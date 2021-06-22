@@ -8,9 +8,8 @@
 import Foundation
 protocol SEODelegate {
     func SEOModel(link: String, url: String, listLine: Int)
+    func didFailWithError(error: Error)
 }
-
-
 
 struct SEO {
     var delegate: SEODelegate?
@@ -22,20 +21,24 @@ struct SEO {
     
    //&lr=\(lang)
     
-    func fetchSEO(keyword: String, requestURL: String) {
-        let start = 1
-        let url = "https://www.googleapis.com/customsearch/v1?q=\(keyword)&gl=\(location)&start=\(start)&key=\(apiKey)&cx=\(searchEngine)"
+    func fetchSEO(keyword: String, requestURL: String, _ start: Int?) {
+        let start = start
+        let url = "https://www.googleapis.com/customsearch/v1?q=\(keyword)&gl=\(location)&start=\(start ?? 1)&key=\(apiKey)&cx=\(searchEngine)"
         
+        prepareData(url: url, keyword: keyword, requestURL: requestURL, start: start ?? 1)
+    }
+
+    func prepareData(url: String, keyword: String, requestURL: String, start: Int) {
         if let urlString = URL(string: url) {
             print(urlString)
             let session = URLSession(configuration: .default)
             let dataTask = session.dataTask(with: urlString) { data, response, error in
                 if let e = error {
-                    print(e)
+                    delegate?.didFailWithError(error: e)
                 } else {
                     if let dataSafe = data {
                         if let seoData = parseJSON(data: dataSafe) {
-                            test(seoData: seoData, url: url, requestURL: requestURL, keyword: keyword, start: start, listCounter: nil)
+                            checkForLinkorNextPage(seoData: seoData, url: url, requestURL: requestURL, keyword: keyword, start: start, listCounter: nil)
                         }
                     }
                 }
@@ -44,7 +47,7 @@ struct SEO {
         }
     }
     
-    func test(seoData: SEODataBrain, url: String, requestURL: String, keyword: String, start: Int, listCounter: Int?) {
+    func checkForLinkorNextPage(seoData: SEODataBrain, url: String, requestURL: String, keyword: String, start: Int, listCounter: Int?) {
         var n = 0
         var start = start
         
@@ -62,35 +65,11 @@ struct SEO {
             if n == 10 {
                 start += 10
                 
-                nextPage(start: start, keyword: keyword, requestURL: requestURL, seoData: seoData, transferListLine: listLine)
+                fetchSEO(keyword: keyword, requestURL: requestURL, start)
             }
             print(keyword, start, requestURL, listLine)
         }
     }
-    
-    func nextPage(start: Int, keyword: String, requestURL: String, seoData: SEODataBrain, transferListLine: Int?) {
-        let url = "https://www.googleapis.com/customsearch/v1?q=\(keyword)&gl=\(location)&start=\(start)&key=\(apiKey)&cx=\(searchEngine)"
-        
-        if let urlString = URL(string: url) {
-            print(urlString)
-            let session = URLSession(configuration: .default)
-            let dataTask = session.dataTask(with: urlString) { data, response, error in
-                if let e = error {
-                    print(e)
-                } else {
-                    if let dataSafe = data {
-                        if let seoData = parseJSON(data: dataSafe) {
-                            
-                            test(seoData: seoData, url: url, requestURL: requestURL, keyword: keyword, start: start, listCounter: transferListLine)
-                  
-                        }
-                    }
-                }
-            }
-            dataTask.resume()
-        }
-    }
-    
     
     func parseJSON(data: Data) -> SEODataBrain? {
         let decoder = JSONDecoder()
@@ -99,9 +78,12 @@ struct SEO {
             let seoData = try decoder.decode(SEODataBrain.self, from: data)
             return seoData
         } catch {
-            print("Parse Json error: \(error)")
+            delegate?.didFailWithError(error: error)
             return nil
         }
     }
     
+    func didFailWithError(error: Error) {
+        print(error.localizedDescription)
+    }
 }

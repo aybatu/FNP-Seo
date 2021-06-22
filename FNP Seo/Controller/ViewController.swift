@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, SEODelegate {
+class ViewController: UIViewController {
     
 
     @IBOutlet weak var keywordTextField: UITextField!
@@ -29,16 +29,21 @@ class ViewController: UIViewController, SEODelegate {
     }
 
     @IBAction func searchPressed(_ sender: UIButton) {
-        seo.delegate = self
         keywordTextField.placeholder = "Type a keyword..."
         urlTextField.placeholder = "Enter a domain name..."
         requestUrlLabel.text = ""
         keywordLabel.text = ""
         resultLabel.text = ""
         if let keyword = keywordTextField.text, let url = urlTextField.text {
-            seo.fetchSEO(keyword: keyword, requestURL: url)
+            seo.fetchSEO(keyword: keyword, requestURL: url, nil)
         }
     }
+    
+    
+}
+
+//MARK: - SEO Delegate Methods
+extension ViewController: SEODelegate {
     
     func SEOModel(link: String, url: String, listLine: Int) {
         DispatchQueue.main.async {
@@ -46,8 +51,10 @@ class ViewController: UIViewController, SEODelegate {
             self.keywordLabel.text = self.keywordTextField.text
             self.requestUrlLabel.text = link
         }
+    }
     
+    func didFailWithError(error: Error) {
+        
     }
     
 }
-
