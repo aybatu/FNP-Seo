@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,6 +14,11 @@
 		1E7679E026805A0600D129DD /* FNP_Seo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1E7679DE26805A0600D129DD /* FNP_Seo.xcdatamodeld */; };
 		1E7679E226805A0700D129DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E7679E126805A0700D129DD /* Assets.xcassets */; };
 		1E7679E526805A0700D129DD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E7679E326805A0700D129DD /* LaunchScreen.storyboard */; };
+		1E7679F126805ADB00D129DD /* SEODataBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7679F026805ADB00D129DD /* SEODataBrain.swift */; };
+		1E7679F3268063EF00D129DD /* SEOModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7679F2268063EF00D129DD /* SEOModel.swift */; };
+		1E7679F5268065AB00D129DD /* SEO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7679F4268065AB00D129DD /* SEO.swift */; };
+		1EBDC083268158DF0068307F /* client_898525375062-rspg2uiadcuftclu25ckd7r2gnef49rb.apps.googleusercontent.com.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1EBDC082268158DF0068307F /* client_898525375062-rspg2uiadcuftclu25ckd7r2gnef49rb.apps.googleusercontent.com.plist */; };
+		1EBDC085268158F00068307F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1EBDC084268158F00068307F /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +31,11 @@
 		1E7679E126805A0700D129DD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1E7679E426805A0700D129DD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1E7679E626805A0700D129DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1E7679F026805ADB00D129DD /* SEODataBrain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SEODataBrain.swift; sourceTree = "<group>"; };
+		1E7679F2268063EF00D129DD /* SEOModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SEOModel.swift; sourceTree = "<group>"; };
+		1E7679F4268065AB00D129DD /* SEO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SEO.swift; sourceTree = "<group>"; };
+		1EBDC082268158DF0068307F /* client_898525375062-rspg2uiadcuftclu25ckd7r2gnef49rb.apps.googleusercontent.com.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "client_898525375062-rspg2uiadcuftclu25ckd7r2gnef49rb.apps.googleusercontent.com.plist"; sourceTree = "<group>"; };
+		1EBDC084268158F00068307F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,7 +53,6 @@
 			isa = PBXGroup;
 			children = (
 				1E7679D426805A0600D129DD /* FNP Seo */,
-				1E7679D326805A0600D129DD /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -53,6 +62,7 @@
 				1E7679D226805A0600D129DD /* FNP Seo.app */,
 			);
 			name = Products;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		1E7679D426805A0600D129DD /* FNP Seo */ = {
@@ -60,14 +70,52 @@
 			children = (
 				1E7679D526805A0600D129DD /* AppDelegate.swift */,
 				1E7679D726805A0600D129DD /* SceneDelegate.swift */,
-				1E7679D926805A0600D129DD /* ViewController.swift */,
-				1E7679DB26805A0600D129DD /* Main.storyboard */,
-				1E7679E126805A0700D129DD /* Assets.xcassets */,
-				1E7679E326805A0700D129DD /* LaunchScreen.storyboard */,
+				1E7679EC26805A1300D129DD /* Data Model */,
+				1E7679ED26805A1C00D129DD /* View */,
+				1E7679EE26805A2500D129DD /* Controller */,
+				1E7679EF26805A3500D129DD /* Support Files */,
 				1E7679E626805A0700D129DD /* Info.plist */,
-				1E7679DE26805A0600D129DD /* FNP_Seo.xcdatamodeld */,
+				1EBDC082268158DF0068307F /* client_898525375062-rspg2uiadcuftclu25ckd7r2gnef49rb.apps.googleusercontent.com.plist */,
+				1EBDC084268158F00068307F /* GoogleService-Info.plist */,
+				1E7679D326805A0600D129DD /* Products */,
 			);
 			path = "FNP Seo";
+			sourceTree = "<group>";
+		};
+		1E7679EC26805A1300D129DD /* Data Model */ = {
+			isa = PBXGroup;
+			children = (
+				1E7679DE26805A0600D129DD /* FNP_Seo.xcdatamodeld */,
+				1E7679F026805ADB00D129DD /* SEODataBrain.swift */,
+				1E7679F4268065AB00D129DD /* SEO.swift */,
+				1E7679F2268063EF00D129DD /* SEOModel.swift */,
+			);
+			path = "Data Model";
+			sourceTree = "<group>";
+		};
+		1E7679ED26805A1C00D129DD /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1E7679DB26805A0600D129DD /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		1E7679EE26805A2500D129DD /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				1E7679D926805A0600D129DD /* ViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		1E7679EF26805A3500D129DD /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				1E7679E126805A0700D129DD /* Assets.xcassets */,
+				1E7679E326805A0700D129DD /* LaunchScreen.storyboard */,
+			);
+			path = "Support Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -86,6 +134,8 @@
 			dependencies = (
 			);
 			name = "FNP Seo";
+			packageProductDependencies = (
+			);
 			productName = "FNP Seo";
 			productReference = 1E7679D226805A0600D129DD /* FNP Seo.app */;
 			productType = "com.apple.product-type.application";
@@ -105,7 +155,7 @@
 				};
 			};
 			buildConfigurationList = 1E7679CD26805A0600D129DD /* Build configuration list for PBXProject "FNP Seo" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -113,6 +163,8 @@
 				Base,
 			);
 			mainGroup = 1E7679C926805A0600D129DD;
+			packageReferences = (
+			);
 			productRefGroup = 1E7679D326805A0600D129DD /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -129,6 +181,8 @@
 			files = (
 				1E7679E526805A0700D129DD /* LaunchScreen.storyboard in Resources */,
 				1E7679E226805A0700D129DD /* Assets.xcassets in Resources */,
+				1EBDC085268158F00068307F /* GoogleService-Info.plist in Resources */,
+				1EBDC083268158DF0068307F /* client_898525375062-rspg2uiadcuftclu25ckd7r2gnef49rb.apps.googleusercontent.com.plist in Resources */,
 				1E7679DD26805A0600D129DD /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -140,6 +194,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1E7679F5268065AB00D129DD /* SEO.swift in Sources */,
+				1E7679F126805ADB00D129DD /* SEODataBrain.swift in Sources */,
+				1E7679F3268063EF00D129DD /* SEOModel.swift in Sources */,
 				1E7679DA26805A0600D129DD /* ViewController.swift in Sources */,
 				1E7679D626805A0600D129DD /* AppDelegate.swift in Sources */,
 				1E7679E026805A0600D129DD /* FNP_Seo.xcdatamodeld in Sources */,
@@ -291,12 +348,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "FNP Seo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Aybatu.FNP.SEO.FNP-Seo";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Aybatu.FNPSEO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -309,12 +367,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "FNP Seo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Aybatu.FNP.SEO.FNP-Seo";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Aybatu.FNPSEO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
