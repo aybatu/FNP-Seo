@@ -23,8 +23,9 @@ struct SEO {
    //&lr=\(lang)
     
     func fetchSEO(keyword: String, requestURL: String) {
-        var start = 1
+        let start = 1
         let url = "https://www.googleapis.com/customsearch/v1?q=\(keyword)&gl=\(location)&start=\(start)&key=\(apiKey)&cx=\(searchEngine)"
+        
         if let urlString = URL(string: url) {
             print(urlString)
             let session = URLSession(configuration: .default)
@@ -34,26 +35,7 @@ struct SEO {
                 } else {
                     if let dataSafe = data {
                         if let seoData = parseJSON(data: dataSafe) {
-                            var n = 0
-        
-                            while n < seoData.items.count {
-                                let link = seoData.items[n].link
-                                
-                                if link.contains(requestURL) {
-                                    
-                                    delegate?.SEOModel(link: link, url: requestURL, listLine: n + 1)
-                                    n = 0
-                                    return
-                                } else {
-                                    n += 1
-                                }
-                                
-                                print(n)
-                                if n == 10 {
-                                    start += 10
-                                    nextPage(start: start, keyword: keyword, requestURL: requestURL, listResult: n)
-                                }
-                            }
+                            test(seoData: seoData, url: url, requestURL: requestURL, keyword: keyword, start: start, listCounter: nil)
                         }
                     }
                 }
@@ -62,9 +44,33 @@ struct SEO {
         }
     }
     
-    func nextPage(start: Int, keyword: String, requestURL: String, listResult: Int) {
+    func test(seoData: SEODataBrain, url: String, requestURL: String, keyword: String, start: Int, listCounter: Int?) {
+        var n = 0
         var start = start
+        
+        while n < seoData.items.count {
+            let link = seoData.items[n].link
+            let listLine = start + n
+            if link.contains(requestURL) {
+                delegate?.SEOModel(link: link, url: requestURL, listLine: listLine)
+                n = 0
+                return
+            } else {
+                n += 1
+            }
+            
+            if n == 10 {
+                start += 10
+                
+                nextPage(start: start, keyword: keyword, requestURL: requestURL, seoData: seoData, transferListLine: listLine)
+            }
+            print(keyword, start, requestURL, listLine)
+        }
+    }
+    
+    func nextPage(start: Int, keyword: String, requestURL: String, seoData: SEODataBrain, transferListLine: Int?) {
         let url = "https://www.googleapis.com/customsearch/v1?q=\(keyword)&gl=\(location)&start=\(start)&key=\(apiKey)&cx=\(searchEngine)"
+        
         if let urlString = URL(string: url) {
             print(urlString)
             let session = URLSession(configuration: .default)
@@ -74,27 +80,9 @@ struct SEO {
                 } else {
                     if let dataSafe = data {
                         if let seoData = parseJSON(data: dataSafe) {
-                            var n = 0
                             
-                            while n < seoData.items.count {
-                                let link = seoData.items[n].link
-                                
-                                if link.contains(requestURL) {
-                                    delegate?.SEOModel(link: link, url: requestURL, listLine: listResult + n + 1)
-                                    n = 0
-                                    return
-                                } else {
-                                    n += 1
-                                }
-     
-                                if n == 10 {
-                                    start += 10
-                                    
-                                    nextPage(start: start, keyword: keyword, requestURL: requestURL, listResult: listResult + n)
-                                    
-                                }
-                                print(keyword, start, requestURL, listResult + n + 1)
-                            }
+                            test(seoData: seoData, url: url, requestURL: requestURL, keyword: keyword, start: start, listCounter: transferListLine)
+                  
                         }
                     }
                 }
@@ -102,9 +90,11 @@ struct SEO {
             dataTask.resume()
         }
     }
+    
     
     func parseJSON(data: Data) -> SEODataBrain? {
         let decoder = JSONDecoder()
+        
         do {
             let seoData = try decoder.decode(SEODataBrain.self, from: data)
             return seoData
