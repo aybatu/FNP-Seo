@@ -19,26 +19,24 @@ struct SEO {
     let hl = "tr"
     let location = "tr"
     
-   //&lr=\(lang)
-    
-    func fetchSEO(keyword: String, requestURL: String, _ start: Int?) {
+    func fetchSEO(keyword: String, requestURL: String, start: Int? = 1) {
         let start = start
-        let url = "https://www.googleapis.com/customsearch/v1?q=\(keyword)&gl=\(location)&start=\(start ?? 1)&key=\(apiKey)&cx=\(searchEngine)"
+        let urlString = "https://www.googleapis.com/customsearch/v1?q=\(keyword)&gl=\(location)&start=\(start ?? 1)&key=\(apiKey)&cx=\(searchEngine)"
         
-        prepareData(url: url, keyword: keyword, requestURL: requestURL, start: start ?? 1)
+        performRequest(with: urlString, for: keyword, request: requestURL, startIndex: start ?? 1)
     }
 
-    func prepareData(url: String, keyword: String, requestURL: String, start: Int) {
-        if let urlString = URL(string: url) {
+    func performRequest(with urlString: String, for keyword: String, request requestURL: String, startIndex: Int) {
+        if let url = URL(string: urlString) {
             print(urlString)
             let session = URLSession(configuration: .default)
-            let dataTask = session.dataTask(with: urlString) { data, response, error in
+            let dataTask = session.dataTask(with: url) { data, response, error in
                 if let e = error {
                     delegate?.didFailWithError(error: e)
                 } else {
                     if let dataSafe = data {
                         if let seoData = parseJSON(data: dataSafe) {
-                            checkForLinkorNextPage(seoData: seoData, url: url, requestURL: requestURL, keyword: keyword, start: start, listCounter: nil)
+                            checkForLinkorNextPage(seoData: seoData, url: urlString, requestURL: requestURL, keyword: keyword, nextPageStartIndex: startIndex)
                         }
                     }
                 }
@@ -47,13 +45,13 @@ struct SEO {
         }
     }
     
-    func checkForLinkorNextPage(seoData: SEODataBrain, url: String, requestURL: String, keyword: String, start: Int, listCounter: Int?) {
+    func checkForLinkorNextPage(seoData: SEODataBrain, url: String, requestURL: String, keyword: String, nextPageStartIndex: Int) {
         var n = 0
-        var start = start
+        var startIndexForNextPage = nextPageStartIndex
         
         while n < seoData.items.count {
             let link = seoData.items[n].link
-            let listLine = start + n
+            let listLine = startIndexForNextPage + n
             if link.contains(requestURL) {
                 delegate?.SEOModel(link: link, url: requestURL, listLine: listLine)
                 n = 0
@@ -61,13 +59,11 @@ struct SEO {
             } else {
                 n += 1
             }
-            
+            print(keyword, startIndexForNextPage, requestURL, listLine)
             if n == 10 {
-                start += 10
-                
-                fetchSEO(keyword: keyword, requestURL: requestURL, start)
+                startIndexForNextPage += 10
+                fetchSEO(keyword: keyword, requestURL: requestURL, start: startIndexForNextPage)
             }
-            print(keyword, start, requestURL, listLine)
         }
     }
     

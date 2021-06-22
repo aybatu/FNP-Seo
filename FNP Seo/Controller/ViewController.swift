@@ -34,11 +34,11 @@ class ViewController: UIViewController {
         requestUrlLabel.text = ""
         keywordLabel.text = ""
         resultLabel.text = ""
+        
         if let keyword = keywordTextField.text, let url = urlTextField.text {
-            seo.fetchSEO(keyword: keyword, requestURL: url, nil)
+            seo.fetchSEO(keyword: keyword, requestURL: url)
         }
     }
-    
     
 }
 
