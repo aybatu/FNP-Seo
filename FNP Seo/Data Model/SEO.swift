@@ -52,6 +52,7 @@ struct SEO {
         while n < seoData.items.count {
             let link = seoData.items[n].link
             let listLine = startIndexForNextPage + n
+            
             if link.contains(requestURL) {
                 delegate?.SEOModel(link: link, url: requestURL, listLine: listLine)
                 n = 0
@@ -59,7 +60,7 @@ struct SEO {
             } else {
                 n += 1
             }
-            print(keyword, startIndexForNextPage, requestURL, listLine)
+            
             if n == 10 {
                 startIndexForNextPage += 10
                 fetchSEO(keyword: keyword, requestURL: requestURL, start: startIndexForNextPage)
