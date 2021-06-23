@@ -37,6 +37,7 @@ class KeywordViewController: UITableViewController {
         var text = UITextField()
         let alert = UIAlertController(title: "Add New Keyword", message: "Please specify and add your keyword to achive seo rank.", preferredStyle: .alert)
         
+        
         let action = UIAlertAction(title: "Add", style: .default) { action in
             if let textSafe = text.text {
                 let textPrefix = textSafe.removeWhitespace()
@@ -99,6 +100,7 @@ class KeywordViewController: UITableViewController {
     
     func loadData() {
         let decoder = PropertyListDecoder()
+        
         if let data = try? Data(contentsOf: dataPath!) {
             do {
                 keywordArray = try decoder.decode([KeywordDataModel].self, from: data)
@@ -136,6 +138,7 @@ extension KeywordViewController: SEODelegate {
             self.rankLabel.text = String(listLine)
         }
         
+        
         var keywordDataModel = KeywordDataModel()
         
         keywordDataModel.domainTitle = link
@@ -154,8 +157,9 @@ extension KeywordViewController: SEODelegate {
         
     }
     
-    
 }
+
+//MARK: - String dash and whitespace remove
 
 extension String {
     func replace(string:String, replacement:String) -> String {

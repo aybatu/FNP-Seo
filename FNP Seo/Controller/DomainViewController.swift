@@ -9,14 +9,20 @@ import UIKit
 
 class DomainViewController: UITableViewController {
     
+    let dataPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Domain.plist")
     var domainArray = [DomainDataModel]()
     var domainSeo = DomainModel()
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-
+        
+        loadData()
     }
+    
+    //MARK: -  Add pressed
 
     @IBAction func addPressed(_ sender: UIBarButtonItem) {
         var text = UITextField()
@@ -24,12 +30,21 @@ class DomainViewController: UITableViewController {
         let time = date.timeIntervalSince1970
         let recentDate = domainSeo.currentDate(date: date)
         
+        
         let alert = UIAlertController(title: "New Domain", message: "Please type domain name you would like to add.", preferredStyle: .alert)
         
         let action = UIAlertAction(title: "Add", style: .default) { action in
+            var domain = DomainDataModel()
             
-            self.domainArray.append(DomainDataModel(domainTitle: text.text!, dateString: recentDate, timeSince: time))
-            self.reloadData()
+            domain.dateString = recentDate
+            if let textSafe = text.text {
+                domain.domainTitle = textSafe
+            }
+            domain.timeSince = time
+            
+            
+            self.domainArray.append(domain)
+            self.saveData()
         }
         
         alert.addAction(action)
@@ -56,7 +71,27 @@ class DomainViewController: UITableViewController {
     
     //MARK: - Data Manupulation Methods
     
-    func reloadData() {
+    func loadData() {
+        let decoder = PropertyListDecoder()
+        
+        do {
+            let data = try Data(contentsOf: dataPath!)
+            domainArray = try decoder.decode([DomainDataModel].self, from: data)
+        } catch {
+            print(error)
+        }
+        
+        tableView.reloadData()
+    }
+    
+    func saveData() {
+        let encoder = PropertyListEncoder()
+        do {
+            let data = try encoder.encode(domainArray)
+            try data.write(to: dataPath!)
+        } catch {
+            print(error.localizedDescription)
+        }
         tableView.reloadData()
     }
     
@@ -68,6 +103,7 @@ class DomainViewController: UITableViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationVC = segue.destination as! KeywordViewController
+        
         if let indexPath = tableView.indexPathForSelectedRow {
             destinationVC.domain = domainArray[indexPath.row]
         }
@@ -77,7 +113,7 @@ class DomainViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let action = UIContextualAction(style: .normal, title: nil) { action, view, escape in
             self.domainArray.remove(at: indexPath.row)
-            self.reloadData()
+            self.saveData()
         }
         action.image = UIImage(systemName: "trash.fill")
         action.backgroundColor = .red
@@ -100,5 +136,4 @@ class DomainViewController: UITableViewController {
         return swipe
     }
     
-
 }

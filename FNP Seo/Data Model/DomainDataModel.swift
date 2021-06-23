@@ -7,10 +7,9 @@
 
 import Foundation
 
-struct DomainDataModel {
-    var domainTitle: String
-    var dateString: String
-    var timeSince: TimeInterval
-    
+struct DomainDataModel: Codable {
+    var domainTitle: String?
+    var dateString: String?
+    var timeSince: TimeInterval?
     
 }
