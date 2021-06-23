@@ -9,8 +9,9 @@ import UIKit
 
 class KeywordViewController: UITableViewController {
     @IBOutlet weak var domainLabel: UILabel!
-    @IBOutlet weak var listLineLabel: UILabel!
     @IBOutlet weak var keywordLabel: UILabel!
+    @IBOutlet weak var rankLabel: UILabel!
+    
     
     var domain: DomainDataModel? {
         didSet{
@@ -26,7 +27,9 @@ class KeywordViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         seo.delegate = self
-        
+        domainLabel.text = ""
+        keywordLabel.text = ""
+        rankLabel.text = ""
         loadData()
     }
     
@@ -35,19 +38,10 @@ class KeywordViewController: UITableViewController {
         let alert = UIAlertController(title: "Add New Keyword", message: "Please specify and add your keyword to achive seo rank.", preferredStyle: .alert)
         
         let action = UIAlertAction(title: "Add", style: .default) { action in
-            if let textSafe = self.keywordLabel.text, let request = self.domainLabel.text, let listLine = self.listLineLabel.text {
-                self.seo.fetchSEO(keyword: text.text!, requestURL: (self.domain?.domainTitle)!)
+            if let textSafe = text.text {
+                let textPrefix = textSafe.removeWhitespace()
                 
-                var keywordDataModel = KeywordDataModel()
-                
-                keywordDataModel.domainTitle = request
-                keywordDataModel.keywordTitle = textSafe
-                keywordDataModel.listedLine = listLine
-                
-                
-                self.keywordArray.append(keywordDataModel)
-                self.saveData()
-                
+                self.seo.fetchSEO(keyword: textPrefix, requestURL: (self.domain?.domainTitle)!)
             }
         }
         
@@ -80,13 +74,18 @@ class KeywordViewController: UITableViewController {
         
         domainLabel.text = keywordArray[indexPath.row].domainTitle
         keywordLabel.text = keywordArray[indexPath.row].keywordTitle
-        listLineLabel.text = keywordArray[indexPath.row].listedLine
+        rankLabel.text = keywordArray[indexPath.row].listedLine
+        
     }
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let action = UIContextualAction(style: .normal, title: nil) { action, view, escape in
+            
             self.keywordArray.remove(at: indexPath.row)
-            self.loadData()
+            self.keywordLabel.text = ""
+            self.domainLabel.text = ""
+            self.rankLabel.text = ""
+            self.saveData()
         }
         action.image = UIImage(systemName: "trash.fill")
         action.backgroundColor = .red
@@ -119,8 +118,10 @@ class KeywordViewController: UITableViewController {
         } catch {
             didFailWithError(error: error)
         }
-        
-        tableView.reloadData()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+       
     }
 }
 
@@ -131,10 +132,22 @@ extension KeywordViewController: SEODelegate {
     func SEOModel(link: String, url: String, listLine: Int, keyword: String) {
         DispatchQueue.main.async {
             self.domainLabel.text = link
-            self.listLineLabel.text = String(listLine)
-            self.keywordLabel.text = keyword
-            print(keyword, link, listLine)
+            self.keywordLabel.text = keyword.removeDash()
+            self.rankLabel.text = String(listLine)
         }
+        
+        var keywordDataModel = KeywordDataModel()
+        
+        keywordDataModel.domainTitle = link
+        keywordDataModel.keywordTitle = keyword.removeDash()
+        keywordDataModel.listedLine = String(listLine)
+        
+        self.keywordArray.append(keywordDataModel)
+        self.saveData()
+        
+
+        print(keyword, link, listLine)
+        
     }
     
     func didFailWithError(error: Error) {
@@ -142,4 +155,18 @@ extension KeywordViewController: SEODelegate {
     }
     
     
+}
+
+extension String {
+    func replace(string:String, replacement:String) -> String {
+        return self.replacingOccurrences(of: string, with: replacement, options: NSString.CompareOptions.literal, range: nil)
+    }
+
+    func removeWhitespace() -> String {
+        return self.replace(string: " ", replacement: "-")
+    }
+    
+    func removeDash() -> String {
+        return self.replace(string: "-", replacement: " ")
+    }
 }
