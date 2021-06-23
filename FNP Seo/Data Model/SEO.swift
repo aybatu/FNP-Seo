@@ -7,7 +7,7 @@
 
 import Foundation
 protocol SEODelegate {
-    func SEOModel(link: String, url: String, listLine: Int)
+    func SEOModel(link: String, url: String, listLine: Int, keyword: String)
     func didFailWithError(error: Error)
 }
 
@@ -54,7 +54,7 @@ struct SEO {
             let listLine = startIndexForNextPage + n
             
             if link.contains(requestURL) {
-                delegate?.SEOModel(link: link, url: requestURL, listLine: listLine)
+                delegate?.SEOModel(link: link, url: requestURL, listLine: listLine, keyword: keyword)
                 n = 0
                 return
             } else {

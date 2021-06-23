@@ -23,6 +23,7 @@
 		1EBDC08B268294F10068307F /* DomainDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBDC08A268294F10068307F /* DomainDataModel.swift */; };
 		1EBDC08D26829A2C0068307F /* DomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBDC08C26829A2C0068307F /* DomainModel.swift */; };
 		1EBDC08F2682A5840068307F /* KeywordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBDC08E2682A5840068307F /* KeywordViewController.swift */; };
+		1EBDC0912682B39F0068307F /* KeywordDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBDC0902682B39F0068307F /* KeywordDataModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		1EBDC08A268294F10068307F /* DomainDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainDataModel.swift; sourceTree = "<group>"; };
 		1EBDC08C26829A2C0068307F /* DomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainModel.swift; sourceTree = "<group>"; };
 		1EBDC08E2682A5840068307F /* KeywordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordViewController.swift; sourceTree = "<group>"; };
+		1EBDC0902682B39F0068307F /* KeywordDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordDataModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 				1E7679F2268063EF00D129DD /* SEOModel.swift */,
 				1EBDC08A268294F10068307F /* DomainDataModel.swift */,
 				1EBDC08C26829A2C0068307F /* DomainModel.swift */,
+				1EBDC0902682B39F0068307F /* KeywordDataModel.swift */,
 			);
 			path = "Data Model";
 			sourceTree = "<group>";
@@ -217,6 +220,7 @@
 				1EBDC08D26829A2C0068307F /* DomainModel.swift in Sources */,
 				1E7679E026805A0600D129DD /* FNP_Seo.xcdatamodeld in Sources */,
 				1E7679D826805A0600D129DD /* SceneDelegate.swift in Sources */,
+				1EBDC0912682B39F0068307F /* KeywordDataModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
