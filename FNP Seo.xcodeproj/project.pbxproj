@@ -10,7 +10,6 @@
 		1E7679D626805A0600D129DD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7679D526805A0600D129DD /* AppDelegate.swift */; };
 		1E7679D826805A0600D129DD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7679D726805A0600D129DD /* SceneDelegate.swift */; };
 		1E7679DD26805A0600D129DD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E7679DB26805A0600D129DD /* Main.storyboard */; };
-		1E7679E026805A0600D129DD /* FNP_Seo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1E7679DE26805A0600D129DD /* FNP_Seo.xcdatamodeld */; };
 		1E7679E226805A0700D129DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E7679E126805A0700D129DD /* Assets.xcassets */; };
 		1E7679E526805A0700D129DD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E7679E326805A0700D129DD /* LaunchScreen.storyboard */; };
 		1E7679F126805ADB00D129DD /* SEODataBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7679F026805ADB00D129DD /* SEODataBrain.swift */; };
@@ -24,6 +23,8 @@
 		1EBDC08D26829A2C0068307F /* DomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBDC08C26829A2C0068307F /* DomainModel.swift */; };
 		1EBDC08F2682A5840068307F /* KeywordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBDC08E2682A5840068307F /* KeywordViewController.swift */; };
 		1EBDC0912682B39F0068307F /* KeywordDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBDC0902682B39F0068307F /* KeywordDataModel.swift */; };
+		1EC30A9026868755008CF69A /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1EC30A8F26868755008CF69A /* RealmSwift */; };
+		1EC30A9226868755008CF69A /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 1EC30A9126868755008CF69A /* Realm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,7 +32,6 @@
 		1E7679D526805A0600D129DD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1E7679D726805A0600D129DD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		1E7679DC26805A0600D129DD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		1E7679DF26805A0600D129DD /* FNP_Seo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FNP_Seo.xcdatamodel; sourceTree = "<group>"; };
 		1E7679E126805A0700D129DD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1E7679E426805A0700D129DD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1E7679E626805A0700D129DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -53,6 +53,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1EC30A9226868755008CF69A /* Realm in Frameworks */,
+				1EC30A9026868755008CF69A /* RealmSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,7 +97,6 @@
 		1E7679EC26805A1300D129DD /* Data Model */ = {
 			isa = PBXGroup;
 			children = (
-				1E7679DE26805A0600D129DD /* FNP_Seo.xcdatamodeld */,
 				1E7679F026805ADB00D129DD /* SEODataBrain.swift */,
 				1E7679F4268065AB00D129DD /* SEO.swift */,
 				1E7679F2268063EF00D129DD /* SEOModel.swift */,
@@ -150,6 +151,8 @@
 			);
 			name = "FNP Seo";
 			packageProductDependencies = (
+				1EC30A8F26868755008CF69A /* RealmSwift */,
+				1EC30A9126868755008CF69A /* Realm */,
 			);
 			productName = "FNP Seo";
 			productReference = 1E7679D226805A0600D129DD /* FNP Seo.app */;
@@ -179,6 +182,7 @@
 			);
 			mainGroup = 1E7679C926805A0600D129DD;
 			packageReferences = (
+				1EC30A8E26868755008CF69A /* XCRemoteSwiftPackageReference "realm-cocoa" */,
 			);
 			productRefGroup = 1E7679D326805A0600D129DD /* Products */;
 			projectDirPath = "";
@@ -218,7 +222,6 @@
 				1EBDC087268286120068307F /* DomainViewController.swift in Sources */,
 				1E7679D626805A0600D129DD /* AppDelegate.swift in Sources */,
 				1EBDC08D26829A2C0068307F /* DomainModel.swift in Sources */,
-				1E7679E026805A0600D129DD /* FNP_Seo.xcdatamodeld in Sources */,
 				1E7679D826805A0600D129DD /* SceneDelegate.swift in Sources */,
 				1EBDC0912682B39F0068307F /* KeywordDataModel.swift in Sources */,
 			);
@@ -423,18 +426,29 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCVersionGroup section */
-		1E7679DE26805A0600D129DD /* FNP_Seo.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				1E7679DF26805A0600D129DD /* FNP_Seo.xcdatamodel */,
-			);
-			currentVersion = 1E7679DF26805A0600D129DD /* FNP_Seo.xcdatamodel */;
-			path = FNP_Seo.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
+/* Begin XCRemoteSwiftPackageReference section */
+		1EC30A8E26868755008CF69A /* XCRemoteSwiftPackageReference "realm-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-cocoa.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.8.1;
+			};
 		};
-/* End XCVersionGroup section */
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1EC30A8F26868755008CF69A /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1EC30A8E26868755008CF69A /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = RealmSwift;
+		};
+		1EC30A9126868755008CF69A /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1EC30A8E26868755008CF69A /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = Realm;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 1E7679CA26805A0600D129DD /* Project object */;
 }
