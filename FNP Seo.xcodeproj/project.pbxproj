@@ -20,11 +20,13 @@
 		1EBDC087268286120068307F /* DomainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBDC086268286120068307F /* DomainViewController.swift */; };
 		1EBDC0892682903A0068307F /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBDC0882682903A0068307F /* Constant.swift */; };
 		1EBDC08B268294F10068307F /* DomainDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBDC08A268294F10068307F /* DomainDataModel.swift */; };
-		1EBDC08D26829A2C0068307F /* DomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBDC08C26829A2C0068307F /* DomainModel.swift */; };
 		1EBDC08F2682A5840068307F /* KeywordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBDC08E2682A5840068307F /* KeywordViewController.swift */; };
 		1EBDC0912682B39F0068307F /* KeywordDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBDC0902682B39F0068307F /* KeywordDataModel.swift */; };
 		1EC30A9026868755008CF69A /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1EC30A8F26868755008CF69A /* RealmSwift */; };
 		1EC30A9226868755008CF69A /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 1EC30A9126868755008CF69A /* Realm */; };
+		1EC30A9426868828008CF69A /* WebSites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC30A9326868828008CF69A /* WebSites.swift */; };
+		1EC30A9626868834008CF69A /* Keywords.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC30A9526868834008CF69A /* Keywords.swift */; };
+		1EC30A982686886E008CF69A /* Statistic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC30A972686886E008CF69A /* Statistic.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,9 +45,11 @@
 		1EBDC086268286120068307F /* DomainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainViewController.swift; sourceTree = "<group>"; };
 		1EBDC0882682903A0068307F /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		1EBDC08A268294F10068307F /* DomainDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainDataModel.swift; sourceTree = "<group>"; };
-		1EBDC08C26829A2C0068307F /* DomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainModel.swift; sourceTree = "<group>"; };
 		1EBDC08E2682A5840068307F /* KeywordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordViewController.swift; sourceTree = "<group>"; };
 		1EBDC0902682B39F0068307F /* KeywordDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordDataModel.swift; sourceTree = "<group>"; };
+		1EC30A9326868828008CF69A /* WebSites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSites.swift; sourceTree = "<group>"; };
+		1EC30A9526868834008CF69A /* Keywords.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keywords.swift; sourceTree = "<group>"; };
+		1EC30A972686886E008CF69A /* Statistic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statistic.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,8 +105,10 @@
 				1E7679F4268065AB00D129DD /* SEO.swift */,
 				1E7679F2268063EF00D129DD /* SEOModel.swift */,
 				1EBDC08A268294F10068307F /* DomainDataModel.swift */,
-				1EBDC08C26829A2C0068307F /* DomainModel.swift */,
 				1EBDC0902682B39F0068307F /* KeywordDataModel.swift */,
+				1EC30A9326868828008CF69A /* WebSites.swift */,
+				1EC30A9526868834008CF69A /* Keywords.swift */,
+				1EC30A972686886E008CF69A /* Statistic.swift */,
 			);
 			path = "Data Model";
 			sourceTree = "<group>";
@@ -215,13 +221,15 @@
 			files = (
 				1E7679F5268065AB00D129DD /* SEO.swift in Sources */,
 				1EBDC08B268294F10068307F /* DomainDataModel.swift in Sources */,
+				1EC30A9626868834008CF69A /* Keywords.swift in Sources */,
 				1E7679F126805ADB00D129DD /* SEODataBrain.swift in Sources */,
+				1EC30A9426868828008CF69A /* WebSites.swift in Sources */,
 				1EBDC08F2682A5840068307F /* KeywordViewController.swift in Sources */,
+				1EC30A982686886E008CF69A /* Statistic.swift in Sources */,
 				1EBDC0892682903A0068307F /* Constant.swift in Sources */,
 				1E7679F3268063EF00D129DD /* SEOModel.swift in Sources */,
 				1EBDC087268286120068307F /* DomainViewController.swift in Sources */,
 				1E7679D626805A0600D129DD /* AppDelegate.swift in Sources */,
-				1EBDC08D26829A2C0068307F /* DomainModel.swift in Sources */,
 				1E7679D826805A0600D129DD /* SceneDelegate.swift in Sources */,
 				1EBDC0912682B39F0068307F /* KeywordDataModel.swift in Sources */,
 			);

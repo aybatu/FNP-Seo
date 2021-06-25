@@ -21,7 +21,7 @@ struct SEO {
     
     func fetchSEO(keyword: String, requestURL: String, start: Int? = 1) {
         let start = start
-        let urlString = "https://www.googleapis.com/customsearch/v1?q=\(keyword)&gl=\(location)&start=\(start ?? 1)&key=\(apiKey)&cx=\(searchEngine)"
+        let urlString = "https://www.googleapis.com/customsearch/v1?q=\(keyword)&lr=\(lang)&gl=\(location)&start=\(start ?? 1)&key=\(apiKey)&cx=\(searchEngine)"
         
         performRequest(with: urlString, for: keyword, request: requestURL, startIndex: start ?? 1)
     }
