@@ -18,7 +18,7 @@ struct SEO {
     let lang = "lang_tr"
     let hl = "tr"
     let location = "tr"
-    
+
     func fetchSEO(keyword: String, requestURL: String, start: Int? = 1) {
         let start = start
         let urlString = "https://www.googleapis.com/customsearch/v1?q=\(keyword)&lr=\(lang)&gl=\(location)&start=\(start ?? 1)&key=\(apiKey)&cx=\(searchEngine)"
@@ -50,20 +50,21 @@ struct SEO {
         var startIndexForNextPage = nextPageStartIndex
         
         while n < seoData.items.count {
-            let link = seoData.items[n].link
-            let listLine = startIndexForNextPage + n
-            
-            if link.contains(requestURL) {
-                delegate?.SEOModel(link: link, url: requestURL, listLine: listLine, keyword: keyword)
-                n = 0
-                return
-            } else {
-                n += 1
-            }
-            
-            if n == 10 {
-                startIndexForNextPage += 10
-                fetchSEO(keyword: keyword, requestURL: requestURL, start: startIndexForNextPage)
+            if let link = seoData.items[n].link {
+                let listLine = startIndexForNextPage + n
+                
+                if link.contains(requestURL) {
+                    delegate?.SEOModel(link: link, url: requestURL, listLine: listLine, keyword: keyword)
+                    n = 0
+                    return
+                } else {
+                    n += 1
+                }
+                
+                if n == 10 {
+                    startIndexForNextPage += 10
+                    fetchSEO(keyword: keyword, requestURL: requestURL, start: startIndexForNextPage)
+                }
             }
         }
     }

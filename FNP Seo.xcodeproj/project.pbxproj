@@ -101,14 +101,9 @@
 		1E7679EC26805A1300D129DD /* Data Model */ = {
 			isa = PBXGroup;
 			children = (
-				1E7679F026805ADB00D129DD /* SEODataBrain.swift */,
-				1E7679F4268065AB00D129DD /* SEO.swift */,
-				1E7679F2268063EF00D129DD /* SEOModel.swift */,
-				1EBDC08A268294F10068307F /* DomainDataModel.swift */,
-				1EBDC0902682B39F0068307F /* KeywordDataModel.swift */,
-				1EC30A9326868828008CF69A /* WebSites.swift */,
-				1EC30A9526868834008CF69A /* Keywords.swift */,
-				1EC30A972686886E008CF69A /* Statistic.swift */,
+				1E91B91E26876AD8006F0281 /* Realm Data Model */,
+				1E91B91D26876AA3006F0281 /* SEO Model */,
+				1E87811726879A0A00FE11C6 /* Views Data Model */,
 			);
 			path = "Data Model";
 			sourceTree = "<group>";
@@ -138,6 +133,35 @@
 				1EBDC0882682903A0068307F /* Constant.swift */,
 			);
 			path = "Support Files";
+			sourceTree = "<group>";
+		};
+		1E87811726879A0A00FE11C6 /* Views Data Model */ = {
+			isa = PBXGroup;
+			children = (
+				1EBDC08A268294F10068307F /* DomainDataModel.swift */,
+				1EBDC0902682B39F0068307F /* KeywordDataModel.swift */,
+			);
+			path = "Views Data Model";
+			sourceTree = "<group>";
+		};
+		1E91B91D26876AA3006F0281 /* SEO Model */ = {
+			isa = PBXGroup;
+			children = (
+				1E7679F026805ADB00D129DD /* SEODataBrain.swift */,
+				1E7679F4268065AB00D129DD /* SEO.swift */,
+				1E7679F2268063EF00D129DD /* SEOModel.swift */,
+			);
+			path = "SEO Model";
+			sourceTree = "<group>";
+		};
+		1E91B91E26876AD8006F0281 /* Realm Data Model */ = {
+			isa = PBXGroup;
+			children = (
+				1EC30A9326868828008CF69A /* WebSites.swift */,
+				1EC30A9526868834008CF69A /* Keywords.swift */,
+				1EC30A972686886E008CF69A /* Statistic.swift */,
+			);
+			path = "Realm Data Model";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

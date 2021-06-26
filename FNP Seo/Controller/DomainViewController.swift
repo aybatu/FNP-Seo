@@ -28,11 +28,13 @@ class DomainViewController: UITableViewController {
     
         let alert = UIAlertController(title: "New Domain", message: "Please type domain name you would like to add.", preferredStyle: .alert)
         let action = UIAlertAction(title: "Add", style: .default) { action in
-            if let textSafe = text.text {
-                let newDomain = WebSites()
-                newDomain.domainName = textSafe
-                newDomain.date = Date()
-                self.saveData(website: newDomain)
+            if text.text != "" {
+                if let textSafe = text.text {
+                    let newDomain = WebSites()
+                    newDomain.domainName = textSafe
+                    newDomain.date = Date()
+                    self.saveData(website: newDomain)
+                }
             }
         }
         
@@ -79,44 +81,68 @@ class DomainViewController: UITableViewController {
     }
     
 //    //MARK: - Table View Delegate Methods
-//
-//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        performSegue(withIdentifier: K.Segue.domianToKeyword, sender: self)
-//    }
-//
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        let destinationVC = segue.destination as! KeywordViewController
-//
-//        if let indexPath = tableView.indexPathForSelectedRow {
-//            destinationVC.domain = domain?[indexPath.row]
-//        }
-//
-//    }
-//
-//    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-//        let action = UIContextualAction(style: .normal, title: nil) { action, view, escape in
-//            self.domainArray.remove(at: indexPath.row)
-//            self.saveData()
-//        }
-//        action.image = UIImage(systemName: "trash.fill")
-//        action.backgroundColor = .red
-//
-//        let swipe = UISwipeActionsConfiguration(actions: [action])
-//
-//        return swipe
-//    }
-//
-//    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-//        let title = domainArray[indexPath.row].dateString
-//
-//        let action = UIContextualAction(style: .normal, title: title) { action, view, escape in
-//
-//        }
-//        action.backgroundColor = .systemTeal
-//
-//        let swipe = UISwipeActionsConfiguration(actions: [action])
-//
-//        return swipe
-//    }
-//
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: K.Segue.domianToKeyword, sender: self)
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationVC = segue.destination as! KeywordViewController
+
+        if let indexPath = tableView.indexPathForSelectedRow {
+            destinationVC.selectedDomain = domain?[indexPath.row]
+        }
+
+    }
+
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let action = UIContextualAction(style: .normal, title: nil) { action, view, escape in
+            if let domain = self.realm.objects(WebSites.self).first {
+                let keywords = self.realm.objects(Keywords.self).filter("ANY parentDomain == %@", domain)
+                try! self.realm.write {
+                    self.realm.delete(keywords)
+                }
+            }
+            
+            do {
+                try self.realm.write {
+                    self.realm.delete(self.domain![indexPath.row])
+                }
+            } catch {
+                print("Error deleting domain name: \(error)")
+            }
+            tableView.reloadData()
+        }
+        
+        action.image = UIImage(systemName: "trash.fill")
+        action.backgroundColor = .red
+
+        let swipe = UISwipeActionsConfiguration(actions: [action])
+        return swipe
+    }
+
+    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let date = domain?[indexPath.row].date
+        let dateString = date?.getFormattedDate(format: "dd-MM-yyyy")
+        
+        let action = UIContextualAction(style: .normal, title: dateString) { action, view, escape in
+
+        }
+        action.backgroundColor = .systemTeal
+
+        let swipe = UISwipeActionsConfiguration(actions: [action])
+
+        return swipe
+    }
+
+}
+
+//MARK: - Date Formatter
+
+extension Date {
+   func getFormattedDate(format: String) -> String {
+        let dateformat = DateFormatter()
+        dateformat.dateFormat = format
+        return dateformat.string(from: self)
+    }
 }

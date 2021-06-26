@@ -6,23 +6,23 @@
 //
 
 import UIKit
+import RealmSwift
 
 class KeywordViewController: UITableViewController {
     @IBOutlet weak var domainLabel: UILabel!
     @IBOutlet weak var keywordLabel: UILabel!
     @IBOutlet weak var rankLabel: UILabel!
     
+    var seo = SEO()
+    let realm = try! Realm()
     
-    var domain: DomainDataModel? {
+    var keyword: Results<Keywords>?
+    var selectedDomain: WebSites? {
         didSet{
             loadData()
         }
     }
     
-    let dataPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("FnpSeo.plist")
-    
-    var keywordArray = [KeywordDataModel]()
-    var seo = SEO()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,18 +31,20 @@ class KeywordViewController: UITableViewController {
         keywordLabel.text = ""
         rankLabel.text = ""
         loadData()
+        
+//        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!)
     }
     
     @IBAction func addPressed(_ sender: UIBarButtonItem) {
         var text = UITextField()
         let alert = UIAlertController(title: "Add New Keyword", message: "Please specify and add your keyword to achive seo rank.", preferredStyle: .alert)
         
-        
         let action = UIAlertAction(title: "Add", style: .default) { action in
             if let textSafe = text.text {
                 let textPrefix = textSafe.removeWhitespace()
+                self.seo.fetchSEO(keyword: textPrefix, requestURL: self.selectedDomain!.domainName, start: 1)
                 
-                self.seo.fetchSEO(keyword: textPrefix, requestURL: (self.domain?.domainTitle)!)
+                self.tableView.reloadData()
             }
         }
         
@@ -59,13 +61,13 @@ class KeywordViewController: UITableViewController {
     //MARK: - Table View Data Source
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return keywordArray.count
+        return keyword?.count ?? 1
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: K.Keyword.keywordCell, for: indexPath)
         
-        cell.textLabel?.text = keywordArray[indexPath.row].keywordTitle
+        cell.textLabel?.text = keyword?[indexPath.row].name ?? "No keyword add yet."
         return cell
     }
     
@@ -73,50 +75,49 @@ class KeywordViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        domainLabel.text = keywordArray[indexPath.row].domainTitle
-        keywordLabel.text = keywordArray[indexPath.row].keywordTitle
-        rankLabel.text = keywordArray[indexPath.row].listedLine
+        domainLabel.text = keyword?[indexPath.row].requestedURL
+        keywordLabel.text = keyword?[indexPath.row].name
+        rankLabel.text = keyword?[indexPath.row].rank
         
     }
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let action = UIContextualAction(style: .normal, title: nil) { action, view, escape in
-            
-            self.keywordArray.remove(at: indexPath.row)
             self.keywordLabel.text = ""
             self.domainLabel.text = ""
             self.rankLabel.text = ""
-            self.saveData()
+            
+            do {
+                try self.realm.write({
+                    self.realm.delete(self.keyword![indexPath.row])
+                })
+            } catch {
+                print("Error delete keyword: \(error)")
+            }
+            
+            tableView.reloadData()
         }
         action.image = UIImage(systemName: "trash.fill")
         action.backgroundColor = .red
-        
+
         let swipe = UISwipeActionsConfiguration(actions: [action])
-        
+
         return swipe
     }
     
     //MARK: - Data Manupulation Methods
     
     func loadData() {
-        let decoder = PropertyListDecoder()
-        
-        if let data = try? Data(contentsOf: dataPath!) {
-            do {
-                keywordArray = try decoder.decode([KeywordDataModel].self, from: data)
-                
-            } catch {
-                didFailWithError(error: error)
-            }
-        }
+        keyword = selectedDomain?.keywords.sorted(byKeyPath: "date", ascending: true)
         tableView.reloadData()
     }
     
-    func saveData() {
-        let encoder = PropertyListEncoder()
+    func saveData(keyword: Keywords) {
+       
         do {
-            let data = try encoder.encode(self.keywordArray)
-            try data.write(to: self.dataPath!)
+            try realm.write {
+                realm.add(keyword)
+            }
         } catch {
             didFailWithError(error: error)
         }
@@ -137,20 +138,24 @@ extension KeywordViewController: SEODelegate {
             self.keywordLabel.text = keyword.removeDash()
             self.rankLabel.text = String(listLine)
         }
-        
-        
-        var keywordDataModel = KeywordDataModel()
-        
-        keywordDataModel.domainTitle = link
-        keywordDataModel.keywordTitle = keyword.removeDash()
-        keywordDataModel.listedLine = String(listLine)
-        
-        self.keywordArray.append(keywordDataModel)
-        self.saveData()
-        
-
-        print(keyword, link, listLine)
-        
+       
+        DispatchQueue.main.async {
+            do {
+                try self.realm.write({
+                    let newKeyword = Keywords()
+                    newKeyword.date = Date()
+                    newKeyword.name = keyword.removeDash()
+                    newKeyword.rank = String(listLine)
+                    newKeyword.requestedURL = link
+    //                newKeyword.alexa = will be updated
+                    
+                    self.selectedDomain?.keywords.append(newKeyword)
+                })
+            } catch {
+                print("Error newKeyword add: \(error)")
+            }
+            self.tableView.reloadData()
+        }
     }
     
     func didFailWithError(error: Error) {

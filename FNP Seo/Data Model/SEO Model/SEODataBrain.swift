@@ -11,6 +11,6 @@ struct SEODataBrain: Decodable {
     let items: [Link]
 }
 struct Link: Decodable {
-    let link: String
+    let link: String?
 }
 

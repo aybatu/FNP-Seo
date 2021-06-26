@@ -13,8 +13,9 @@ class Keywords: Object {
     @objc dynamic var date: Date = Date()
     @objc dynamic var rank: String = ""
     @objc dynamic var alexa: String = ""
+    @objc dynamic var requestedURL: String = ""
     
     var parentDomain = LinkingObjects(fromType: WebSites.self , property: "keywords")
-    let statistic = List<Statistic>()
+  //  let statistic = List<Statistic>()
     
 }

@@ -11,5 +11,4 @@ struct SEOModel {
     var link: String
     var url: String
     var listLine: Int
-
 }

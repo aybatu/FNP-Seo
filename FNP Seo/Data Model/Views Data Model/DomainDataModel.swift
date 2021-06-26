@@ -11,5 +11,4 @@ struct DomainDataModel: Codable {
     var domainTitle: String?
     var dateString: String?
     var timeSince: TimeInterval?
-    
 }
