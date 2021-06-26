@@ -32,7 +32,7 @@ class KeywordViewController: UITableViewController {
         rankLabel.text = ""
         loadData()
         
-//        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!)
+        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!)
     }
     
     @IBAction func addPressed(_ sender: UIBarButtonItem) {

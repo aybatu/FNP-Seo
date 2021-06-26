@@ -27,7 +27,7 @@ struct SEO {
     }
 
     func performRequest(with urlString: String, for keyword: String, request requestURL: String, startIndex: Int) {
-        if let url = URL(string: urlString) {
+        if let url = URL(string: urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!) {
             print(urlString)
             let session = URLSession(configuration: .default)
             let dataTask = session.dataTask(with: url) { data, response, error in
