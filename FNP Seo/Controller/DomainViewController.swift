@@ -134,7 +134,6 @@ class DomainViewController: UITableViewController {
 
         return swipe
     }
-
 }
 
 //MARK: - Date Formatter

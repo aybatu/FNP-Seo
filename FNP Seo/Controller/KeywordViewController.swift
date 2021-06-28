@@ -9,16 +9,15 @@ import UIKit
 import RealmSwift
 
 class KeywordViewController: UITableViewController {
-    @IBOutlet weak var domainLabel: UILabel!
-    @IBOutlet weak var keywordLabel: UILabel!
-    @IBOutlet weak var rankLabel: UILabel!
+   
+    @IBOutlet weak var alexaResultLabel: UILabel!
+   
     
     var seo = SEO()
     let realm = try! Realm()
     var sectionData = [SectionData]()
     var sectionModel = SectionModel()
    
-    
     var keyword: Results<Keywords>?
     var selectedDomain: WebSites? {
         didSet{
@@ -26,18 +25,17 @@ class KeywordViewController: UITableViewController {
         }
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         seo.delegate = self
-        domainLabel.text = ""
-        keywordLabel.text = ""
-        rankLabel.text = ""
-        
+        alexaResultLabel.text = selectedDomain?.alexaResult
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         keyword = selectedDomain?.keywords.sorted(byKeyPath: "date", ascending: true)
         sectionData.append(SectionData(sectionTitle: "Statistics", sectionResults: keyword))
         sectionData.append(SectionData(sectionTitle: "Keywords", sectionResults: keyword))
-
     }
     
     @IBAction func addPressed(_ sender: UIBarButtonItem) {
@@ -105,21 +103,14 @@ class KeywordViewController: UITableViewController {
     //MARK: - Table View Delegate Methods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 1 {
-            domainLabel.text = keyword?[indexPath.row].requestedURL
-            keywordLabel.text = keyword?[indexPath.row].name
-            rankLabel.text = String(keyword![indexPath.row].rank)
-        }
         
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
         if indexPath.section == 1 {
             let action = UIContextualAction(style: .normal, title: nil) { action, view, escape in
-                self.keywordLabel.text = ""
-                self.domainLabel.text = ""
-                self.rankLabel.text = ""
                 
                 do {
                     try self.realm.write({
@@ -131,6 +122,7 @@ class KeywordViewController: UITableViewController {
                 self.sectionModel.keywordRanks.removeLast()
                 self.loadData()
             }
+            
             action.image = UIImage(systemName: "trash.fill")
             action.backgroundColor = .red
 
@@ -176,12 +168,7 @@ class KeywordViewController: UITableViewController {
 extension KeywordViewController: SEODelegate {
     
     func SEOModel(link: String, url: String, listLine: Int, keyword: String) {
-        DispatchQueue.main.async {
-            self.domainLabel.text = link
-            self.keywordLabel.text = keyword.removeDash()
-            self.rankLabel.text = String(listLine)
-        }
-       
+        
         DispatchQueue.main.async {
             do {
                 try self.realm.write({
@@ -190,11 +177,9 @@ extension KeywordViewController: SEODelegate {
                     newKeyword.name = keyword.removeDash()
                     newKeyword.rank = listLine
                     newKeyword.requestedURL = link
-                    newKeyword.alexa = "Will be updated"
                     
                     self.selectedDomain?.keywords.append(newKeyword)
                     self.loadData()
-                    self.tableView.reloadData()
                 })
             } catch {
                 print("Error newKeyword add: \(error)")
