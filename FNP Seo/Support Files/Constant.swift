@@ -13,6 +13,8 @@ struct K {
     }
     
     struct Keyword {
+        static let totalKeywordsCell = "TotalKeywordsCell"
+        static let averageRankingCell = "AverageRankingCell"
         static let keywordCell = "KeywordCell"
     }
     

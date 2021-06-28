@@ -5,11 +5,12 @@
 //  Created by Aybatu Kerkukluoglu on 21.06.2021.
 //
 
-import Foundation
 protocol SEODelegate {
     func SEOModel(link: String, url: String, listLine: Int, keyword: String)
     func didFailWithError(error: Error)
 }
+
+import Foundation
 
 struct SEO {
     var delegate: SEODelegate?
@@ -28,7 +29,6 @@ struct SEO {
 
     func performRequest(with urlString: String, for keyword: String, request requestURL: String, startIndex: Int) {
         if let url = URL(string: urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!) {
-            print(urlString)
             let session = URLSession(configuration: .default)
             let dataTask = session.dataTask(with: url) { data, response, error in
                 if let e = error {

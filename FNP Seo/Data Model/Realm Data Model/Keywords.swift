@@ -11,11 +11,10 @@ import RealmSwift
 class Keywords: Object {
     @objc dynamic var name: String = ""
     @objc dynamic var date: Date = Date()
-    @objc dynamic var rank: String = ""
+    @objc dynamic var rank: Int = 0
     @objc dynamic var alexa: String = ""
     @objc dynamic var requestedURL: String = ""
+
     
     var parentDomain = LinkingObjects(fromType: WebSites.self , property: "keywords")
-  //  let statistic = List<Statistic>()
-    
 }

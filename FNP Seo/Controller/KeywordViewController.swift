@@ -15,6 +15,9 @@ class KeywordViewController: UITableViewController {
     
     var seo = SEO()
     let realm = try! Realm()
+    var sectionData = [SectionData]()
+    var sectionModel = SectionModel()
+   
     
     var keyword: Results<Keywords>?
     var selectedDomain: WebSites? {
@@ -30,9 +33,11 @@ class KeywordViewController: UITableViewController {
         domainLabel.text = ""
         keywordLabel.text = ""
         rankLabel.text = ""
-        loadData()
         
-        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!)
+        keyword = selectedDomain?.keywords.sorted(byKeyPath: "date", ascending: true)
+        sectionData.append(SectionData(sectionTitle: "Statistics", sectionResults: keyword))
+        sectionData.append(SectionData(sectionTitle: "Keywords", sectionResults: keyword))
+
     }
     
     @IBAction func addPressed(_ sender: UIBarButtonItem) {
@@ -43,8 +48,6 @@ class KeywordViewController: UITableViewController {
             if let textSafe = text.text {
                 let textPrefix = textSafe.removeWhitespace()
                 self.seo.fetchSEO(keyword: textPrefix, requestURL: self.selectedDomain!.domainName, start: 1)
-                
-                self.tableView.reloadData()
             }
         }
         
@@ -55,61 +58,101 @@ class KeywordViewController: UITableViewController {
         }
         
         present(alert, animated: true, completion: nil)
-      
     }
     
     //MARK: - Table View Data Source
     
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return sectionData.count
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return keyword?.count ?? 1
+        if section == 0 {
+            return 2
+        } else {
+            return sectionData[section].sectionResults!.count
+        }      
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return sectionData[section].sectionTitle
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: K.Keyword.keywordCell, for: indexPath)
-        
-        cell.textLabel?.text = keyword?[indexPath.row].name ?? "No keyword add yet."
-        return cell
+        var result = UITableViewCell()
+        let keywordCell = tableView.dequeueReusableCell(withIdentifier: K.Keyword.keywordCell, for: indexPath)
+        let aveRankCell = tableView.dequeueReusableCell(withIdentifier: K.Keyword.averageRankingCell)
+        let totalKeywordsCount = tableView.dequeueReusableCell(withIdentifier: K.Keyword.totalKeywordsCell)
+      
+        if indexPath.section == 0 && indexPath.row < 3{
+            if indexPath.row == 0 {
+                aveRankCell?.textLabel?.text = "Average Ranking"
+                aveRankCell?.detailTextLabel!.text = sectionModel.averageRankString
+                result = aveRankCell!
+            } else if indexPath.row == 1 && indexPath.row < 3 {
+                totalKeywordsCount?.textLabel?.text = "Total Keywords"
+                totalKeywordsCount?.detailTextLabel!.text = sectionModel.keywordCountString
+                result = totalKeywordsCount!
+            }
+        } else if indexPath.section == 1 {
+            keywordCell.textLabel?.text = sectionData[indexPath.section].sectionResults?[indexPath.row].name ?? "No keyword add yet."
+            keywordCell.detailTextLabel?.text = String(sectionData[indexPath.section].sectionResults?[indexPath.row].rank ?? 0)
+            result = keywordCell
+        }
+        return result
     }
     
     //MARK: - Table View Delegate Methods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 1 {
+            domainLabel.text = keyword?[indexPath.row].requestedURL
+            keywordLabel.text = keyword?[indexPath.row].name
+            rankLabel.text = String(keyword![indexPath.row].rank)
+        }
         
-        domainLabel.text = keyword?[indexPath.row].requestedURL
-        keywordLabel.text = keyword?[indexPath.row].name
-        rankLabel.text = keyword?[indexPath.row].rank
-        
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let action = UIContextualAction(style: .normal, title: nil) { action, view, escape in
-            self.keywordLabel.text = ""
-            self.domainLabel.text = ""
-            self.rankLabel.text = ""
-            
-            do {
-                try self.realm.write({
-                    self.realm.delete(self.keyword![indexPath.row])
-                })
-            } catch {
-                print("Error delete keyword: \(error)")
+        if indexPath.section == 1 {
+            let action = UIContextualAction(style: .normal, title: nil) { action, view, escape in
+                self.keywordLabel.text = ""
+                self.domainLabel.text = ""
+                self.rankLabel.text = ""
+                
+                do {
+                    try self.realm.write({
+                        self.realm.delete(self.keyword![indexPath.row])
+                    })
+                } catch {
+                    print("Error delete keyword: \(error)")
+                }
+                self.sectionModel.keywordRanks.removeLast()
+                self.loadData()
             }
-            
-            tableView.reloadData()
+            action.image = UIImage(systemName: "trash.fill")
+            action.backgroundColor = .red
+
+            let swipe = UISwipeActionsConfiguration(actions: [action])
+            return swipe
+        } else {
+            return nil
         }
-        action.image = UIImage(systemName: "trash.fill")
-        action.backgroundColor = .red
-
-        let swipe = UISwipeActionsConfiguration(actions: [action])
-
-        return swipe
     }
     
     //MARK: - Data Manupulation Methods
     
     func loadData() {
         keyword = selectedDomain?.keywords.sorted(byKeyPath: "date", ascending: true)
+        statisticCalculate(keyword: keyword)
+        
         tableView.reloadData()
+    }
+    
+    func statisticCalculate(keyword: Results<Keywords>?) {
+        sectionModel.keywordCount = keyword?.count
+        sectionModel.averageOfRanks(resultKeyword: keyword)
     }
     
     func saveData(keyword: Keywords) {
@@ -145,16 +188,17 @@ extension KeywordViewController: SEODelegate {
                     let newKeyword = Keywords()
                     newKeyword.date = Date()
                     newKeyword.name = keyword.removeDash()
-                    newKeyword.rank = String(listLine)
+                    newKeyword.rank = listLine
                     newKeyword.requestedURL = link
-    //                newKeyword.alexa = will be updated
+                    newKeyword.alexa = "Will be updated"
                     
                     self.selectedDomain?.keywords.append(newKeyword)
+                    self.loadData()
+                    self.tableView.reloadData()
                 })
             } catch {
                 print("Error newKeyword add: \(error)")
             }
-            self.tableView.reloadData()
         }
     }
     
