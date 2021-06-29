@@ -6,7 +6,8 @@
 //
 
 protocol SEODelegate {
-    func SEOModel(link: String, url: String, listLine: Int, keyword: String)
+    func seoModel(link: String, url: String, listLine: Int, keyword: String)
+    func getLinks(link: String)
     func didFailWithError(error: Error)
 }
 
@@ -20,13 +21,13 @@ struct SEO {
     let hl = "tr"
     let location = "tr"
 
-    func fetchSEO(keyword: String, requestURL: String, start: Int? = 1) {
+    func fetchSEO(keyword: String, requestURL: String? = nil, start: Int? = 1) {
             let start = start
             let urlString = "https://www.googleapis.com/customsearch/v1?q=\(keyword)&lr=\(lang)&gl=\(location)&start=\(start ?? 1)&key=\(apiKey)&cx=\(searchEngine)"
             performRequest(with: urlString, for: keyword, request: requestURL, startIndex: start ?? 1)
     }
 
-    func performRequest(with urlString: String, for keyword: String, request requestURL: String, startIndex: Int) {
+    func performRequest(with urlString: String, for keyword: String, request requestURL: String?, startIndex: Int) {
         if let url = URL(string: urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!) {
             
             let session = URLSession(configuration: .default)
@@ -46,18 +47,22 @@ struct SEO {
         }
     }
     
-    func checkForLinkorNextPage(seoData: SEODataBrain, url: String, requestURL: String, keyword: String, nextPageStartIndex: Int) {
+    func checkForLinkorNextPage(seoData: SEODataBrain, url: String, requestURL: String?, keyword: String, nextPageStartIndex: Int) {
         var n = 0
         var startIndexForNextPage = nextPageStartIndex
         
         while n < seoData.items.count {
             if let link = seoData.items[n].link {
+                delegate?.getLinks(link: link)
                 let listLine = startIndexForNextPage + n
-                
-                if link.contains(requestURL) {
-                    delegate?.SEOModel(link: link, url: requestURL, listLine: listLine, keyword: keyword)
-                    n = 0
-                    return
+                if let request = requestURL {
+                    if link.contains(request) {
+                        delegate?.seoModel(link: link, url: request, listLine: listLine, keyword: keyword)
+                        n = 0
+                        return
+                    } else {
+                        n += 1
+                    }
                 } else {
                     n += 1
                 }

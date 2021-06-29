@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -218,34 +219,55 @@
             </objects>
             <point key="canvasLocation" x="2947.826086956522" y="77.678571428571431"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Link List View Controller-->
         <scene sceneID="NVG-Kx-Yz6">
             <objects>
-                <tableViewController id="81t-Nz-VDP" sceneMemberID="viewController">
+                <tableViewController id="81t-Nz-VDP" customClass="LinkListViewController" customModule="FNP_Seo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="sNE-T0-PiP">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LinkList" id="C1s-Y1-YpB">
-                                <rect key="frame" x="0.0" y="24.5" width="414" height="43.5"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="C1s-Y1-YpB" id="8R6-Vp-RKa">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
                         <connections>
-                            <outlet property="dataSource" destination="81t-Nz-VDP" id="ybA-Ap-tN0"/>
-                            <outlet property="delegate" destination="81t-Nz-VDP" id="WoR-ZL-tsW"/>
+                            <outlet property="dataSource" destination="81t-Nz-VDP" id="z9N-fv-Ndg"/>
+                            <outlet property="delegate" destination="81t-Nz-VDP" id="BWg-pB-KbM"/>
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="6Fj-kf-K6h"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="YZk-1S-O7E">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <attributedString key="attributedTitle">
+                            <fragment content="Loading...">
+                                <attributes>
+                                    <font key="NSFont" metaFont="cellTitle"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                    </refreshControl>
+                    <connections>
+                        <segue destination="5VF-ww-hiu" kind="showDetail" identifier="LinkToWebView" id="Bik-co-Ylt"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jDl-Hq-VYp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3670" y="78"/>
+        </scene>
+        <!--Web View Controller-->
+        <scene sceneID="z1i-Hs-lMW">
+            <objects>
+                <viewController id="5VF-ww-hiu" customClass="WebViewController" customModule="FNP_Seo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="x9P-CO-p8P">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="nXi-b2-Ws8"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="wZG-6c-4CI"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nkL-gb-HFk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4365.217391304348" y="78.348214285714278"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Jus-R1-DWE">

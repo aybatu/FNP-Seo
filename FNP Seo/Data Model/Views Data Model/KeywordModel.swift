@@ -44,7 +44,6 @@ struct KeywordModel {
                 n += 1
             }
             keywordNames = raw
-            print(keywordNames)
         }
     }
 }

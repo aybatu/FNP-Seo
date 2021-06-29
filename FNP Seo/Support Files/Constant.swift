@@ -20,11 +20,13 @@ struct K {
     }
     
     struct Links {
-        static let linkCell = "LinkList"
+        static let linkCell = "LinkListCell"
+        static let cellNib = "LinkListCell"
     }
     
     struct Segue {
         static let domianToKeyword = "DomainToKeyword"
         static let keywordToLinks = "KeywordToLinks"
+        static let linkToWeb = "LinkToWebView"
     }
 }

@@ -13,7 +13,6 @@ class KeywordViewController: UITableViewController {
     @IBOutlet weak var alexaResultLabel: UILabel!
    
     let realm = try! Realm()
-    let group = DispatchGroup()
     
     var keyword: Results<Keywords>?
     var seo = SEO()
@@ -27,7 +26,7 @@ class KeywordViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.refreshControl?.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
+        self.refreshControl?.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
         seo.delegate = self
         alexaResultLabel.text = selectedDomain?.alexaResult
     }
@@ -52,7 +51,14 @@ class KeywordViewController: UITableViewController {
 //            print("test")
 //
 //        }
-//        loadData()
+//        do {
+//            try realm.write({
+//                realm.delete(keyword!)
+//            })
+//        } catch {
+//            print(error)
+//        }
+       // loadData()
         refreshControl?.endRefreshing()
     }
 
@@ -126,10 +132,10 @@ class KeywordViewController: UITableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destinationVC = segue.destination as! KeywordLinksViewController
+        let destinationVC = segue.destination as! LinkListViewController
         
         if let indexPath = tableView.indexPathForSelectedRow {
-            destinationVC.selectedKeyword = keyword![indexPath.row]
+            destinationVC.keywordRaw = selectedDomain?.keywords[indexPath.row].name
         }
     }
     
@@ -191,7 +197,7 @@ class KeywordViewController: UITableViewController {
 
 extension KeywordViewController: SEODelegate {
     
-    func SEOModel(link: String, url: String, listLine: Int, keyword: String) {
+    func seoModel(link: String, url: String, listLine: Int, keyword: String) {
         DispatchQueue.main.async {
             do {
                 try self.realm.write({
@@ -209,6 +215,11 @@ extension KeywordViewController: SEODelegate {
             }
         }
     }
+    
+    func getLinks(link: String) {
+        
+    }
+    
     
     func didFailWithError(error: Error) {
         

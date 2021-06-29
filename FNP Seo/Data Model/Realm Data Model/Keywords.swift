@@ -15,5 +15,4 @@ class Keywords: Object {
     @objc dynamic var requestedURL: String = ""
         
     var parentDomain = LinkingObjects(fromType: WebSites.self , property: "keywords")
-    let links = List<Links>()
 }
