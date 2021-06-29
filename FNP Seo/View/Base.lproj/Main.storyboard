@@ -25,8 +25,8 @@
                             </tableViewCell>
                         </prototypes>
                         <connections>
-                            <outlet property="dataSource" destination="2wv-cW-gcA" id="G2N-w4-q1l"/>
-                            <outlet property="delegate" destination="2wv-cW-gcA" id="TRt-fE-UQk"/>
+                            <outlet property="dataSource" destination="2wv-cW-gcA" id="JCk-fG-s82"/>
+                            <outlet property="delegate" destination="2wv-cW-gcA" id="JeG-Ch-yNT"/>
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="FNP SEO" id="aWs-0L-SXo">
@@ -184,8 +184,8 @@
                             </tableViewCell>
                         </prototypes>
                         <connections>
-                            <outlet property="dataSource" destination="HXn-gN-EKN" id="aBk-vo-R64"/>
-                            <outlet property="delegate" destination="HXn-gN-EKN" id="DUd-dK-RBt"/>
+                            <outlet property="dataSource" destination="HXn-gN-EKN" id="5Ys-Qd-Qxw"/>
+                            <outlet property="delegate" destination="HXn-gN-EKN" id="ONs-SX-hPF"/>
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="GVu-5M-fbC">
@@ -197,13 +197,55 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="mGu-Zw-VPc">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <attributedString key="attributedTitle">
+                            <fragment content="Refreshing...">
+                                <attributes>
+                                    <font key="NSFont" metaFont="cellTitle"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                    </refreshControl>
                     <connections>
                         <outlet property="alexaResultLabel" destination="7qo-fe-xxa" id="m1y-4j-fza"/>
+                        <segue destination="81t-Nz-VDP" kind="show" identifier="KeywordToLinks" id="Pgp-PP-Fgu"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bxZ-c2-rL9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2947.826086956522" y="77.678571428571431"/>
+        </scene>
+        <!--Table View Controller-->
+        <scene sceneID="NVG-Kx-Yz6">
+            <objects>
+                <tableViewController id="81t-Nz-VDP" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="sNE-T0-PiP">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LinkList" id="C1s-Y1-YpB">
+                                <rect key="frame" x="0.0" y="24.5" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="C1s-Y1-YpB" id="8R6-Vp-RKa">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="81t-Nz-VDP" id="ybA-Ap-tN0"/>
+                            <outlet property="delegate" destination="81t-Nz-VDP" id="WoR-ZL-tsW"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="6Fj-kf-K6h"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jDl-Hq-VYp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3670" y="78"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Jus-R1-DWE">

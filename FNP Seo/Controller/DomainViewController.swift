@@ -15,9 +15,6 @@ class DomainViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.delegate = self
-        tableView.dataSource = self
-        
         loadData()
     }
     
@@ -80,7 +77,7 @@ class DomainViewController: UITableViewController {
         tableView.reloadData()
     }
     
-//    //MARK: - Table View Delegate Methods
+    //MARK: - Table View Delegate Methods
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: K.Segue.domianToKeyword, sender: self)
@@ -94,7 +91,7 @@ class DomainViewController: UITableViewController {
         }
 
     }
-
+    
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let action = UIContextualAction(style: .normal, title: nil) { action, view, escape in
             if let domain = self.realm.objects(WebSites.self).first {
@@ -123,7 +120,7 @@ class DomainViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let date = domain?[indexPath.row].date
-        let dateString = date?.getFormattedDate(format: "dd-MM-yyyy")
+        let dateString = date?.getFormattedDate(format: "dd.MM.yyyy")
         
         let action = UIContextualAction(style: .normal, title: dateString) { action, view, escape in
 

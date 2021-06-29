@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E6B1269268A140A00D93521 /* KeywordLinksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6B1268268A140A00D93521 /* KeywordLinksViewController.swift */; };
 		1E7679D626805A0600D129DD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7679D526805A0600D129DD /* AppDelegate.swift */; };
 		1E7679D826805A0600D129DD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7679D726805A0600D129DD /* SceneDelegate.swift */; };
 		1E7679DD26805A0600D129DD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E7679DB26805A0600D129DD /* Main.storyboard */; };
@@ -15,8 +16,8 @@
 		1E7679F126805ADB00D129DD /* SEODataBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7679F026805ADB00D129DD /* SEODataBrain.swift */; };
 		1E7679F3268063EF00D129DD /* SEOModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7679F2268063EF00D129DD /* SEOModel.swift */; };
 		1E7679F5268065AB00D129DD /* SEO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7679F4268065AB00D129DD /* SEO.swift */; };
-		1E87811B2689049C00FE11C6 /* SectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E87811A2689049C00FE11C6 /* SectionData.swift */; };
-		1E87811D268913AF00FE11C6 /* SectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E87811C268913AF00FE11C6 /* SectionModel.swift */; };
+		1E87811B2689049C00FE11C6 /* KeywordSectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E87811A2689049C00FE11C6 /* KeywordSectionData.swift */; };
+		1E87811D268913AF00FE11C6 /* KeywordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E87811C268913AF00FE11C6 /* KeywordModel.swift */; };
 		1EBDC083268158DF0068307F /* client_898525375062-rspg2uiadcuftclu25ckd7r2gnef49rb.apps.googleusercontent.com.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1EBDC082268158DF0068307F /* client_898525375062-rspg2uiadcuftclu25ckd7r2gnef49rb.apps.googleusercontent.com.plist */; };
 		1EBDC085268158F00068307F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1EBDC084268158F00068307F /* GoogleService-Info.plist */; };
 		1EBDC087268286120068307F /* DomainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBDC086268286120068307F /* DomainViewController.swift */; };
@@ -26,10 +27,11 @@
 		1EC30A9226868755008CF69A /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 1EC30A9126868755008CF69A /* Realm */; };
 		1EC30A9426868828008CF69A /* WebSites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC30A9326868828008CF69A /* WebSites.swift */; };
 		1EC30A9626868834008CF69A /* Keywords.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC30A9526868834008CF69A /* Keywords.swift */; };
-		1EC30A982686886E008CF69A /* Statistic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC30A972686886E008CF69A /* Statistic.swift */; };
+		1EC30A982686886E008CF69A /* Links.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC30A972686886E008CF69A /* Links.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1E6B1268268A140A00D93521 /* KeywordLinksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordLinksViewController.swift; sourceTree = "<group>"; };
 		1E7679D226805A0600D129DD /* FNP Seo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FNP Seo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E7679D526805A0600D129DD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1E7679D726805A0600D129DD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -40,8 +42,8 @@
 		1E7679F026805ADB00D129DD /* SEODataBrain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SEODataBrain.swift; sourceTree = "<group>"; };
 		1E7679F2268063EF00D129DD /* SEOModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SEOModel.swift; sourceTree = "<group>"; };
 		1E7679F4268065AB00D129DD /* SEO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SEO.swift; sourceTree = "<group>"; };
-		1E87811A2689049C00FE11C6 /* SectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionData.swift; sourceTree = "<group>"; };
-		1E87811C268913AF00FE11C6 /* SectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionModel.swift; sourceTree = "<group>"; };
+		1E87811A2689049C00FE11C6 /* KeywordSectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordSectionData.swift; sourceTree = "<group>"; };
+		1E87811C268913AF00FE11C6 /* KeywordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordModel.swift; sourceTree = "<group>"; };
 		1EBDC082268158DF0068307F /* client_898525375062-rspg2uiadcuftclu25ckd7r2gnef49rb.apps.googleusercontent.com.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "client_898525375062-rspg2uiadcuftclu25ckd7r2gnef49rb.apps.googleusercontent.com.plist"; sourceTree = "<group>"; };
 		1EBDC084268158F00068307F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1EBDC086268286120068307F /* DomainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainViewController.swift; sourceTree = "<group>"; };
@@ -49,7 +51,7 @@
 		1EBDC08E2682A5840068307F /* KeywordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordViewController.swift; sourceTree = "<group>"; };
 		1EC30A9326868828008CF69A /* WebSites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSites.swift; sourceTree = "<group>"; };
 		1EC30A9526868834008CF69A /* Keywords.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keywords.swift; sourceTree = "<group>"; };
-		1EC30A972686886E008CF69A /* Statistic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statistic.swift; sourceTree = "<group>"; };
+		1EC30A972686886E008CF69A /* Links.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Links.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +123,7 @@
 			children = (
 				1EBDC086268286120068307F /* DomainViewController.swift */,
 				1EBDC08E2682A5840068307F /* KeywordViewController.swift */,
+				1E6B1268268A140A00D93521 /* KeywordLinksViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -138,8 +141,8 @@
 		1E87811726879A0A00FE11C6 /* Views Data Model */ = {
 			isa = PBXGroup;
 			children = (
-				1E87811A2689049C00FE11C6 /* SectionData.swift */,
-				1E87811C268913AF00FE11C6 /* SectionModel.swift */,
+				1E87811A2689049C00FE11C6 /* KeywordSectionData.swift */,
+				1E87811C268913AF00FE11C6 /* KeywordModel.swift */,
 			);
 			path = "Views Data Model";
 			sourceTree = "<group>";
@@ -159,7 +162,7 @@
 			children = (
 				1EC30A9326868828008CF69A /* WebSites.swift */,
 				1EC30A9526868834008CF69A /* Keywords.swift */,
-				1EC30A972686886E008CF69A /* Statistic.swift */,
+				1EC30A972686886E008CF69A /* Links.swift */,
 			);
 			path = "Realm Data Model";
 			sourceTree = "<group>";
@@ -244,18 +247,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				1E7679F5268065AB00D129DD /* SEO.swift in Sources */,
-				1E87811D268913AF00FE11C6 /* SectionModel.swift in Sources */,
+				1E87811D268913AF00FE11C6 /* KeywordModel.swift in Sources */,
 				1EC30A9626868834008CF69A /* Keywords.swift in Sources */,
 				1E7679F126805ADB00D129DD /* SEODataBrain.swift in Sources */,
 				1EC30A9426868828008CF69A /* WebSites.swift in Sources */,
 				1EBDC08F2682A5840068307F /* KeywordViewController.swift in Sources */,
-				1EC30A982686886E008CF69A /* Statistic.swift in Sources */,
+				1EC30A982686886E008CF69A /* Links.swift in Sources */,
 				1EBDC0892682903A0068307F /* Constant.swift in Sources */,
 				1E7679F3268063EF00D129DD /* SEOModel.swift in Sources */,
 				1EBDC087268286120068307F /* DomainViewController.swift in Sources */,
 				1E7679D626805A0600D129DD /* AppDelegate.swift in Sources */,
 				1E7679D826805A0600D129DD /* SceneDelegate.swift in Sources */,
-				1E87811B2689049C00FE11C6 /* SectionData.swift in Sources */,
+				1E6B1269268A140A00D93521 /* KeywordLinksViewController.swift in Sources */,
+				1E87811B2689049C00FE11C6 /* KeywordSectionData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

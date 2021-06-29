@@ -12,13 +12,13 @@ class KeywordViewController: UITableViewController {
    
     @IBOutlet weak var alexaResultLabel: UILabel!
    
-    
-    var seo = SEO()
     let realm = try! Realm()
-    var sectionData = [SectionData]()
-    var sectionModel = SectionModel()
-   
+    let group = DispatchGroup()
+    
     var keyword: Results<Keywords>?
+    var seo = SEO()
+    var keywordSectionData = [KeywordSectionData]()
+    var keywordModel = KeywordModel()
     var selectedDomain: WebSites? {
         didSet{
             loadData()
@@ -27,6 +27,7 @@ class KeywordViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        self.refreshControl?.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
         seo.delegate = self
         alexaResultLabel.text = selectedDomain?.alexaResult
     }
@@ -34,10 +35,27 @@ class KeywordViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         keyword = selectedDomain?.keywords.sorted(byKeyPath: "date", ascending: true)
-        sectionData.append(SectionData(sectionTitle: "Statistics", sectionResults: keyword))
-        sectionData.append(SectionData(sectionTitle: "Keywords", sectionResults: keyword))
+        keywordSectionData.append(KeywordSectionData(sectionTitle: "Statistics", sectionResults: keyword))
+        keywordSectionData.append(KeywordSectionData(sectionTitle: "Keywords", sectionResults: keyword))
     }
-    
+
+    @objc func refresh(_ sender: AnyObject) {
+
+//        if keywordModel.keywordNames.count == 0 {
+//            refreshControl?.endRefreshing()
+//        } else {
+//
+//        let keywords = keywordModel.keywordNames.enumerated()
+//        keywords.forEach { keyword in
+//            seo.fetchSEO(keyword: keyword.element, requestURL: selectedDomain!.domainName, start: 1)
+//        }
+//            print("test")
+//
+//        }
+//        loadData()
+        refreshControl?.endRefreshing()
+    }
+
     @IBAction func addPressed(_ sender: UIBarButtonItem) {
         var text = UITextField()
         let alert = UIAlertController(title: "Add New Keyword", message: "Please specify and add your keyword to achive seo rank.", preferredStyle: .alert)
@@ -61,19 +79,19 @@ class KeywordViewController: UITableViewController {
     //MARK: - Table View Data Source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return sectionData.count
+        return keywordSectionData.count
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return 2
         } else {
-            return sectionData[section].sectionResults!.count
+            return keywordSectionData[section].sectionResults!.count
         }      
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sectionData[section].sectionTitle
+        return keywordSectionData[section].sectionTitle
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -85,16 +103,16 @@ class KeywordViewController: UITableViewController {
         if indexPath.section == 0 && indexPath.row < 3{
             if indexPath.row == 0 {
                 aveRankCell?.textLabel?.text = "Average Ranking"
-                aveRankCell?.detailTextLabel!.text = sectionModel.averageRankString
+                aveRankCell?.detailTextLabel!.text = keywordModel.averageRankString
                 result = aveRankCell!
             } else if indexPath.row == 1 && indexPath.row < 3 {
                 totalKeywordsCount?.textLabel?.text = "Total Keywords"
-                totalKeywordsCount?.detailTextLabel!.text = sectionModel.keywordCountString
+                totalKeywordsCount?.detailTextLabel!.text = keywordModel.keywordCountString
                 result = totalKeywordsCount!
             }
         } else if indexPath.section == 1 {
-            keywordCell.textLabel?.text = sectionData[indexPath.section].sectionResults?[indexPath.row].name ?? "No keyword add yet."
-            keywordCell.detailTextLabel?.text = String(sectionData[indexPath.section].sectionResults?[indexPath.row].rank ?? 0)
+            keywordCell.textLabel?.text = keywordModel.keywordNames[indexPath.row]
+            keywordCell.detailTextLabel?.text = String(format: "%.0f", keywordModel.keywordRanks[indexPath.row])
             result = keywordCell
         }
         return result
@@ -103,33 +121,26 @@ class KeywordViewController: UITableViewController {
     //MARK: - Table View Delegate Methods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        performSegue(withIdentifier: K.Segue.keywordToLinks, sender: self)
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationVC = segue.destination as! KeywordLinksViewController
         
+        if let indexPath = tableView.indexPathForSelectedRow {
+            destinationVC.selectedKeyword = keyword![indexPath.row]
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if indexPath.section == 1 {
-            let action = UIContextualAction(style: .normal, title: nil) { action, view, escape in
-                
-                do {
-                    try self.realm.write({
-                        self.realm.delete(self.keyword![indexPath.row])
-                    })
-                } catch {
-                    print("Error delete keyword: \(error)")
-                }
-                self.sectionModel.keywordRanks.removeLast()
-                self.loadData()
+            if editingStyle == .delete {
+                deleteData(indexPath: indexPath)
+                keywordModel.keywordRanks.removeLast()
+                keywordModel.keywordNames.removeLast()
+                loadData()
             }
-            
-            action.image = UIImage(systemName: "trash.fill")
-            action.backgroundColor = .red
-
-            let swipe = UISwipeActionsConfiguration(actions: [action])
-            return swipe
-        } else {
-            return nil
         }
     }
     
@@ -138,17 +149,16 @@ class KeywordViewController: UITableViewController {
     func loadData() {
         keyword = selectedDomain?.keywords.sorted(byKeyPath: "date", ascending: true)
         statisticCalculate(keyword: keyword)
-        
+        keywordModel.saveKeywords(from: keyword)
         tableView.reloadData()
     }
     
     func statisticCalculate(keyword: Results<Keywords>?) {
-        sectionModel.keywordCount = keyword?.count
-        sectionModel.averageOfRanks(resultKeyword: keyword)
+        keywordModel.keywordCount = keyword?.count
+        keywordModel.averageOfRanks(resultKeyword: keyword)
     }
     
     func saveData(keyword: Keywords) {
-       
         do {
             try realm.write {
                 realm.add(keyword)
@@ -156,10 +166,24 @@ class KeywordViewController: UITableViewController {
         } catch {
             didFailWithError(error: error)
         }
+        
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
-       
+    }
+        
+    func deleteData(indexPath: IndexPath?) {
+        do {
+            try realm.write {
+                if indexPath != nil {
+                    realm.delete(keyword![indexPath!.row])
+                } else {
+                    self.selectedDomain?.keywords.removeAll()
+                }
+            }
+        } catch {
+            print("Error delete keyword: \(error)")
+        }
     }
 }
 
@@ -168,7 +192,6 @@ class KeywordViewController: UITableViewController {
 extension KeywordViewController: SEODelegate {
     
     func SEOModel(link: String, url: String, listLine: Int, keyword: String) {
-        
         DispatchQueue.main.async {
             do {
                 try self.realm.write({
@@ -190,7 +213,6 @@ extension KeywordViewController: SEODelegate {
     func didFailWithError(error: Error) {
         
     }
-    
 }
 
 //MARK: - String dash and whitespace remove

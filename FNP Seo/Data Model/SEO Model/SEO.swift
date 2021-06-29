@@ -21,16 +21,17 @@ struct SEO {
     let location = "tr"
 
     func fetchSEO(keyword: String, requestURL: String, start: Int? = 1) {
-        let start = start
-        let urlString = "https://www.googleapis.com/customsearch/v1?q=\(keyword)&lr=\(lang)&gl=\(location)&start=\(start ?? 1)&key=\(apiKey)&cx=\(searchEngine)"
-        
-        performRequest(with: urlString, for: keyword, request: requestURL, startIndex: start ?? 1)
+            let start = start
+            let urlString = "https://www.googleapis.com/customsearch/v1?q=\(keyword)&lr=\(lang)&gl=\(location)&start=\(start ?? 1)&key=\(apiKey)&cx=\(searchEngine)"
+            performRequest(with: urlString, for: keyword, request: requestURL, startIndex: start ?? 1)
     }
 
     func performRequest(with urlString: String, for keyword: String, request requestURL: String, startIndex: Int) {
         if let url = URL(string: urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!) {
+            
             let session = URLSession(configuration: .default)
             let dataTask = session.dataTask(with: url) { data, response, error in
+                
                 if let e = error {
                     delegate?.didFailWithError(error: e)
                 } else {
@@ -60,8 +61,9 @@ struct SEO {
                 } else {
                     n += 1
                 }
-                
+                print(n)
                 if n == 10 {
+                    
                     startIndexForNextPage += 10
                     fetchSEO(keyword: keyword, requestURL: requestURL, start: startIndexForNextPage)
                 }

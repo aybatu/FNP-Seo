@@ -8,10 +8,11 @@
 import Foundation
 import RealmSwift
 
-struct SectionModel {
+struct KeywordModel {
     var keywordRanks = [Double]()
     var averageRank: Double? = 0.0
     var keywordCount: Int? = 0
+    var keywordNames = [String]()
     
     var keywordCountString: String? {
         return String(keywordCount!)
@@ -32,5 +33,18 @@ struct SectionModel {
         
         let rankSum = keywordRanks.reduce(0, +)
         averageRank = rankSum / Double(keywordRanks.count)
+    }
+    
+    mutating func saveKeywords(from results: Results<Keywords>?) {
+        if results!.count > 0 {
+            var n = 0
+            var raw = [String]()
+            while n < results!.count {
+                raw.append(results![n].name)
+                n += 1
+            }
+            keywordNames = raw
+            print(keywordNames)
+        }
     }
 }

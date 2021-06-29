@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-struct SectionData {
+struct KeywordSectionData {
     var sectionTitle: String?
     var sectionResults: Results<Keywords>?
 }
