@@ -246,7 +246,7 @@
                         </attributedString>
                     </refreshControl>
                     <connections>
-                        <segue destination="5VF-ww-hiu" kind="showDetail" identifier="LinkToWebView" id="Bik-co-Ylt"/>
+                        <segue destination="5VF-ww-hiu" kind="show" identifier="LinkToWebView" id="yl2-5L-WbL"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jDl-Hq-VYp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -258,7 +258,7 @@
             <objects>
                 <viewController id="5VF-ww-hiu" customClass="WebViewController" customModule="FNP_Seo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="x9P-CO-p8P">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="nXi-b2-Ws8"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>

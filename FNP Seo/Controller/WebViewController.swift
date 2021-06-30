@@ -17,7 +17,6 @@ class WebViewController: UIViewController, WKNavigationDelegate {
         webView = WKWebView()
         webView.navigationDelegate = self
         view = webView
-        navigationController?.isNavigationBarHidden = true
     }
     
     override func viewDidLoad() {

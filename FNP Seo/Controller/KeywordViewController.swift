@@ -27,38 +27,49 @@ class KeywordViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.refreshControl?.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
-        seo.delegate = self
-        alexaResultLabel.text = selectedDomain?.alexaResult
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        keyword = selectedDomain?.keywords.sorted(byKeyPath: "date", ascending: true)
         keywordSectionData.append(KeywordSectionData(sectionTitle: "Statistics", sectionResults: keyword))
         keywordSectionData.append(KeywordSectionData(sectionTitle: "Keywords", sectionResults: keyword))
+        
+        seo.delegate = self
+        alexaResultLabel.text = selectedDomain?.alexaResult
+        
+        realm.autorefresh = true
     }
 
     @objc func refresh(_ sender: AnyObject) {
+//        var n = 0
+        if keywordModel.keywordNames.count == 0 && keywordModel.keywordRanks.count == 0 {
+            refreshControl?.endRefreshing()
+        } else {
+            keywordModel.keywordRanks = [Double]()
+            keywordModel.keywordNames = [String]()
+            keywordModel.averageRank = 0
+            keywordModel.keywordCount = 0
+            tableView.reloadData()
+//            let keywords = selectedDomain?.keywords
 
-//        if keywordModel.keywordNames.count == 0 {
-//            refreshControl?.endRefreshing()
-//        } else {
+//            var rawKeys = [String]()
+//            while n < keywords!.count {
 //
-//        let keywords = keywordModel.keywordNames.enumerated()
-//        keywords.forEach { keyword in
-//            seo.fetchSEO(keyword: keyword.element, requestURL: selectedDomain!.domainName, start: 1)
-//        }
-//            print("test")
+//                let keys = keywords![n].name
+//                rawKeys.append(keys)
+//                n += 1
+//            }
 //
-//        }
+//            let enumKeys = rawKeys.enumerated()
+//            enumKeys.forEach { forEachKey in
+//                seo.fetchSEO(keyword: forEachKey.element, requestURL: selectedDomain?.domainName, start: 1)
+//            }
+        }
+        
 //        do {
 //            try realm.write({
-//                realm.delete(keyword!)
+//                selectedDomain?.keywords.removeAll()
 //            })
 //        } catch {
 //            print(error)
 //        }
-       // loadData()
+//
         refreshControl?.endRefreshing()
     }
 
@@ -116,9 +127,11 @@ class KeywordViewController: UITableViewController {
                 totalKeywordsCount?.detailTextLabel!.text = keywordModel.keywordCountString
                 result = totalKeywordsCount!
             }
-        } else if indexPath.section == 1 {
+        }
+        
+        if 0 < keywordModel.keywordRanks.count  && 0 < keywordModel.keywordNames.count && indexPath.section == 1 {
+            keywordCell.detailTextLabel?.text = String(keywordModel.keywordRanks[indexPath.row])
             keywordCell.textLabel?.text = keywordModel.keywordNames[indexPath.row]
-            keywordCell.detailTextLabel?.text = String(format: "%.0f", keywordModel.keywordRanks[indexPath.row])
             result = keywordCell
         }
         return result
@@ -136,6 +149,7 @@ class KeywordViewController: UITableViewController {
         
         if let indexPath = tableView.indexPathForSelectedRow {
             destinationVC.keywordRaw = selectedDomain?.keywords[indexPath.row].name
+         
         }
     }
     
@@ -143,8 +157,7 @@ class KeywordViewController: UITableViewController {
         if indexPath.section == 1 {
             if editingStyle == .delete {
                 deleteData(indexPath: indexPath)
-                keywordModel.keywordRanks.removeLast()
-                keywordModel.keywordNames.removeLast()
+               
                 loadData()
             }
         }
@@ -155,13 +168,13 @@ class KeywordViewController: UITableViewController {
     func loadData() {
         keyword = selectedDomain?.keywords.sorted(byKeyPath: "date", ascending: true)
         statisticCalculate(keyword: keyword)
-        keywordModel.saveKeywords(from: keyword)
+        
         tableView.reloadData()
     }
     
     func statisticCalculate(keyword: Results<Keywords>?) {
-        keywordModel.keywordCount = keyword?.count
         keywordModel.averageOfRanks(resultKeyword: keyword)
+        keywordModel.saveKeywords(from: keyword)
     }
     
     func saveData(keyword: Keywords) {
@@ -184,12 +197,15 @@ class KeywordViewController: UITableViewController {
                 if indexPath != nil {
                     realm.delete(keyword![indexPath!.row])
                 } else {
-                    self.selectedDomain?.keywords.removeAll()
+                    realm.delete(keyword!)
                 }
             }
         } catch {
             print("Error delete keyword: \(error)")
         }
+        keywordModel.keywordRanks.removeLast()
+        keywordModel.keywordNames.removeLast()
+
     }
 }
 
@@ -206,7 +222,7 @@ extension KeywordViewController: SEODelegate {
                     newKeyword.name = keyword.removeDash()
                     newKeyword.rank = listLine
                     newKeyword.requestedURL = link
-                    
+              
                     self.selectedDomain?.keywords.append(newKeyword)
                     self.loadData()
                 })
@@ -241,3 +257,4 @@ extension String {
         return self.replace(string: "-", replacement: " ")
     }
 }
+

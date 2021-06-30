@@ -66,7 +66,7 @@ struct SEO {
                 } else {
                     n += 1
                 }
-                print(n)
+               
                 if n == 10 {
                     
                     startIndexForNextPage += 10

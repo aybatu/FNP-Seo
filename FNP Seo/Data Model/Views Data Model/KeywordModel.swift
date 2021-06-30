@@ -22,17 +22,22 @@ struct KeywordModel {
     }
     
     mutating func averageOfRanks(resultKeyword: Results<Keywords>?) {
+        keywordCount = resultKeyword?.count
         var n = 0
         var raw = [Double]()
-       
+            
         while n < resultKeyword!.count {
             raw.append(Double(resultKeyword![n].rank))
-            keywordRanks = raw
             n += 1
         }
+        keywordRanks = raw
         
         let rankSum = keywordRanks.reduce(0, +)
         averageRank = rankSum / Double(keywordRanks.count)
+          
+            
+              
+        
     }
     
     mutating func saveKeywords(from results: Results<Keywords>?) {
