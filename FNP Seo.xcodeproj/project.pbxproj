@@ -15,7 +15,6 @@
 		1E7679E526805A0700D129DD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E7679E326805A0700D129DD /* LaunchScreen.storyboard */; };
 		1E7679F126805ADB00D129DD /* SEODataBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7679F026805ADB00D129DD /* SEODataBrain.swift */; };
 		1E7679F5268065AB00D129DD /* SEO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7679F4268065AB00D129DD /* SEO.swift */; };
-		1E87811B2689049C00FE11C6 /* KeywordSectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E87811A2689049C00FE11C6 /* KeywordSectionData.swift */; };
 		1E87811D268913AF00FE11C6 /* KeywordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E87811C268913AF00FE11C6 /* KeywordModel.swift */; };
 		1E990F6A268B6B2800EA258E /* LinkListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E990F69268B6B2800EA258E /* LinkListViewController.swift */; };
 		1E990F6D268B7A3400EA258E /* LinkListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E990F6B268B7A3400EA258E /* LinkListCell.swift */; };
@@ -43,7 +42,6 @@
 		1E7679E626805A0700D129DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1E7679F026805ADB00D129DD /* SEODataBrain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SEODataBrain.swift; sourceTree = "<group>"; };
 		1E7679F4268065AB00D129DD /* SEO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SEO.swift; sourceTree = "<group>"; };
-		1E87811A2689049C00FE11C6 /* KeywordSectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordSectionData.swift; sourceTree = "<group>"; };
 		1E87811C268913AF00FE11C6 /* KeywordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordModel.swift; sourceTree = "<group>"; };
 		1E990F69268B6B2800EA258E /* LinkListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkListViewController.swift; sourceTree = "<group>"; };
 		1E990F6B268B7A3400EA258E /* LinkListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkListCell.swift; sourceTree = "<group>"; };
@@ -149,7 +147,6 @@
 		1E87811726879A0A00FE11C6 /* Views Data Model */ = {
 			isa = PBXGroup;
 			children = (
-				1E87811A2689049C00FE11C6 /* KeywordSectionData.swift */,
 				1E87811C268913AF00FE11C6 /* KeywordModel.swift */,
 			);
 			path = "Views Data Model";
@@ -267,7 +264,6 @@
 				1E7679D626805A0600D129DD /* AppDelegate.swift in Sources */,
 				1E990F72268B895C00EA258E /* WebViewController.swift in Sources */,
 				1E7679D826805A0600D129DD /* SceneDelegate.swift in Sources */,
-				1E87811B2689049C00FE11C6 /* KeywordSectionData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
