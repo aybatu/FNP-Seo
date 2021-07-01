@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E665697268D5287008329DC /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E665696268D5287008329DC /* Formatters.swift */; };
 		1E7679D626805A0600D129DD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7679D526805A0600D129DD /* AppDelegate.swift */; };
 		1E7679D826805A0600D129DD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7679D726805A0600D129DD /* SceneDelegate.swift */; };
 		1E7679DD26805A0600D129DD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E7679DB26805A0600D129DD /* Main.storyboard */; };
@@ -32,6 +33,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1E665696268D5287008329DC /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
 		1E7679D226805A0600D129DD /* FNP Seo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FNP Seo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E7679D526805A0600D129DD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1E7679D726805A0600D129DD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 				1E7679E126805A0700D129DD /* Assets.xcassets */,
 				1E7679E326805A0700D129DD /* LaunchScreen.storyboard */,
 				1EBDC0882682903A0068307F /* Constant.swift */,
+				1E665696268D5287008329DC /* Formatters.swift */,
 			);
 			path = "Support Files";
 			sourceTree = "<group>";
@@ -253,6 +256,7 @@
 				1E7679F5268065AB00D129DD /* SEO.swift in Sources */,
 				1E990F6D268B7A3400EA258E /* LinkListCell.swift in Sources */,
 				1E87811D268913AF00FE11C6 /* KeywordModel.swift in Sources */,
+				1E665697268D5287008329DC /* Formatters.swift in Sources */,
 				1EC30A9626868834008CF69A /* Keywords.swift in Sources */,
 				1E7679F126805ADB00D129DD /* SEODataBrain.swift in Sources */,
 				1EC30A9426868828008CF69A /* WebSites.swift in Sources */,

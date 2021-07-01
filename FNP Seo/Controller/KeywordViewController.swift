@@ -16,7 +16,6 @@ class KeywordViewController: UITableViewController {
     
     var keyword: Results<Keywords>?
     var seo = SEO()
-    var keywordSectionData = [KeywordSectionData]()
     var keywordModel = KeywordModel()
     var selectedDomain: WebSites? {
         didSet{
@@ -27,13 +26,8 @@ class KeywordViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.refreshControl?.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
-        keywordSectionData.append(KeywordSectionData(sectionTitle: "Statistics", sectionResults: keyword))
-        keywordSectionData.append(KeywordSectionData(sectionTitle: "Keywords", sectionResults: keyword))
         
         seo.delegate = self
-        alexaResultLabel.text = selectedDomain?.alexaResult
-        
-        realm.autorefresh = true
     }
 
     @objc func refresh(_ sender: AnyObject) {
@@ -96,38 +90,57 @@ class KeywordViewController: UITableViewController {
     //MARK: - Table View Data Source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return keywordSectionData.count
+        return 2
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return 2
         } else {
-            return keywordSectionData[section].sectionResults!.count
+            return selectedDomain!.keywords.count
         }      
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return keywordSectionData[section].sectionTitle
+        if section == 0 {
+            return "Statistics"
+        } else if section == 1 {
+            return "Keywords"
+        } else {
+            return nil
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var result = UITableViewCell()
         let keywordCell = tableView.dequeueReusableCell(withIdentifier: K.Keyword.keywordCell, for: indexPath)
-        let aveRankCell = tableView.dequeueReusableCell(withIdentifier: K.Keyword.averageRankingCell)
-        let totalKeywordsCount = tableView.dequeueReusableCell(withIdentifier: K.Keyword.totalKeywordsCell)
-      
-        if indexPath.section == 0 && indexPath.row < 3{
-            if indexPath.row == 0 {
-                aveRankCell?.textLabel?.text = "Average Ranking"
-                aveRankCell?.detailTextLabel!.text = keywordModel.averageRankString
-                result = aveRankCell!
-            } else if indexPath.row == 1 && indexPath.row < 3 {
-                totalKeywordsCount?.textLabel?.text = "Total Keywords"
-                totalKeywordsCount?.detailTextLabel!.text = keywordModel.keywordCountString
-                result = totalKeywordsCount!
-            }
+        
+        var keywordSection = KeywordSectionData()
+        keywordSection.averageRank = keywordModel.averageRankString
+        
+        keywordSection.totalKeywords = keywordModel.keywordCountString
+        
+        if indexPath.section == 0 && indexPath.row == 0 {
+            keywordCell.detailTextLabel?.text = keywordSection.averageRank
+            keywordCell.textLabel?.text = "Average Ranking"
+            result = keywordCell
+        } else if indexPath.section == 0 && indexPath.row == 1 {
+            keywordCell.detailTextLabel?.text = keywordModel.keywordCountString
+            keywordCell.textLabel?.text = "Total Keywords"
+            result = keywordCell
+            return result
         }
+//        if indexPath.section == 0 && indexPath.row < 3{
+//            if indexPath.row == 0 {
+//                aveRankCell?.textLabel?.text = "Average Ranking"
+//                aveRankCell?.detailTextLabel!.text = keywordModel.averageRankString
+//                result = aveRankCell!
+//            } else if indexPath.row == 1 && indexPath.row < 3 {
+//                totalKeywordsCount?.textLabel?.text = "Total Keywords"
+//                totalKeywordsCount?.detailTextLabel!.text = keywordModel.keywordCountString
+//                result = totalKeywordsCount!
+//            }
+//        }
         
         if 0 < keywordModel.keywordRanks.count  && 0 < keywordModel.keywordNames.count && indexPath.section == 1 {
             keywordCell.detailTextLabel?.text = String(keywordModel.keywordRanks[indexPath.row])
@@ -157,7 +170,7 @@ class KeywordViewController: UITableViewController {
         if indexPath.section == 1 {
             if editingStyle == .delete {
                 deleteData(indexPath: indexPath)
-               
+                
                 loadData()
             }
         }
@@ -205,7 +218,6 @@ class KeywordViewController: UITableViewController {
         }
         keywordModel.keywordRanks.removeLast()
         keywordModel.keywordNames.removeLast()
-
     }
 }
 
@@ -239,22 +251,6 @@ extension KeywordViewController: SEODelegate {
     
     func didFailWithError(error: Error) {
         
-    }
-}
-
-//MARK: - String dash and whitespace remove
-
-extension String {
-    func replace(string:String, replacement:String) -> String {
-        return self.replacingOccurrences(of: string, with: replacement, options: NSString.CompareOptions.literal, range: nil)
-    }
-
-    func removeWhitespace() -> String {
-        return self.replace(string: " ", replacement: "-")
-    }
-    
-    func removeDash() -> String {
-        return self.replace(string: "-", replacement: " ")
     }
 }
 

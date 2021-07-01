@@ -9,6 +9,6 @@ import Foundation
 import RealmSwift
 
 struct KeywordSectionData {
-    var sectionTitle: String?
-    var sectionResults: Results<Keywords>?
+    var totalKeywords: String?
+    var averageRank: String?
 }
