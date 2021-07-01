@@ -27,6 +27,7 @@ class KeywordViewController: UITableViewController {
         super.viewDidLoad()
         self.refreshControl?.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
         seo.delegate = self
+        print(keywordModel.keywordNames)
     }
     
     @objc func refresh(_ sender: AnyObject) {
@@ -40,7 +41,7 @@ class KeywordViewController: UITableViewController {
         keywordArray.forEach { keyword in
             self.seo.fetchSEO(keyword: keyword, requestURL: self.selectedDomain!.domainName)
         }
-        
+      
         refreshControl?.endRefreshing()
     }
     
@@ -53,19 +54,17 @@ class KeywordViewController: UITableViewController {
                 let textPrefix = textSafe.removeWhitespace()
                 
                 if self.keywordModel.keywordNames.count > 0 {
-                    self.keywordModel.keywordNames.forEach { keyword in
-                        if keyword.contains(textSafe) {
-                            return
-                        } else {
-                            self.seo.fetchSEO(keyword: textPrefix, requestURL: self.selectedDomain!.domainName, start: 1)
-                        }
+                    if self.keywordModel.keywordNames.contains(textSafe) {
+                        return
+                    } else {
+                        self.seo.fetchSEO(keyword: textPrefix, requestURL: self.selectedDomain!.domainName, start: 1)
                     }
                 } else {
                     self.seo.fetchSEO(keyword: textPrefix, requestURL: self.selectedDomain!.domainName, start: 1)
                 }
             }
         }
-        
+                
         alert.addAction(action)
         alert.addTextField { textfield in
             text = textfield
@@ -145,6 +144,7 @@ class KeywordViewController: UITableViewController {
     
     func loadData() {
         keyword = selectedDomain?.keywords.sorted(byKeyPath: "date", ascending: true)
+        
         statisticCalculate(keyword: keyword)
         tableView.reloadData()
     }

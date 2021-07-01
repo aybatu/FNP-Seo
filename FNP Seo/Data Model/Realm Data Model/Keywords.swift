@@ -13,4 +13,8 @@ class Keywords: Object {
     @objc dynamic var date: Date = Date()
     @objc dynamic var rank: Int = 0
     @objc dynamic var requestedURL: String = ""
+    
+    override static func indexedProperties() -> [String] {
+        return ["name"]
+    }
 }
