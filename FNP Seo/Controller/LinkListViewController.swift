@@ -6,12 +6,22 @@
 //
 
 import UIKit
+import RealmSwift
 
 class LinkListViewController: UITableViewController, SEODelegate {
    
-      var seo = SEO()
+    var seo = SEO()
     var keywordRaw: String?
     var linkArray = [String]()
+    var selectedKeyword: Results<StatisticResult>? {
+        didSet{
+           loadData()
+        }
+    }
+    
+    func loadData() {
+        print(selectedKeyword?.count ?? "now statistics list")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,6 +29,7 @@ class LinkListViewController: UITableViewController, SEODelegate {
         seo.delegate = self
         self.refreshControl?.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
         seo.fetchSEO(keyword: keywordRaw!, requestURL: nil, start: 1)
+        
     }
 
     @objc func refresh() {
@@ -67,7 +78,11 @@ class LinkListViewController: UITableViewController, SEODelegate {
             self.tableView.reloadData()
         }
     }
-
+    
+    func seoModelUpdate(link: String, url: String, listLine: Int, keyword: String) {
+//        
+    }
+    
     func didFailWithError(error: Error) {
 //
     }

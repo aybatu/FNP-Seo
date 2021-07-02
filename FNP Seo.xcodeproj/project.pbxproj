@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1E665697268D5287008329DC /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E665696268D5287008329DC /* Formatters.swift */; };
+		1E665699268E3CFE008329DC /* StatisticResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E665698268E3CFE008329DC /* StatisticResults.swift */; };
 		1E7679D626805A0600D129DD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7679D526805A0600D129DD /* AppDelegate.swift */; };
 		1E7679D826805A0600D129DD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7679D726805A0600D129DD /* SceneDelegate.swift */; };
 		1E7679DD26805A0600D129DD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E7679DB26805A0600D129DD /* Main.storyboard */; };
@@ -33,6 +34,7 @@
 
 /* Begin PBXFileReference section */
 		1E665696268D5287008329DC /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
+		1E665698268E3CFE008329DC /* StatisticResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticResults.swift; sourceTree = "<group>"; };
 		1E7679D226805A0600D129DD /* FNP Seo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FNP Seo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E7679D526805A0600D129DD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1E7679D726805A0600D129DD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 			children = (
 				1EC30A9326868828008CF69A /* WebSites.swift */,
 				1EC30A9526868834008CF69A /* Keywords.swift */,
+				1E665698268E3CFE008329DC /* StatisticResults.swift */,
 			);
 			path = "Realm Data Model";
 			sourceTree = "<group>";
@@ -259,6 +262,7 @@
 				1EC30A9426868828008CF69A /* WebSites.swift in Sources */,
 				1EBDC08F2682A5840068307F /* KeywordViewController.swift in Sources */,
 				1EBDC0892682903A0068307F /* Constant.swift in Sources */,
+				1E665699268E3CFE008329DC /* StatisticResults.swift in Sources */,
 				1EBDC087268286120068307F /* DomainViewController.swift in Sources */,
 				1E990F6A268B6B2800EA258E /* LinkListViewController.swift in Sources */,
 				1E7679D626805A0600D129DD /* AppDelegate.swift in Sources */,

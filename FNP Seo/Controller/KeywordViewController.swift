@@ -17,6 +17,8 @@ class KeywordViewController: UITableViewController {
     var seo = SEO()
     
     var keyword: Results<Keywords>?
+    var statistics: Results<StatisticResult>?
+    
     var selectedDomain: WebSites? {
         didSet{
             loadData()
@@ -27,22 +29,31 @@ class KeywordViewController: UITableViewController {
         super.viewDidLoad()
         self.refreshControl?.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
         seo.delegate = self
-        print(keywordModel.keywordNames)
+        alexaResultLabel.text = String(selectedDomain!.alexaResult)
     }
     
     @objc func refresh(_ sender: AnyObject) {
         var keywordArray = [String]()
+       
         keywordModel.keywordNames.forEach { keyword in
             keywordArray.append(keyword)
         }
+
         keywordModel.keywordNames = [String]()
         keywordModel.keywordRanks = [Double]()
+        keywordModel.averageRank = 0
+        keywordModel.keywordCount = 0
         
         keywordArray.forEach { keyword in
             self.seo.fetchSEO(keyword: keyword, requestURL: self.selectedDomain!.domainName)
         }
-      
-        refreshControl?.endRefreshing()
+        
+        let deadLine = DispatchTime.now() + .seconds(2)
+        DispatchQueue.main.asyncAfter(deadline: deadLine) {
+            self.loadData()
+            self.refreshControl?.endRefreshing()
+        }
+        
     }
     
     @IBAction func addPressed(_ sender: UIBarButtonItem) {
@@ -64,7 +75,7 @@ class KeywordViewController: UITableViewController {
                 }
             }
         }
-                
+        
         alert.addAction(action)
         alert.addTextField { textfield in
             text = textfield
@@ -102,9 +113,13 @@ class KeywordViewController: UITableViewController {
         let keywordCell = tableView.dequeueReusableCell(withIdentifier: K.Keyword.keywordCell, for: indexPath)
         
         if indexPath.section == 0 && indexPath.row == 0 {
+            keywordCell.accessoryType = .none
+            keywordCell.isUserInteractionEnabled = false
             keywordCell.detailTextLabel?.text = keywordModel.averageRankString
             keywordCell.textLabel?.text = "Average Ranking"
         } else if indexPath.section == 0 && indexPath.row == 1 {
+            keywordCell.accessoryType = .none
+            keywordCell.isUserInteractionEnabled = false
             keywordCell.detailTextLabel?.text = keywordModel.keywordCountString
             keywordCell.textLabel?.text = "Total Keywords"
         }
@@ -118,6 +133,14 @@ class KeywordViewController: UITableViewController {
     
     //MARK: - Table View Delegate Methods
     
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        if indexPath.section == 0 {
+            return nil
+        } else {
+            return indexPath
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: K.Segue.keywordToLinks, sender: self)
         tableView.deselectRow(at: indexPath, animated: true)
@@ -128,10 +151,17 @@ class KeywordViewController: UITableViewController {
         
         if let indexPath = tableView.indexPathForSelectedRow {
             destinationVC.keywordRaw = selectedDomain?.keywords[indexPath.row].name
+            destinationVC.selectedKeyword = statistics
             
         }
     }
-    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if indexPath.section == 0 {
+            return false
+        } else {
+            return true
+        }
+    }
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if indexPath.section == 1 {
             if editingStyle == .delete {
@@ -143,8 +173,7 @@ class KeywordViewController: UITableViewController {
     //MARK: - Data Manupulation Methods
     
     func loadData() {
-        keyword = selectedDomain?.keywords.sorted(byKeyPath: "date", ascending: true)
-        
+        keyword = selectedDomain?.keywords.sorted(byKeyPath: "rank")
         statisticCalculate(keyword: keyword)
         tableView.reloadData()
     }
@@ -170,14 +199,22 @@ class KeywordViewController: UITableViewController {
     
     func deleteData(indexPath: IndexPath?) {
         do {
-            try realm.write {
-                realm.delete(selectedDomain!.keywords[indexPath!.row])
+            if indexPath == nil {
+                try realm.write {
+                    realm.delete(selectedDomain!.keywords)
+                }
+            } else {
+                try realm.write {
+                    realm.delete(selectedDomain!.keywords[indexPath!.row].statistics)
+                    realm.delete(selectedDomain!.keywords[indexPath!.row])
+                }
             }
         } catch {
             print("Error delete keyword: \(error)")
         }
         keywordModel.keywordRanks.removeLast()
         keywordModel.keywordNames.removeLast()
+        
         loadData()
     }
 }
@@ -188,17 +225,42 @@ extension KeywordViewController: SEODelegate {
     
     func seoModel(link: String, url: String, listLine: Int, keyword: String) {
         DispatchQueue.main.async {
+            
             do {
-                try self.realm.write({
+                try self.realm.write {
                     let newKeyword = Keywords()
-                    newKeyword.date = Date()
-                    newKeyword.name = keyword.removeDash()
-                    newKeyword.rank = listLine
-                    newKeyword.requestedURL = link
+                    let newStatistic = StatisticResult()
+                    let date = Date()
+                    var dateComponent = DateComponents()
+                    dateComponent.day = 1
                     
-                    self.selectedDomain?.keywords.append(newKeyword)
+                    newStatistic.date = Date()
+                    newStatistic.name = keyword.removeDash()
+                    newStatistic.rank = listLine
+                    newStatistic.requestedURL = link
+                    
+                    if let newKey = self.realm.objects(Keywords.self).filter("name = %@", keyword).last {
+                        print("UPDATED")
+                        let oldStatistic = newKey.statistics.last?.date
+                        let futureDate = Calendar.current.date(byAdding: dateComponent, to: oldStatistic!)
+        
+                        newKey.rank = listLine
+                        newKey.name = keyword
+    
+                        if date >= futureDate! {
+                            newKey.statistics.append(newStatistic)
+                        }
+
+                    } else {
+                        newKeyword.name = keyword.removeDash()
+                        newKeyword.rank = listLine
+                        print(keyword)
+                        self.selectedDomain?.keywords.append(newKeyword)
+                        newKeyword.statistics.append(newStatistic)
+                    }
+                    
                     self.loadData()
-                })
+                }
             } catch {
                 print("Error newKeyword add: \(error)")
             }

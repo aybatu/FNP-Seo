@@ -34,9 +34,6 @@ struct KeywordModel {
         
         let rankSum = keywordRanks.reduce(0, +)
         averageRank = rankSum / Double(keywordRanks.count)
-          
-            
-              
         
     }
     

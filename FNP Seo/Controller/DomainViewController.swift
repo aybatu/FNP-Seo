@@ -31,7 +31,7 @@ class DomainViewController: UITableViewController {
                     newDomain.domainName = textSafe
                     newDomain.date = Date()
                     //alexa result will be updated by fetching result through API
-                    newDomain.alexaResult = String(Int.random(in: 500...2500))
+                    newDomain.alexaResult = Int.random(in: 500...2500)
                     self.saveData(website: newDomain)
                 }
             }
@@ -63,7 +63,6 @@ class DomainViewController: UITableViewController {
     
     func loadData() {
         domain = realm.objects(WebSites.self).sorted(byKeyPath: "date", ascending: true)
-        
         tableView.reloadData()
     }
     
@@ -90,6 +89,7 @@ class DomainViewController: UITableViewController {
         
         if let indexPath = tableView.indexPathForSelectedRow {
             destinationVC.selectedDomain = domain?[indexPath.row]
+            
         }
         
     }
@@ -98,6 +98,9 @@ class DomainViewController: UITableViewController {
         let action = UIContextualAction(style: .normal, title: nil) { action, view, escape in
             do {
                 try self.realm.write {
+                    self.domain![indexPath.row].keywords.forEach({ key in
+                        self.realm.delete(key.statistics)
+                    })
                     self.realm.delete(self.domain![indexPath.row].keywords)
                     self.realm.delete(self.domain![indexPath.row])
                 }
