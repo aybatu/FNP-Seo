@@ -11,7 +11,7 @@ import RealmSwift
 class WebSites: Object {
     @objc dynamic var domainName: String = ""
     @objc dynamic var date: Date = Date()
-    @objc dynamic var alexaResult: Int = 1
+    @objc dynamic var alexaResult: String = ""
     
     let keywords = List<Keywords>()
 }

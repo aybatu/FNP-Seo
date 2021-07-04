@@ -13,6 +13,4 @@ class StatisticResult: Object {
     @objc dynamic var date: Date = Date()
     @objc dynamic var rank: Int = 0
     @objc dynamic var requestedURL: String = ""
-    
-//    let keywords = LinkingObjects(fromType: Keywords.self, property: "statistics")
 }

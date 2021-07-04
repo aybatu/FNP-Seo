@@ -29,7 +29,7 @@ class KeywordViewController: UITableViewController {
         super.viewDidLoad()
         self.refreshControl?.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
         seo.delegate = self
-        alexaResultLabel.text = String(selectedDomain!.alexaResult)
+        alexaResultLabel.text = selectedDomain?.alexaResult ?? "No Result."
     }
     
     @objc func refresh(_ sender: AnyObject) {
@@ -58,7 +58,7 @@ class KeywordViewController: UITableViewController {
     
     @IBAction func addPressed(_ sender: UIBarButtonItem) {
         var text = UITextField()
-        let alert = UIAlertController(title: "Add New Keyword", message: "Please specify and add your keyword to achive seo rank.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Add New Keyword", message: "Please add your keyword to achive seo rank result.", preferredStyle: .alert)
         
         let action = UIAlertAction(title: "Add", style: .default) { action in
             if let textSafe = text.text {
@@ -66,6 +66,9 @@ class KeywordViewController: UITableViewController {
                 
                 if self.keywordModel.keywordNames.count > 0 {
                     if self.keywordModel.keywordNames.contains(textSafe) {
+                        let alert = UIAlertController(title: "Failed", message: "The keyword \(textSafe) already entered once.", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
                         return
                     } else {
                         self.seo.fetchSEO(keyword: textPrefix, requestURL: self.selectedDomain!.domainName, start: 1)
@@ -113,18 +116,17 @@ class KeywordViewController: UITableViewController {
         let keywordCell = tableView.dequeueReusableCell(withIdentifier: K.Keyword.keywordCell, for: indexPath)
         
         if indexPath.section == 0 && indexPath.row == 0 {
-            keywordCell.accessoryType = .none
-            keywordCell.isUserInteractionEnabled = false
+            
             keywordCell.detailTextLabel?.text = keywordModel.averageRankString
             keywordCell.textLabel?.text = "Average Ranking"
         } else if indexPath.section == 0 && indexPath.row == 1 {
-            keywordCell.accessoryType = .none
-            keywordCell.isUserInteractionEnabled = false
+           
             keywordCell.detailTextLabel?.text = keywordModel.keywordCountString
             keywordCell.textLabel?.text = "Total Keywords"
         }
         
         if 0 < keywordModel.keywordRanks.count  && 0 < keywordModel.keywordNames.count && indexPath.section == 1 {
+            keywordCell.accessoryType = .disclosureIndicator
             keywordCell.detailTextLabel?.text = String(keywordModel.keywordRanks[indexPath.row])
             keywordCell.textLabel?.text = keywordModel.keywordNames[indexPath.row]
         }
@@ -138,6 +140,14 @@ class KeywordViewController: UITableViewController {
             return nil
         } else {
             return indexPath
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if indexPath.section == 0 {
+            return false
+        } else {
+            return true
         }
     }
     
@@ -155,13 +165,7 @@ class KeywordViewController: UITableViewController {
             
         }
     }
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        if indexPath.section == 0 {
-            return false
-        } else {
-            return true
-        }
-    }
+   
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if indexPath.section == 1 {
             if editingStyle == .delete {
@@ -175,7 +179,9 @@ class KeywordViewController: UITableViewController {
     func loadData() {
         keyword = selectedDomain?.keywords.sorted(byKeyPath: "rank")
         statisticCalculate(keyword: keyword)
-        tableView.reloadData()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
     
     func statisticCalculate(keyword: Results<Keywords>?) {
@@ -239,27 +245,25 @@ extension KeywordViewController: SEODelegate {
                     newStatistic.rank = listLine
                     newStatistic.requestedURL = link
                     
-                    if let newKey = self.realm.objects(Keywords.self).filter("name = %@", keyword).last {
-                        print("UPDATED")
-                        let oldStatistic = newKey.statistics.last?.date
-                        let futureDate = Calendar.current.date(byAdding: dateComponent, to: oldStatistic!)
-        
-                        newKey.rank = listLine
-                        newKey.name = keyword
-    
-                        if date >= futureDate! {
-                            newKey.statistics.append(newStatistic)
-                        }
-
-                    } else {
+                    guard let newKey = self.selectedDomain?.keywords.filter("name = %@", keyword).last else {
                         newKeyword.name = keyword.removeDash()
                         newKeyword.rank = listLine
-                        print(keyword)
                         self.selectedDomain?.keywords.append(newKeyword)
                         newKeyword.statistics.append(newStatistic)
+                        self.loadData()
+                        return
+                    }
+                    guard let oldStatistic = newKey.statistics.last?.date else {return}
+                    guard let futureDate = Calendar.current.date(byAdding: dateComponent, to: oldStatistic) else {return}
+
+                    newKey.rank = listLine
+                    newKey.name = keyword
+                    if date >= futureDate {
+                        newKey.statistics.append(newStatistic)
                     }
                     
                     self.loadData()
+                    return
                 }
             } catch {
                 print("Error newKeyword add: \(error)")

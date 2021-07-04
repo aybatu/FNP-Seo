@@ -13,15 +13,7 @@ class LinkListViewController: UITableViewController, SEODelegate {
     var seo = SEO()
     var keywordRaw: String?
     var linkArray = [String]()
-    var selectedKeyword: Results<StatisticResult>? {
-        didSet{
-           loadData()
-        }
-    }
-    
-    func loadData() {
-        print(selectedKeyword?.count ?? "now statistics list")
-    }
+    var selectedKeyword: Results<StatisticResult>?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +27,11 @@ class LinkListViewController: UITableViewController, SEODelegate {
     @objc func refresh() {
         linkArray = [String]()
         seo.fetchSEO(keyword: keywordRaw!, requestURL: nil, start: 1)
-        refreshControl?.endRefreshing()
+        
+        let deadline = DispatchTime.now() + .seconds(3)
+        DispatchQueue.main.asyncAfter(deadline: deadline) {
+            self.refreshControl?.endRefreshing()
+        }
     }
 
     //MARK: - Table View Data Source Methods

@@ -12,9 +12,12 @@ class DomainViewController: UITableViewController {
     
     let realm = try! Realm()
     var domain: Results<WebSites>?
-    
+    let alexa = Decoder()
+    var alexaScore = ""
+        
     override func viewDidLoad() {
         super.viewDidLoad()
+        alexa.delegate = self
         loadData()
     }
     
@@ -27,12 +30,8 @@ class DomainViewController: UITableViewController {
         let action = UIAlertAction(title: "Add", style: .default) { action in
             if text.text != "" {
                 if let textSafe = text.text {
-                    let newDomain = WebSites()
-                    newDomain.domainName = textSafe
-                    newDomain.date = Date()
-                    //alexa result will be updated by fetching result through API
-                    newDomain.alexaResult = Int.random(in: 500...2500)
-                    self.saveData(website: newDomain)
+                    self.alexa.fetchAlexa(for: textSafe)
+                    
                 }
             }
         }
@@ -63,7 +62,10 @@ class DomainViewController: UITableViewController {
     
     func loadData() {
         domain = realm.objects(WebSites.self).sorted(byKeyPath: "date", ascending: true)
-        tableView.reloadData()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+       
     }
     
     func saveData(website domain: WebSites) {
@@ -75,7 +77,9 @@ class DomainViewController: UITableViewController {
             print("Error saving website domain: \(error)")
         }
         
-        tableView.reloadData()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
     
     //MARK: - Table View Delegate Methods
@@ -89,7 +93,6 @@ class DomainViewController: UITableViewController {
         
         if let indexPath = tableView.indexPathForSelectedRow {
             destinationVC.selectedDomain = domain?[indexPath.row]
-            
         }
         
     }
@@ -130,4 +133,21 @@ class DomainViewController: UITableViewController {
         
         return swipe
     }
+}
+
+extension DomainViewController: AlexaDelegate {
+    
+    func alexaResult(alexaResult: String, domainURL: String) {
+        let newDomain = WebSites()
+
+        newDomain.domainName = domainURL
+        newDomain.date = Date()
+        newDomain.alexaResult = alexaResult
+        alexaScore = alexaResult
+        DispatchQueue.main.async {
+            self.saveData(website: newDomain)
+        }
+    }
+    
+    
 }

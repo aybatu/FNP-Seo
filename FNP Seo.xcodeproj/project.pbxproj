@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E3002C62690B2CA00EE8477 /* Alexa.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3002C52690B2CA00EE8477 /* Alexa.swift */; };
+		1E3002C82690B2D900EE8477 /* AlexaDataBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3002C72690B2D900EE8477 /* AlexaDataBrain.swift */; };
+		1E3002CB2690F82000EE8477 /* XMLCoder in Frameworks */ = {isa = PBXBuildFile; productRef = 1E3002CA2690F82000EE8477 /* XMLCoder */; };
 		1E665697268D5287008329DC /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E665696268D5287008329DC /* Formatters.swift */; };
 		1E665699268E3CFE008329DC /* StatisticResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E665698268E3CFE008329DC /* StatisticResults.swift */; };
 		1E7679D626805A0600D129DD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7679D526805A0600D129DD /* AppDelegate.swift */; };
@@ -33,6 +36,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1E3002C52690B2CA00EE8477 /* Alexa.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alexa.swift; sourceTree = "<group>"; };
+		1E3002C72690B2D900EE8477 /* AlexaDataBrain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlexaDataBrain.swift; sourceTree = "<group>"; };
 		1E665696268D5287008329DC /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
 		1E665698268E3CFE008329DC /* StatisticResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticResults.swift; sourceTree = "<group>"; };
 		1E7679D226805A0600D129DD /* FNP Seo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FNP Seo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -63,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1E3002CB2690F82000EE8477 /* XMLCoder in Frameworks */,
 				1EC30A9226868755008CF69A /* Realm in Frameworks */,
 				1EC30A9026868755008CF69A /* RealmSwift in Frameworks */,
 			);
@@ -159,6 +165,8 @@
 			children = (
 				1E7679F026805ADB00D129DD /* SEODataBrain.swift */,
 				1E7679F4268065AB00D129DD /* SEO.swift */,
+				1E3002C52690B2CA00EE8477 /* Alexa.swift */,
+				1E3002C72690B2D900EE8477 /* AlexaDataBrain.swift */,
 			);
 			path = "SEO Model";
 			sourceTree = "<group>";
@@ -192,6 +200,7 @@
 			packageProductDependencies = (
 				1EC30A8F26868755008CF69A /* RealmSwift */,
 				1EC30A9126868755008CF69A /* Realm */,
+				1E3002CA2690F82000EE8477 /* XMLCoder */,
 			);
 			productName = "FNP Seo";
 			productReference = 1E7679D226805A0600D129DD /* FNP Seo.app */;
@@ -222,6 +231,7 @@
 			mainGroup = 1E7679C926805A0600D129DD;
 			packageReferences = (
 				1EC30A8E26868755008CF69A /* XCRemoteSwiftPackageReference "realm-cocoa" */,
+				1E3002C92690F81F00EE8477 /* XCRemoteSwiftPackageReference "XMLCoder" */,
 			);
 			productRefGroup = 1E7679D326805A0600D129DD /* Products */;
 			projectDirPath = "";
@@ -254,12 +264,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				1E7679F5268065AB00D129DD /* SEO.swift in Sources */,
+				1E3002C62690B2CA00EE8477 /* Alexa.swift in Sources */,
 				1E990F6D268B7A3400EA258E /* LinkListCell.swift in Sources */,
 				1E87811D268913AF00FE11C6 /* KeywordModel.swift in Sources */,
 				1E665697268D5287008329DC /* Formatters.swift in Sources */,
 				1EC30A9626868834008CF69A /* Keywords.swift in Sources */,
 				1E7679F126805ADB00D129DD /* SEODataBrain.swift in Sources */,
 				1EC30A9426868828008CF69A /* WebSites.swift in Sources */,
+				1E3002C82690B2D900EE8477 /* AlexaDataBrain.swift in Sources */,
 				1EBDC08F2682A5840068307F /* KeywordViewController.swift in Sources */,
 				1EBDC0892682903A0068307F /* Constant.swift in Sources */,
 				1E665699268E3CFE008329DC /* StatisticResults.swift in Sources */,
@@ -471,6 +483,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		1E3002C92690F81F00EE8477 /* XCRemoteSwiftPackageReference "XMLCoder" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/MaxDesiatov/XMLCoder.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.12.0;
+			};
+		};
 		1EC30A8E26868755008CF69A /* XCRemoteSwiftPackageReference "realm-cocoa" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/realm-cocoa.git";
@@ -482,6 +502,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		1E3002CA2690F82000EE8477 /* XMLCoder */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1E3002C92690F81F00EE8477 /* XCRemoteSwiftPackageReference "XMLCoder" */;
+			productName = XMLCoder;
+		};
 		1EC30A8F26868755008CF69A /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 1EC30A8E26868755008CF69A /* XCRemoteSwiftPackageReference "realm-cocoa" */;
