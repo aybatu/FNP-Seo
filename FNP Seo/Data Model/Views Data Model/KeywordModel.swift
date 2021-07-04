@@ -9,10 +9,10 @@ import Foundation
 import RealmSwift
 
 struct KeywordModel {
-    var keywordRanks = [Double]()
+    var keywordRanks: [Double]? = [Double]()
     var averageRank: Double? = 0.0
     var keywordCount: Int? = 0
-    var keywordNames = [String]()
+    var keywordNames = [String?]()
     
     var keywordCountString: String? {
         return String(keywordCount!)
@@ -22,18 +22,20 @@ struct KeywordModel {
     }
     
     mutating func averageOfRanks(resultKeyword: Results<Keywords>?) {
-        keywordCount = resultKeyword?.count
+        guard let results = resultKeyword else {return}
+        keywordCount = results.count
         var n = 0
         var raw = [Double]()
             
-        while n < resultKeyword!.count {
+        while n < results.count {
             raw.append(Double(resultKeyword![n].rank))
             n += 1
         }
         keywordRanks = raw
         
-        let rankSum = keywordRanks.reduce(0, +)
-        averageRank = rankSum / Double(keywordRanks.count)
+        guard let keyRanks = keywordRanks else {return}
+        let rankSum = keyRanks.reduce(0, +)
+        averageRank = rankSum / Double(keyRanks.count)
         
     }
     

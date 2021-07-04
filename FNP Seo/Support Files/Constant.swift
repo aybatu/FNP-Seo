@@ -13,15 +13,14 @@ struct K {
     }
     
     struct Keyword {
-        static let totalKeywordsCell = "TotalKeywordsCell"
-        static let averageRankingCell = "AverageRankingCell"
+        static let statisticsCell = "StatisticsCell"
         static let keywordCell = "KeywordCell"
         
     }
     
     struct Links {
-        static let linkCell = "LinkListCell"
         static let cellNib = "LinkListCell"
+        static let linkCell = "LinkListCell"
     }
     
     struct Segue {

@@ -29,6 +29,8 @@ class KeywordViewController: UITableViewController {
         super.viewDidLoad()
         self.refreshControl?.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
         seo.delegate = self
+        navigationItem.title = selectedDomain?.domainName
+        navigationItem.backButtonTitle = "Keywords"
         alexaResultLabel.text = selectedDomain?.alexaResult ?? "No Result."
     }
     
@@ -36,7 +38,8 @@ class KeywordViewController: UITableViewController {
         var keywordArray = [String]()
        
         keywordModel.keywordNames.forEach { keyword in
-            keywordArray.append(keyword)
+            guard let keySafe = keyword else {return}
+            keywordArray.append(keySafe)
         }
 
         keywordModel.keywordNames = [String]()
@@ -47,13 +50,11 @@ class KeywordViewController: UITableViewController {
         keywordArray.forEach { keyword in
             self.seo.fetchSEO(keyword: keyword, requestURL: self.selectedDomain!.domainName)
         }
-        
-        let deadLine = DispatchTime.now() + .seconds(2)
+     
+        let deadLine = DispatchTime.now() + .seconds(1)
         DispatchQueue.main.asyncAfter(deadline: deadLine) {
-            self.loadData()
             self.refreshControl?.endRefreshing()
         }
-        
     }
     
     @IBAction func addPressed(_ sender: UIBarButtonItem) {
@@ -63,7 +64,6 @@ class KeywordViewController: UITableViewController {
         let action = UIAlertAction(title: "Add", style: .default) { action in
             if let textSafe = text.text {
                 let textPrefix = textSafe.removeWhitespace()
-                
                 if self.keywordModel.keywordNames.count > 0 {
                     if self.keywordModel.keywordNames.contains(textSafe) {
                         let alert = UIAlertController(title: "Failed", message: "The keyword \(textSafe) already entered once.", preferredStyle: .alert)
@@ -114,42 +114,28 @@ class KeywordViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let keywordCell = tableView.dequeueReusableCell(withIdentifier: K.Keyword.keywordCell, for: indexPath)
+        let statisticsCell = tableView.dequeueReusableCell(withIdentifier: K.Keyword.statisticsCell, for: indexPath)
+        var result = UITableViewCell()
         
         if indexPath.section == 0 && indexPath.row == 0 {
-            
-            keywordCell.detailTextLabel?.text = keywordModel.averageRankString
-            keywordCell.textLabel?.text = "Average Ranking"
+            statisticsCell.detailTextLabel?.text = keywordModel.averageRankString
+            statisticsCell.textLabel?.text = "Average Ranking"
+            result = statisticsCell
         } else if indexPath.section == 0 && indexPath.row == 1 {
-           
-            keywordCell.detailTextLabel?.text = keywordModel.keywordCountString
-            keywordCell.textLabel?.text = "Total Keywords"
+            statisticsCell.detailTextLabel?.text = keywordModel.keywordCountString
+            statisticsCell.textLabel?.text = "Total Keywords"
+            result = statisticsCell
         }
         
-        if 0 < keywordModel.keywordRanks.count  && 0 < keywordModel.keywordNames.count && indexPath.section == 1 {
-            keywordCell.accessoryType = .disclosureIndicator
-            keywordCell.detailTextLabel?.text = String(keywordModel.keywordRanks[indexPath.row])
+        if 0 < keywordModel.keywordRanks!.count  && 0 < keywordModel.keywordNames.count && indexPath.section == 1 {
+            keywordCell.detailTextLabel?.text = String(keywordModel.keywordRanks![indexPath.row])
             keywordCell.textLabel?.text = keywordModel.keywordNames[indexPath.row]
+            result = keywordCell
         }
-        return keywordCell
+        return result
     }
     
     //MARK: - Table View Delegate Methods
-    
-    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        if indexPath.section == 0 {
-            return nil
-        } else {
-            return indexPath
-        }
-    }
-    
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        if indexPath.section == 0 {
-            return false
-        } else {
-            return true
-        }
-    }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: K.Segue.keywordToLinks, sender: self)
@@ -166,14 +152,21 @@ class KeywordViewController: UITableViewController {
         }
     }
    
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let action = UIContextualAction(style: .normal, title: nil) { action, view, escape in
+            self.deleteData(indexPath: indexPath)
+        }
+        action.image = UIImage(systemName: "trash.fill")
+        action.backgroundColor = .red
+        
         if indexPath.section == 1 {
-            if editingStyle == .delete {
-                deleteData(indexPath: indexPath)
-            }
+            return UISwipeActionsConfiguration(actions: [action])
+        } else if indexPath.section == 0 {
+            return nil
+        } else {
+            return nil
         }
     }
-    
     //MARK: - Data Manupulation Methods
     
     func loadData() {
@@ -189,37 +182,17 @@ class KeywordViewController: UITableViewController {
         keywordModel.saveKeywords(from: keyword)
     }
     
-    func saveData(keyword: Keywords) {
-        do {
-            try realm.write {
-                realm.add(keyword)
-            }
-        } catch {
-            didFailWithError(error: error)
-        }
-        
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
-    }
-    
     func deleteData(indexPath: IndexPath?) {
         do {
-            if indexPath == nil {
-                try realm.write {
-                    realm.delete(selectedDomain!.keywords)
-                }
-            } else {
-                try realm.write {
-                    realm.delete(selectedDomain!.keywords[indexPath!.row].statistics)
-                    realm.delete(selectedDomain!.keywords[indexPath!.row])
-                }
+            try realm.write {
+                realm.delete(selectedDomain!.keywords[indexPath!.row].statistics)
+                realm.delete(selectedDomain!.keywords[indexPath!.row])
             }
         } catch {
             print("Error delete keyword: \(error)")
         }
-        keywordModel.keywordRanks.removeLast()
-        keywordModel.keywordNames.removeLast()
+        guard let _ = keywordModel.keywordRanks?.removeLast() else {return}
+        guard let _ = keywordModel.keywordNames.removeLast() else {return}
         
         loadData()
     }

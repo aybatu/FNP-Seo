@@ -20,6 +20,8 @@ class LinkListViewController: UITableViewController, SEODelegate {
         tableView.register(UINib(nibName: K.Links.cellNib, bundle: nil), forCellReuseIdentifier: K.Links.linkCell)
         seo.delegate = self
         self.refreshControl?.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
+        navigationItem.title = "Results For: \(keywordRaw!)"
+        navigationItem.backButtonTitle = "Back"
         seo.fetchSEO(keyword: keywordRaw!, requestURL: nil, start: 1)
         
     }
