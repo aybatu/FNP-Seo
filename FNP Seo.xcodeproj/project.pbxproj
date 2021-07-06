@@ -20,7 +20,6 @@
 		1E7679F126805ADB00D129DD /* SEODataBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7679F026805ADB00D129DD /* SEODataBrain.swift */; };
 		1E7679F5268065AB00D129DD /* SEO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7679F4268065AB00D129DD /* SEO.swift */; };
 		1E87811D268913AF00FE11C6 /* KeywordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E87811C268913AF00FE11C6 /* KeywordModel.swift */; };
-		1E990F6A268B6B2800EA258E /* LinkListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E990F69268B6B2800EA258E /* LinkListViewController.swift */; };
 		1E990F6D268B7A3400EA258E /* LinkListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E990F6B268B7A3400EA258E /* LinkListCell.swift */; };
 		1E990F6E268B7A3400EA258E /* LinkListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1E990F6C268B7A3400EA258E /* LinkListCell.xib */; };
 		1E990F72268B895C00EA258E /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E990F71268B895C00EA258E /* WebViewController.swift */; };
@@ -33,7 +32,23 @@
 		1EC30A9226868755008CF69A /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 1EC30A9126868755008CF69A /* Realm */; };
 		1EC30A9426868828008CF69A /* WebSites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC30A9326868828008CF69A /* WebSites.swift */; };
 		1EC30A9626868834008CF69A /* Keywords.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC30A9526868834008CF69A /* Keywords.swift */; };
+		1EE400632693500300E0D425 /* ChartsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE400622693500300E0D425 /* ChartsViewController.swift */; };
+		1EE400722693A3D900E0D425 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = 1EE400712693A3D900E0D425 /* Charts */; };
+		1EE400742693DF4C00E0D425 /* LinkListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE400732693DF4C00E0D425 /* LinkListViewController.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		1EE4005E269348DF00E0D425 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1E3002C52690B2CA00EE8477 /* Alexa.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alexa.swift; sourceTree = "<group>"; };
@@ -50,7 +65,6 @@
 		1E7679F026805ADB00D129DD /* SEODataBrain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SEODataBrain.swift; sourceTree = "<group>"; };
 		1E7679F4268065AB00D129DD /* SEO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SEO.swift; sourceTree = "<group>"; };
 		1E87811C268913AF00FE11C6 /* KeywordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordModel.swift; sourceTree = "<group>"; };
-		1E990F69268B6B2800EA258E /* LinkListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkListViewController.swift; sourceTree = "<group>"; };
 		1E990F6B268B7A3400EA258E /* LinkListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkListCell.swift; sourceTree = "<group>"; };
 		1E990F6C268B7A3400EA258E /* LinkListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LinkListCell.xib; sourceTree = "<group>"; };
 		1E990F71268B895C00EA258E /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
@@ -61,6 +75,8 @@
 		1EBDC08E2682A5840068307F /* KeywordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordViewController.swift; sourceTree = "<group>"; };
 		1EC30A9326868828008CF69A /* WebSites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSites.swift; sourceTree = "<group>"; };
 		1EC30A9526868834008CF69A /* Keywords.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keywords.swift; sourceTree = "<group>"; };
+		1EE400622693500300E0D425 /* ChartsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsViewController.swift; sourceTree = "<group>"; };
+		1EE400732693DF4C00E0D425 /* LinkListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkListViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +87,7 @@
 				1E3002CB2690F82000EE8477 /* XMLCoder in Frameworks */,
 				1EC30A9226868755008CF69A /* Realm in Frameworks */,
 				1EC30A9026868755008CF69A /* RealmSwift in Frameworks */,
+				1EE400722693A3D900E0D425 /* Charts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,8 +152,9 @@
 			children = (
 				1EBDC086268286120068307F /* DomainViewController.swift */,
 				1EBDC08E2682A5840068307F /* KeywordViewController.swift */,
-				1E990F69268B6B2800EA258E /* LinkListViewController.swift */,
+				1EE400732693DF4C00E0D425 /* LinkListViewController.swift */,
 				1E990F71268B895C00EA258E /* WebViewController.swift */,
+				1EE400622693500300E0D425 /* ChartsViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -191,6 +209,7 @@
 				1E7679CE26805A0600D129DD /* Sources */,
 				1E7679CF26805A0600D129DD /* Frameworks */,
 				1E7679D026805A0600D129DD /* Resources */,
+				1EE4005E269348DF00E0D425 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -201,6 +220,7 @@
 				1EC30A8F26868755008CF69A /* RealmSwift */,
 				1EC30A9126868755008CF69A /* Realm */,
 				1E3002CA2690F82000EE8477 /* XMLCoder */,
+				1EE400712693A3D900E0D425 /* Charts */,
 			);
 			productName = "FNP Seo";
 			productReference = 1E7679D226805A0600D129DD /* FNP Seo.app */;
@@ -232,6 +252,7 @@
 			packageReferences = (
 				1EC30A8E26868755008CF69A /* XCRemoteSwiftPackageReference "realm-cocoa" */,
 				1E3002C92690F81F00EE8477 /* XCRemoteSwiftPackageReference "XMLCoder" */,
+				1EE400702693A3D900E0D425 /* XCRemoteSwiftPackageReference "Charts" */,
 			);
 			productRefGroup = 1E7679D326805A0600D129DD /* Products */;
 			projectDirPath = "";
@@ -266,6 +287,7 @@
 				1E7679F5268065AB00D129DD /* SEO.swift in Sources */,
 				1E3002C62690B2CA00EE8477 /* Alexa.swift in Sources */,
 				1E990F6D268B7A3400EA258E /* LinkListCell.swift in Sources */,
+				1EE400632693500300E0D425 /* ChartsViewController.swift in Sources */,
 				1E87811D268913AF00FE11C6 /* KeywordModel.swift in Sources */,
 				1E665697268D5287008329DC /* Formatters.swift in Sources */,
 				1EC30A9626868834008CF69A /* Keywords.swift in Sources */,
@@ -276,9 +298,9 @@
 				1EBDC0892682903A0068307F /* Constant.swift in Sources */,
 				1E665699268E3CFE008329DC /* StatisticResults.swift in Sources */,
 				1EBDC087268286120068307F /* DomainViewController.swift in Sources */,
-				1E990F6A268B6B2800EA258E /* LinkListViewController.swift in Sources */,
 				1E7679D626805A0600D129DD /* AppDelegate.swift in Sources */,
 				1E990F72268B895C00EA258E /* WebViewController.swift in Sources */,
+				1EE400742693DF4C00E0D425 /* LinkListViewController.swift in Sources */,
 				1E7679D826805A0600D129DD /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -496,7 +518,15 @@
 			repositoryURL = "https://github.com/realm/realm-cocoa.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 10.8.1;
+				minimumVersion = 10.9.0;
+			};
+		};
+		1EE400702693A3D900E0D425 /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielgindi/Charts";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -516,6 +546,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1EC30A8E26868755008CF69A /* XCRemoteSwiftPackageReference "realm-cocoa" */;
 			productName = Realm;
+		};
+		1EE400712693A3D900E0D425 /* Charts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1EE400702693A3D900E0D425 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = Charts;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -46,6 +46,66 @@
             </objects>
             <point key="canvasLocation" x="2139.130434782609" y="78.348214285714278"/>
         </scene>
+        <!--Link List View Controller-->
+        <scene sceneID="Ev5-YA-ibt">
+            <objects>
+                <viewController id="I4P-Lb-ANf" customClass="LinkListViewController" customModule="FNP_Seo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="yRb-Ph-1s3">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3pb-47-Hql" customClass="LineChartView" customModule="Charts">
+                                <rect key="frame" x="0.0" y="88" width="414" height="200"/>
+                                <subviews>
+                                    <button opaque="NO" alpha="0.050000000000000003" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ncu-mp-76Z">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="200"/>
+                                        <color key="backgroundColor" systemColor="labelColor"/>
+                                        <connections>
+                                            <segue destination="YHu-4j-INO" kind="presentation" identifier="LinkToChart" modalTransitionStyle="flipHorizontal" id="t1F-WR-xtD"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="59y-Uv-IYE"/>
+                                    <constraint firstItem="ncu-mp-76Z" firstAttribute="leading" secondItem="3pb-47-Hql" secondAttribute="leading" id="AzW-4X-xxn"/>
+                                    <constraint firstAttribute="trailing" secondItem="ncu-mp-76Z" secondAttribute="trailing" id="Cpx-ki-KlG"/>
+                                    <constraint firstItem="ncu-mp-76Z" firstAttribute="top" secondItem="3pb-47-Hql" secondAttribute="top" id="JWU-pt-93l"/>
+                                    <constraint firstAttribute="bottom" secondItem="ncu-mp-76Z" secondAttribute="bottom" id="vRx-Ye-Krq"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="d88-HB-ac3">
+                                <rect key="frame" x="0.0" y="289" width="414" height="573"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="I4P-Lb-ANf" id="4PI-IP-OdH"/>
+                                    <outlet property="delegate" destination="I4P-Lb-ANf" id="61v-N4-qSl"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="dAf-vQ-exe"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="d88-HB-ac3" firstAttribute="trailing" secondItem="dAf-vQ-exe" secondAttribute="trailing" id="05G-u4-T0i"/>
+                            <constraint firstItem="3pb-47-Hql" firstAttribute="top" secondItem="dAf-vQ-exe" secondAttribute="top" id="26N-hu-exC"/>
+                            <constraint firstItem="d88-HB-ac3" firstAttribute="leading" secondItem="dAf-vQ-exe" secondAttribute="leading" id="GqM-Tf-6ff"/>
+                            <constraint firstItem="d88-HB-ac3" firstAttribute="bottom" secondItem="dAf-vQ-exe" secondAttribute="bottom" id="PaU-VJ-aw3"/>
+                            <constraint firstItem="d88-HB-ac3" firstAttribute="top" secondItem="3pb-47-Hql" secondAttribute="bottom" constant="1" id="mhf-0k-Bti"/>
+                            <constraint firstItem="3pb-47-Hql" firstAttribute="trailing" secondItem="dAf-vQ-exe" secondAttribute="trailing" id="rq2-VQ-6ar"/>
+                            <constraint firstItem="3pb-47-Hql" firstAttribute="leading" secondItem="dAf-vQ-exe" secondAttribute="leading" id="uXK-l4-sCc"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="fsO-rp-Awz"/>
+                    <connections>
+                        <outlet property="lineChartView" destination="3pb-47-Hql" id="Sj7-Fz-3lt"/>
+                        <outlet property="tableView" destination="d88-HB-ac3" id="Xdo-tk-afJ"/>
+                        <segue destination="5VF-ww-hiu" kind="show" identifier="LinkToWebView" id="WQY-gA-Bh8"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GTo-KV-M6h" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3737.68115942029" y="77.678571428571431"/>
+        </scene>
         <!--Label-->
         <scene sceneID="8RH-3o-KDh">
             <objects>
@@ -191,46 +251,28 @@
                     </refreshControl>
                     <connections>
                         <outlet property="alexaResultLabel" destination="7qo-fe-xxa" id="m1y-4j-fza"/>
-                        <segue destination="81t-Nz-VDP" kind="show" identifier="KeywordToLinks" id="Pgp-PP-Fgu"/>
+                        <segue destination="I4P-Lb-ANf" kind="show" identifier="KeywordToLinks" id="LFb-WS-7BH"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bxZ-c2-rL9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2947.826086956522" y="77.678571428571431"/>
         </scene>
-        <!--Link List View Controller-->
-        <scene sceneID="NVG-Kx-Yz6">
+        <!--Charts View Controller-->
+        <scene sceneID="ZwX-FV-9FN">
             <objects>
-                <tableViewController id="81t-Nz-VDP" customClass="LinkListViewController" customModule="FNP_Seo" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="sNE-T0-PiP">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                <viewController id="YHu-4j-INO" customClass="ChartsViewController" customModule="FNP_Seo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="bv0-62-sFu">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="lYV-pQ-iv6"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <connections>
-                            <outlet property="dataSource" destination="81t-Nz-VDP" id="z9N-fv-Ndg"/>
-                            <outlet property="delegate" destination="81t-Nz-VDP" id="BWg-pB-KbM"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="6Fj-kf-K6h"/>
-                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="YZk-1S-O7E">
-                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <attributedString key="attributedTitle">
-                            <fragment content="Loading...">
-                                <attributes>
-                                    <font key="NSFont" metaFont="cellTitle"/>
-                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                </attributes>
-                            </fragment>
-                        </attributedString>
-                    </refreshControl>
-                    <connections>
-                        <segue destination="5VF-ww-hiu" kind="show" identifier="LinkToWebView" id="yl2-5L-WbL"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="jDl-Hq-VYp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="4iO-MA-IFo"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1B7-90-i7I" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3670" y="78"/>
+            <point key="canvasLocation" x="4661" y="-220"/>
         </scene>
         <!--Web View Controller-->
         <scene sceneID="z1i-Hs-lMW">
@@ -246,7 +288,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nkL-gb-HFk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4365.217391304348" y="78.348214285714278"/>
+            <point key="canvasLocation" x="4661" y="469"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Jus-R1-DWE">
