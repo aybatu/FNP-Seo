@@ -55,7 +55,7 @@
 		1E3002C72690B2D900EE8477 /* AlexaDataBrain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlexaDataBrain.swift; sourceTree = "<group>"; };
 		1E665696268D5287008329DC /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
 		1E665698268E3CFE008329DC /* StatisticResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticResults.swift; sourceTree = "<group>"; };
-		1E7679D226805A0600D129DD /* FNP Seo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FNP Seo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1E7679D226805A0600D129DD /* SEO LIFE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SEO LIFE.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E7679D526805A0600D129DD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1E7679D726805A0600D129DD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		1E7679DC26805A0600D129DD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -97,20 +97,20 @@
 		1E7679C926805A0600D129DD = {
 			isa = PBXGroup;
 			children = (
-				1E7679D426805A0600D129DD /* FNP Seo */,
+				1E7679D426805A0600D129DD /* SEO LIFE */,
 			);
 			sourceTree = "<group>";
 		};
 		1E7679D326805A0600D129DD /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1E7679D226805A0600D129DD /* FNP Seo.app */,
+				1E7679D226805A0600D129DD /* SEO LIFE.app */,
 			);
 			name = Products;
 			path = ..;
 			sourceTree = "<group>";
 		};
-		1E7679D426805A0600D129DD /* FNP Seo */ = {
+		1E7679D426805A0600D129DD /* SEO LIFE */ = {
 			isa = PBXGroup;
 			children = (
 				1E7679D526805A0600D129DD /* AppDelegate.swift */,
@@ -124,7 +124,7 @@
 				1EBDC084268158F00068307F /* GoogleService-Info.plist */,
 				1E7679D326805A0600D129DD /* Products */,
 			);
-			path = "FNP Seo";
+			path = "SEO LIFE";
 			sourceTree = "<group>";
 		};
 		1E7679EC26805A1300D129DD /* Data Model */ = {
@@ -202,9 +202,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1E7679D126805A0600D129DD /* FNP Seo */ = {
+		1E7679D126805A0600D129DD /* SEO LIFE */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1E7679E926805A0700D129DD /* Build configuration list for PBXNativeTarget "FNP Seo" */;
+			buildConfigurationList = 1E7679E926805A0700D129DD /* Build configuration list for PBXNativeTarget "SEO LIFE" */;
 			buildPhases = (
 				1E7679CE26805A0600D129DD /* Sources */,
 				1E7679CF26805A0600D129DD /* Frameworks */,
@@ -215,7 +215,7 @@
 			);
 			dependencies = (
 			);
-			name = "FNP Seo";
+			name = "SEO LIFE";
 			packageProductDependencies = (
 				1EC30A8F26868755008CF69A /* RealmSwift */,
 				1EC30A9126868755008CF69A /* Realm */,
@@ -223,7 +223,7 @@
 				1EE400712693A3D900E0D425 /* Charts */,
 			);
 			productName = "FNP Seo";
-			productReference = 1E7679D226805A0600D129DD /* FNP Seo.app */;
+			productReference = 1E7679D226805A0600D129DD /* SEO LIFE.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -240,7 +240,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 1E7679CD26805A0600D129DD /* Build configuration list for PBXProject "FNP Seo" */;
+			buildConfigurationList = 1E7679CD26805A0600D129DD /* Build configuration list for PBXProject "SEO LIFE" */;
 			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -258,7 +258,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1E7679D126805A0600D129DD /* FNP Seo */,
+				1E7679D126805A0600D129DD /* SEO LIFE */,
 			);
 		};
 /* End PBXProject section */
@@ -450,15 +450,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "FNP Seo/FNP Seo.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DY24C2H8X3;
-				INFOPLIST_FILE = "FNP Seo/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/SEO LIFE/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.Aybatu.FNPSEO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fnpdigital.SEOLIFE;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -469,15 +471,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "FNP Seo/FNP Seo.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DY24C2H8X3;
-				INFOPLIST_FILE = "FNP Seo/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/SEO LIFE/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.Aybatu.FNPSEO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fnpdigital.SEOLIFE;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -486,7 +490,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1E7679CD26805A0600D129DD /* Build configuration list for PBXProject "FNP Seo" */ = {
+		1E7679CD26805A0600D129DD /* Build configuration list for PBXProject "SEO LIFE" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1E7679E726805A0700D129DD /* Debug */,
@@ -495,7 +499,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1E7679E926805A0700D129DD /* Build configuration list for PBXNativeTarget "FNP Seo" */ = {
+		1E7679E926805A0700D129DD /* Build configuration list for PBXNativeTarget "SEO LIFE" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1E7679EA26805A0700D129DD /* Debug */,

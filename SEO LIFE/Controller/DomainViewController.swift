@@ -17,6 +17,7 @@ class DomainViewController: UITableViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = K.appName
         alexa.delegate = self
         navigationItem.backButtonTitle = "Domains"
         loadData()

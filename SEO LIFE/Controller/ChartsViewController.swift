@@ -5,10 +5,10 @@
 //  Created by Aybatu Kerkukluoglu on 5.07.2021.
 //
 
-#if canImport(UIKit)
-    import UIKit
-#endif
+
+import UIKit
 import RealmSwift
+import RealModule
 import Charts
 
 class ChartsViewController: UIViewController, ChartViewDelegate {

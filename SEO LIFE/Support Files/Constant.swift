@@ -8,6 +8,8 @@
 import Foundation
 
 struct K {
+    static let appName = "SEO LIFE"
+    
     struct DomainTable  {
         static let domainCell = "DomainCell"
     }
