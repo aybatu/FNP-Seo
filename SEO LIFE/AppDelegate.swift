@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  FNP Seo
+//  SEO LIFE
 //
 //  Created by Aybatu Kerkukluoglu on 21.06.2021.
 //
