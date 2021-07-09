@@ -52,7 +52,7 @@ public class DateValueFormatter: NSObject, AxisValueFormatter {
     
     override init() {
         super.init()
-        dateFormatter.dateFormat = "dd.mm.yyyy"
+        dateFormatter.dateFormat = "dd.MM.yyyy"
     }
     
     public func stringForValue(_ value: Double, axis: AxisBase?) -> String {
