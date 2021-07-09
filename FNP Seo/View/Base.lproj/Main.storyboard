@@ -61,7 +61,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="200"/>
                                         <color key="backgroundColor" systemColor="labelColor"/>
                                         <connections>
-                                            <segue destination="YHu-4j-INO" kind="presentation" identifier="LinkToChart" modalTransitionStyle="flipHorizontal" id="t1F-WR-xtD"/>
+                                            <segue destination="YHu-4j-INO" kind="presentation" identifier="LinkToChart" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="t1F-WR-xtD"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -261,18 +261,50 @@
         <!--Charts View Controller-->
         <scene sceneID="ZwX-FV-9FN">
             <objects>
-                <viewController id="YHu-4j-INO" customClass="ChartsViewController" customModule="FNP_Seo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalTransitionStyle="flipHorizontal" modalPresentationStyle="overFullScreen" id="YHu-4j-INO" customClass="ChartsViewController" customModule="FNP_Seo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bv0-62-sFu">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pwr-sR-D2w" customClass="LineChartView" customModule="Charts">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="close" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L6Z-5C-AqR">
+                                        <rect key="frame" x="374" y="10" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="30" id="2rR-j2-g83"/>
+                                            <constraint firstAttribute="height" constant="30" id="V7B-YI-QoR"/>
+                                        </constraints>
+                                        <connections>
+                                            <action selector="closePressed:" destination="YHu-4j-INO" eventType="touchUpInside" id="Q7X-gw-LML"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="L6Z-5C-AqR" secondAttribute="trailing" constant="10" id="ClT-T2-TxA"/>
+                                    <constraint firstItem="L6Z-5C-AqR" firstAttribute="top" secondItem="pwr-sR-D2w" secondAttribute="top" constant="10" id="V4d-Bj-o1Z"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="lYV-pQ-iv6"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="pwr-sR-D2w" firstAttribute="bottom" secondItem="bv0-62-sFu" secondAttribute="bottom" id="9fD-o4-0mJ"/>
+                            <constraint firstItem="pwr-sR-D2w" firstAttribute="top" secondItem="bv0-62-sFu" secondAttribute="top" id="D16-AN-8we"/>
+                            <constraint firstItem="pwr-sR-D2w" firstAttribute="trailing" secondItem="bv0-62-sFu" secondAttribute="trailing" id="FL9-hu-XNk"/>
+                            <constraint firstItem="pwr-sR-D2w" firstAttribute="leading" secondItem="bv0-62-sFu" secondAttribute="leading" id="IbO-zi-aQK"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="4iO-MA-IFo"/>
+                    <connections>
+                        <outlet property="button" destination="L6Z-5C-AqR" id="Z0Z-g0-ZdZ"/>
+                        <outlet property="lineChartView" destination="pwr-sR-D2w" id="2Vn-Ld-GYf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1B7-90-i7I" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4661" y="-220"/>
+            <point key="canvasLocation" x="4660.8695652173919" y="-220.3125"/>
         </scene>
         <!--Web View Controller-->
         <scene sceneID="z1i-Hs-lMW">

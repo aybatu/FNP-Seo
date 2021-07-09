@@ -19,19 +19,26 @@ class Decoder {
         let urlString = "https://data.alexa.com/data?cli=10&dat=snbamz&url=\(urlDomain)"
         guard let url = URL(string: urlString) else {return}
         let _ = URLSession(configuration: .default).dataTask(with: url) { (data, response, err) in
-            guard let data = data, err == nil else {
-                print("Error dataTask alexa: \(err!)")
+            if let error = err {
+                print("Error dataTask alexa: \(error)")
                 return
             }
-           
-            let decoder = XMLDecoder()
-            decoder.shouldProcessNamespaces = true
-            do {
-                let data = try decoder.decode(Alexa.self, from: data)
-                let alexa = data.SD[1].POPULARITY[0].TEXT
-                self.delegate?.alexaResult(alexaResult: alexa, domainURL: urlDomain)
-            } catch {
-                print(error)
+            if let dataSafe = data {
+                let decoder = XMLDecoder()
+                decoder.shouldProcessNamespaces = true
+                do {
+                    
+                    
+                    let data = try decoder.decode(Alexa.self, from: dataSafe)
+                    if let dataCount = data.SD?.count {
+                        if dataCount > 1 {
+                            let alexa = data.SD?[1].POPULARITY[0].TEXT
+                            self.delegate?.alexaResult(alexaResult: alexa!, domainURL: urlDomain)
+                        }
+                    }
+                } catch {
+                    print(error)
+                }
             }
         }.resume()
     }

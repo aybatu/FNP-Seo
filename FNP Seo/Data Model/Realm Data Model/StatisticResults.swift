@@ -10,7 +10,7 @@ import RealmSwift
 
 class StatisticResult: Object {
     @objc dynamic var name: String = ""
-    @objc dynamic var date: Date = Date()
+    @objc dynamic var date: TimeInterval = Date().timeIntervalSince1970
     @objc dynamic var rank: Int = 0
     @objc dynamic var requestedURL: String = ""
 }

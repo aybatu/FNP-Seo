@@ -8,7 +8,7 @@
 import Foundation
 
 struct Alexa: Codable, Equatable {
-    let SD: [SD]
+    let SD: [SD]?
     
     struct SD: Codable, Equatable {
         let POPULARITY: [POPULARITY]

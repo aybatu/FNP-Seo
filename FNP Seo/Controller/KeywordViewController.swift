@@ -128,8 +128,8 @@ class KeywordViewController: UITableViewController {
         }
         
         if 0 < keywordModel.keywordRanks!.count  && 0 < keywordModel.keywordNames.count && indexPath.section == 1 {
-            keywordCell.detailTextLabel?.text = String(keywordModel.keywordRanks![indexPath.row])
-            keywordCell.textLabel?.text = keywordModel.keywordNames[indexPath.row]
+            keywordCell.detailTextLabel?.text = String((selectedDomain?.keywords[indexPath.row].rank)!)
+            keywordCell.textLabel?.text = selectedDomain?.keywords[indexPath.row].name
             result = keywordCell
         }
         return result
@@ -147,8 +147,8 @@ class KeywordViewController: UITableViewController {
         
         if let indexPath = tableView.indexPathForSelectedRow {
             destinationVC.keywordRaw = selectedDomain?.keywords[indexPath.row].name
-            destinationVC.selectedKeyword = statistics
-            
+            destinationVC.selectedKeyword = selectedDomain?.keywords[indexPath.row].statistics.sorted(byKeyPath: "date", ascending: true)
+           
         }
     }
    
@@ -209,11 +209,11 @@ extension KeywordViewController: SEODelegate {
                 try self.realm.write {
                     let newKeyword = Keywords()
                     let newStatistic = StatisticResult()
-                    let date = Date()
+                    let date = Date().timeIntervalSince1970
                     var dateComponent = DateComponents()
                     dateComponent.day = 1
                     
-                    newStatistic.date = Date()
+                    newStatistic.date = Date().timeIntervalSince1970
                     newStatistic.name = keyword.removeDash()
                     newStatistic.rank = listLine
                     newStatistic.requestedURL = link
@@ -227,7 +227,8 @@ extension KeywordViewController: SEODelegate {
                         return
                     }
                     guard let oldStatistic = newKey.statistics.last?.date else {return}
-                    guard let futureDate = Calendar.current.date(byAdding: dateComponent, to: oldStatistic) else {return}
+                    let oldStatisticDate = Date(timeIntervalSince1970: oldStatistic)
+                    guard let futureDate = Calendar.current.date(byAdding: dateComponent, to: oldStatisticDate)?.timeIntervalSince1970 else {return}
 
                     newKey.rank = listLine
                     newKey.name = keyword

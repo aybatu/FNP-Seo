@@ -29,8 +29,11 @@ class LinkListViewController: UIViewController, SEODelegate {
         tableView.register(UINib(nibName: K.Links.linkCellNib, bundle: nil), forCellReuseIdentifier: K.Links.linkCell)
         
         lineChartView.delegate = self
-        lineChartView.frame = CGRect(x: 0, y: 0, width: lineChartView.frame.size.width, height: lineChartView.frame.size.height)
+        
+        
         lineChartData()
+        chartView()
+       
     }
 
 
@@ -55,26 +58,6 @@ class LinkListViewController: UIViewController, SEODelegate {
     func didFailWithError(error: Error) {
 //
     }
-}
-    //MARK: - Line Chart
-
-extension LinkListViewController: ChartViewDelegate {
-    func lineChartData() {
-        let set = LineChartDataSet(entries: [
-        ChartDataEntry(x: 1, y: 1),
-            ChartDataEntry(x: 2, y: 2),
-            ChartDataEntry(x: 3, y: 3),
-            ChartDataEntry(x: 4, y: 4),
-            ChartDataEntry(x: 5, y: 5),
-            ChartDataEntry(x: 6, y: 7),
-            ChartDataEntry(x: 7, y: 7),
-            ChartDataEntry(x: 8, y: 8)
-        ])
-        set.colors = ChartColorTemplates.material()
-        let data = LineChartData(dataSet: set)
-        lineChartView.data = data
-    }
-
 }
 
 //MARK: - Table View Data Source Methods
@@ -106,7 +89,7 @@ extension LinkListViewController: UITableViewDataSource {
 extension LinkListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Web Sites Results For The Keyword"
+        return "Website Results For The Keyword"
     }
 //
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -121,7 +104,48 @@ extension LinkListViewController: UITableViewDelegate {
             if let indexPath = tableView.indexPathForSelectedRow {
                 destinationVC.url = linkArray[indexPath.row]
             }
+        } else if segue.identifier == K.Segue.linkToChart {
+            let destinationVC = segue.destination as! ChartsViewController
+            destinationVC.selectedKeyword = selectedKeyword
         }
     }
+
+}
+
+//MARK: - Line Chart
+
+extension LinkListViewController: ChartViewDelegate {
+    
+    func chartView() {
+        lineChartView.frame = CGRect(x: 0, y: 0, width: lineChartView.frame.size.width, height: lineChartView.frame.size.height)
+        lineChartView.rightAxis.enabled = false
+        
+        let xAxis = lineChartView.xAxis
+        xAxis.labelPosition = .top
+        if selectedKeyword!.count < 7 {
+            xAxis.setLabelCount(selectedKeyword!.count, force: true)
+        } else {
+            lineChartView.xAxis.axisMaxLabels = 7
+        }
+        lineChartView.setVisibleXRange(minXRange: 50000, maxXRange: 500000)
+    }
+    
+func lineChartData() {
+    let listFormatter = DateValueFormatter()
+    guard let realmData = selectedKeyword else {return}
+    var chartDataEntryRaw = [ChartDataEntry]()
+
+    realmData.forEach { statics in
+        chartDataEntryRaw.append(ChartDataEntry(x: statics.date, y: Double(statics.rank)))
+    }
+
+    let chartDataEntry = chartDataEntryRaw
+
+    let dataSet = LineChartDataSet(entries: chartDataEntry, label: "Rank")
+    let data = LineChartData(dataSet: dataSet)
+    lineChartView.xAxis.valueFormatter = listFormatter
+    dataSet.colors = ChartColorTemplates.material()
+    lineChartView.data = data
+}
 
 }
