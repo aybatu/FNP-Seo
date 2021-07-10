@@ -52,34 +52,35 @@ class ChartsViewController: UIViewController, ChartViewDelegate {
         limitLine.valueTextColor = .systemRed
         limitLine.drawLabelEnabled = true
         lineChartView.leftAxis.addLimitLine(limitLine)
+        lineChartView.leftAxis.granularity = 1
+        lineChartView.leftAxis.granularityEnabled = true
+        
         
         let xaxis = lineChartView.xAxis
         xaxis.valueFormatter = DateValueFormatter()
         xaxis.labelFont = .systemFont(ofSize: 12, weight: .light)
         xaxis.labelTextColor = .label
-        if selectedKeyword!.count < 8 {
-            xaxis.setLabelCount(selectedKeyword!.count , force: true)
+        if selectedKeyword!.count < 5 {
+            xaxis.setLabelCount(selectedKeyword!.count, force: true)
         } else {
-            xaxis.axisMaxLabels = 7
+            xaxis.axisMaxLabels = 4
         }
+        xaxis.avoidFirstLastClippingEnabled = true
         xaxis.labelPosition = .bottom
-        xaxis.drawGridLinesEnabled = false
+        xaxis.drawGridLinesEnabled = true
         xaxis.axisLineColor = .label
         xaxis.axisLineWidth = 1
-        xaxis.avoidFirstLastClippingEnabled = true
-        lineChartView.setVisibleXRange(minXRange: 0, maxXRange: 7)
+        lineChartView.setVisibleXRange(minXRange: 1, maxXRange: 7)
 
         lineChartView.animate(xAxisDuration: 2)
         lineChartView.rightAxis.enabled = false
-        
-        lineChartView.setScaleEnabled(true)
         lineChartView.setViewPortOffsets(left: 20, top: 20, right: 30, bottom: 35)
     }
 
    
     
     func lineChartData() {
-        guard let realmData = selectedKeyword else {return}
+        guard let realmData = selectedKeyword?.sorted(byKeyPath: "date", ascending: true) else {return}
         var chartDataEntryRaw = [ChartDataEntry]()
         
         realmData.forEach { statics in
@@ -103,11 +104,6 @@ class ChartsViewController: UIViewController, ChartViewDelegate {
         dataSet.drawFilledEnabled = true
         dataSet.drawValuesEnabled = true
         
-        
-        
-        
-        
-      
         lineChartView.data = data
        
     }
