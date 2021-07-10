@@ -75,6 +75,7 @@
 		1EBDC08E2682A5840068307F /* KeywordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordViewController.swift; sourceTree = "<group>"; };
 		1EC30A9326868828008CF69A /* WebSites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSites.swift; sourceTree = "<group>"; };
 		1EC30A9526868834008CF69A /* Keywords.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keywords.swift; sourceTree = "<group>"; };
+		1ED23385269950E300769119 /* SEO LIFE.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "SEO LIFE.entitlements"; sourceTree = "<group>"; };
 		1EE400622693500300E0D425 /* ChartsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsViewController.swift; sourceTree = "<group>"; };
 		1EE400732693DF4C00E0D425 /* LinkListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkListViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -113,6 +114,7 @@
 		1E7679D426805A0600D129DD /* SEO LIFE */ = {
 			isa = PBXGroup;
 			children = (
+				1ED23385269950E300769119 /* SEO LIFE.entitlements */,
 				1E7679D526805A0600D129DD /* AppDelegate.swift */,
 				1E7679D726805A0600D129DD /* SceneDelegate.swift */,
 				1E7679EC26805A1300D129DD /* Data Model */,
@@ -450,7 +452,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "FNP Seo/FNP Seo.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "SEO LIFE/SEO LIFE.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -464,7 +466,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
-				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -475,7 +477,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "FNP Seo/FNP Seo.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "SEO LIFE/SEO LIFE.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -489,7 +491,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
-				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
