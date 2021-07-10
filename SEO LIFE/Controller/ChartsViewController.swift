@@ -8,7 +8,6 @@
 
 import UIKit
 import RealmSwift
-import RealModule
 import Charts
 
 class ChartsViewController: UIViewController, ChartViewDelegate {
@@ -41,6 +40,8 @@ class ChartsViewController: UIViewController, ChartViewDelegate {
     
     @IBAction func closePressed(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
+        let value = UIInterfaceOrientation.portrait.rawValue
+        UIDevice.current.setValue(value, forKey: "orientation")
     }
     
     func setView() {

@@ -18,6 +18,10 @@ class LinkListViewController: UIViewController, SEODelegate {
     var linkArray = [String]()
     var selectedKeyword: Results<StatisticResult>?
     
+    override var shouldAutorotate: Bool {
+        return true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Results For: \(keywordRaw!)"
