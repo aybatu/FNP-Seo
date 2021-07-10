@@ -41,7 +41,7 @@ extension Double {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en")
         dateFormatter.dateStyle = .medium
-
+        dateFormatter.timeZone = NSTimeZone (abbreviation: "GMT + 3: 00")! as TimeZone
         return dateFormatter.string(from: date)
     }
 }
@@ -49,17 +49,16 @@ extension Double {
 
 public class DateValueFormatter: NSObject, AxisValueFormatter {
     private let dateFormatter = DateFormatter()
-    
+
     override init() {
         super.init()
-        dateFormatter.dateFormat = "dd.MM.yyyy"
-    }
     
+        dateFormatter.dateFormat = "dd.MM.yy"
+    }
+
     public func stringForValue(_ value: Double, axis: AxisBase?) -> String {
-        return dateFormatter.string(from: Date(timeIntervalSince1970: value))
+        let date = Date(timeIntervalSince1970: Date().timeIntervalSince1970 + (value * 3600 * 24))
+        return dateFormatter.string(from: date)
     }
 }
-
-
-
 

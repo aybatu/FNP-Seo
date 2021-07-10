@@ -32,8 +32,9 @@ class ChartsViewController: UIViewController, ChartViewDelegate {
         let value = UIInterfaceOrientation.landscapeLeft.rawValue
         UIDevice.current.setValue(value, forKey: "orientation")
         
-        setView()
+       
         lineChartData()
+        setView()
     }
     
     
@@ -43,26 +44,36 @@ class ChartsViewController: UIViewController, ChartViewDelegate {
     }
     
     func setView() {
- 
+        lineChartView.leftAxis.enabled = true
+        let limitLine = ChartLimitLine(limit: 10.0, label: "RANK: 10")
+        limitLine.enabled = true
+        limitLine.lineColor = .systemRed
+        limitLine.lineWidth = 2
+        limitLine.valueTextColor = .systemRed
+        limitLine.drawLabelEnabled = true
+        lineChartView.leftAxis.addLimitLine(limitLine)
+        
         let xaxis = lineChartView.xAxis
+        xaxis.valueFormatter = DateValueFormatter()
         xaxis.labelFont = .systemFont(ofSize: 12, weight: .light)
         xaxis.labelTextColor = .label
-        xaxis.axisMaxLabels = 7
-        xaxis.setLabelCount(selectedKeyword!.count , force: true)
-        xaxis.labelPosition = .top
+        if selectedKeyword!.count < 8 {
+            xaxis.setLabelCount(selectedKeyword!.count , force: true)
+        } else {
+            xaxis.axisMaxLabels = 7
+        }
+        xaxis.labelPosition = .bottom
         xaxis.drawGridLinesEnabled = false
         xaxis.axisLineColor = .label
         xaxis.axisLineWidth = 1
-        xaxis.valueFormatter = DateValueFormatter()
-        
+        xaxis.avoidFirstLastClippingEnabled = true
+        lineChartView.setVisibleXRange(minXRange: 0, maxXRange: 7)
 
         lineChartView.animate(xAxisDuration: 2)
         lineChartView.rightAxis.enabled = false
-               
-        lineChartView.backgroundColor = .white
         
         lineChartView.setScaleEnabled(true)
-        lineChartView.setViewPortOffsets(left: 45, top: 50, right: 40, bottom: 0)
+        lineChartView.setViewPortOffsets(left: 20, top: 20, right: 30, bottom: 35)
     }
 
    
@@ -72,37 +83,33 @@ class ChartsViewController: UIViewController, ChartViewDelegate {
         var chartDataEntryRaw = [ChartDataEntry]()
         
         realmData.forEach { statics in
-            chartDataEntryRaw.append(ChartDataEntry(x: Double(statics.date), y: Double(statics.rank)))
+            let day = (statics.date - Date().timeIntervalSince1970) / (3600 * 24)
+            chartDataEntryRaw.append(ChartDataEntry(x: floor(day), y: Double(statics.rank)))
         }
-       
         
         let chartDataEntry = chartDataEntryRaw
 
         let dataSet = LineChartDataSet(entries: chartDataEntry, label: "Rank")
         let data = LineChartData(dataSet: dataSet)
-        
-//
-  
+ 
         dataSet.mode = .horizontalBezier
         dataSet.lineWidth = 1
         dataSet.setColor(.label)
         dataSet.setColor(.systemTeal)
         dataSet.fillColor = .systemTeal
         dataSet.fillAlpha = 0.1
-        
-        dataSet.axisDependency = .left
-
-        dataSet.highlightEnabled = true
-        dataSet.highlightColor = .systemRed
-        dataSet.highlightLineWidth = 1
-
-        dataSet.drawVerticalHighlightIndicatorEnabled = false
+       
+        dataSet.highlightEnabled = false
         dataSet.drawFilledEnabled = true
         dataSet.drawValuesEnabled = true
+        
+        
+        
+        
+        
       
         lineChartView.data = data
-        
-        lineChartView.setVisibleXRange(minXRange: 50000, maxXRange: 600000)
+       
     }
 }
 

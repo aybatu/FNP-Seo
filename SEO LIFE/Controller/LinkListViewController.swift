@@ -33,17 +33,17 @@ class LinkListViewController: UIViewController, SEODelegate {
         
         lineChartData()
         chartView()
-       
+        
     }
-
-
-
+    
+    
+    
     //MARK: - Seo Delegate Methods
-
+    
     func seoModel(link: String, url: String, listLine: Int, keyword: String) {
-
+        
     }
-
+    
     func getLinks(link: String) {
         DispatchQueue.main.async {
             self.linkArray.append(link)
@@ -52,11 +52,11 @@ class LinkListViewController: UIViewController, SEODelegate {
     }
     
     func seoModelUpdate(link: String, url: String, listLine: Int, keyword: String) {
-//
+        //
     }
     
     func didFailWithError(error: Error) {
-//
+        //
     }
 }
 
@@ -71,16 +71,16 @@ extension LinkListViewController: UITableViewDataSource {
         return linkArray.count
     }
     
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: K.Links.linkCell, for: indexPath) as! LinkListCell
- 
+        
         cell.rankLabel.text = String(indexPath.row + 1)
         cell.urlLabel.text = linkArray[indexPath.row]
-
+        
         return cell
     }
-
+    
 }
 
 
@@ -91,16 +91,16 @@ extension LinkListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "Website Results For The Keyword"
     }
-//
+    //
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: K.Segue.linkToWeb, sender: self)
         tableView.deselectRow(at: indexPath, animated: true)
     }
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == K.Segue.linkToWeb {
             let destinationVC = segue.destination as! WebViewController
-                
+            
             if let indexPath = tableView.indexPathForSelectedRow {
                 destinationVC.url = linkArray[indexPath.row]
             }
@@ -109,7 +109,7 @@ extension LinkListViewController: UITableViewDelegate {
             destinationVC.selectedKeyword = selectedKeyword
         }
     }
-
+    
 }
 
 //MARK: - Line Chart
@@ -117,35 +117,48 @@ extension LinkListViewController: UITableViewDelegate {
 extension LinkListViewController: ChartViewDelegate {
     
     func chartView() {
+        let xAxis = lineChartView.xAxis
+        xAxis.granularityEnabled = true
+        xAxis.granularity = 1.0
+        xAxis.labelRotationAngle = 0
+        xAxis.valueFormatter = DateValueFormatter()
+        xAxis.labelPosition = .bottom
+        if selectedKeyword!.count < 5 {
+            xAxis.setLabelCount(selectedKeyword!.count, force: true)
+        } else {
+            xAxis.axisMaxLabels = 4
+        }
+        xAxis.avoidFirstLastClippingEnabled = true
+        lineChartView.setVisibleXRange(minXRange: 1, maxXRange: 5)
+        
+        let yAxis = lineChartView.leftAxis
+        yAxis.granularityEnabled = true
+        yAxis.granularity = 1
+        if selectedKeyword!.count < 10 {
+            yAxis.labelCount = selectedKeyword!.count
+        } else {
+            yAxis.setLabelCount(10, force: true)
+        }
+        
         lineChartView.frame = CGRect(x: 0, y: 0, width: lineChartView.frame.size.width, height: lineChartView.frame.size.height)
         lineChartView.rightAxis.enabled = false
         
-        let xAxis = lineChartView.xAxis
-        xAxis.labelPosition = .top
-        if selectedKeyword!.count < 7 {
-            xAxis.setLabelCount(selectedKeyword!.count, force: true)
-        } else {
-            lineChartView.xAxis.axisMaxLabels = 7
-        }
-        lineChartView.setVisibleXRange(minXRange: 50000, maxXRange: 500000)
     }
     
-func lineChartData() {
-    let listFormatter = DateValueFormatter()
-    guard let realmData = selectedKeyword else {return}
-    var chartDataEntryRaw = [ChartDataEntry]()
-
-    realmData.forEach { statics in
-        chartDataEntryRaw.append(ChartDataEntry(x: statics.date, y: Double(statics.rank)))
+    func lineChartData() {
+        guard let realmData = selectedKeyword?.sorted(byKeyPath: "date", ascending: true) else {return}
+        var chartDataEntryRaw = [ChartDataEntry]()
+        
+        realmData.forEach { statics in
+            let day = (statics.date - Date().timeIntervalSince1970) / (3600 * 24)
+            chartDataEntryRaw.append(ChartDataEntry(x: floor(day), y: Double(statics.rank)))
+        }
+        
+        let dataSet = LineChartDataSet(entries: chartDataEntryRaw, label: "Rank")
+        let data = LineChartData(dataSet: dataSet)
+        
+        dataSet.colors = ChartColorTemplates.material()
+        lineChartView.data = data
     }
-
-    let chartDataEntry = chartDataEntryRaw
-
-    let dataSet = LineChartDataSet(entries: chartDataEntry, label: "Rank")
-    let data = LineChartData(dataSet: dataSet)
-    lineChartView.xAxis.valueFormatter = listFormatter
-    dataSet.colors = ChartColorTemplates.material()
-    lineChartView.data = data
-}
-
+    
 }
