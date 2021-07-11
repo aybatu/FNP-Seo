@@ -13,33 +13,28 @@ class LinkListViewController: UIViewController, SEODelegate {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var lineChartView: LineChartView!
     
-    var seo = SEO()
+    lazy var seo = SEO()
     var keywordRaw: String?
-    var linkArray = [String]()
+    lazy var linkArray = [String]()
     var selectedKeyword: Results<StatisticResult>?
-    
-    override var shouldAutorotate: Bool {
-        return true
-    }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        lineChartView.delegate = self
+        seo.delegate = self
+        
         navigationItem.title = "Results For: \(keywordRaw!)"
         navigationItem.backButtonTitle = "Back"
         
-        seo.delegate = self
-        seo.fetchSEO(keyword: keywordRaw!, requestURL: nil, start: 1)
-        
         tableView.register(UINib(nibName: K.Links.linkCellNib, bundle: nil), forCellReuseIdentifier: K.Links.linkCell)
-        
-        lineChartView.delegate = self
-        
         
         lineChartData()
         chartView()
-        
     }
-    
+
+    override func viewWillAppear(_ animated: Bool) {
+        seo.fetchSEO(keyword: keywordRaw!, requestURL: nil, start: 1)
+    }
     
     
     //MARK: - Seo Delegate Methods
@@ -53,10 +48,6 @@ class LinkListViewController: UIViewController, SEODelegate {
             self.linkArray.append(link)
             self.tableView.reloadData()
         }
-    }
-    
-    func seoModelUpdate(link: String, url: String, listLine: Int, keyword: String) {
-        //
     }
     
     func didFailWithError(error: Error) {
@@ -116,7 +107,7 @@ extension LinkListViewController: UITableViewDelegate {
     
 }
 
-//MARK: - Line Chart
+//MARK: - Line Chart View
 
 extension LinkListViewController: ChartViewDelegate {
     
@@ -148,7 +139,7 @@ extension LinkListViewController: ChartViewDelegate {
         lineChartView.rightAxis.enabled = false
         
     }
-    
+    //MARK: - Line Chart Data
     func lineChartData() {
         guard let realmData = selectedKeyword?.sorted(byKeyPath: "date", ascending: true) else {return}
         var chartDataEntryRaw = [ChartDataEntry]()

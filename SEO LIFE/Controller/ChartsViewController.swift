@@ -31,18 +31,19 @@ class ChartsViewController: UIViewController, ChartViewDelegate {
         let value = UIInterfaceOrientation.landscapeLeft.rawValue
         UIDevice.current.setValue(value, forKey: "orientation")
         
-       
         lineChartData()
         setView()
     }
     
-    
+    //Mark: Close Button Pressed
     
     @IBAction func closePressed(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
         let value = UIInterfaceOrientation.portrait.rawValue
         UIDevice.current.setValue(value, forKey: "orientation")
     }
+    
+    //MARK: - Line Chart View
     
     func setView() {
         lineChartView.leftAxis.enabled = true
@@ -78,7 +79,7 @@ class ChartsViewController: UIViewController, ChartViewDelegate {
         lineChartView.setViewPortOffsets(left: 20, top: 20, right: 30, bottom: 35)
     }
 
-   
+   //MARK: - Line Chart Data
     
     func lineChartData() {
         guard let realmData = selectedKeyword?.sorted(byKeyPath: "date", ascending: true) else {return}

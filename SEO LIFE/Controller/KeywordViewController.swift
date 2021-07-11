@@ -13,9 +13,9 @@ class KeywordViewController: UITableViewController {
     @IBOutlet weak var alexaResultLabel: UILabel!
     
     let realm = try! Realm()
-    var keywordModel = KeywordModel()
-    var seo = SEO()
-    
+    lazy var keywordModel = KeywordModel()
+    lazy var seo = SEO()
+
     var keyword: Results<Keywords>?
     var statistics: Results<StatisticResult>?
     
@@ -33,6 +33,8 @@ class KeywordViewController: UITableViewController {
         navigationItem.backButtonTitle = "Keywords"
         alexaResultLabel.text = selectedDomain?.alexaResult ?? "No Result."
     }
+    
+    //MARK: - Table View Pull Refresh
     
     @objc func refresh(_ sender: AnyObject) {
         var keywordArray = [String]()
@@ -56,6 +58,8 @@ class KeywordViewController: UITableViewController {
             self.refreshControl?.endRefreshing()
         }
     }
+    
+    //MARK: - Add Button Pressed
     
     @IBAction func addPressed(_ sender: UIBarButtonItem) {
         var text = UITextField()
@@ -246,7 +250,7 @@ extension KeywordViewController: SEODelegate {
     }
     
     func getLinks(link: String) {
-        
+        //used for link list view controller
     }
     
     
