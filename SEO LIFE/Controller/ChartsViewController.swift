@@ -87,9 +87,9 @@ class ChartsViewController: UIViewController, ChartViewDelegate {
         
         realmData.forEach { statics in
             let day = (statics.date - Date().timeIntervalSince1970) / (3600 * 24)
-            chartDataEntryRaw.append(ChartDataEntry(x: floor(day), y: Double(statics.rank)))
+            chartDataEntryRaw.append(ChartDataEntry(x: round(1 * day / 1), y: Double(statics.rank)))
         }
-        
+    
         let chartDataEntry = chartDataEntryRaw
 
         let dataSet = LineChartDataSet(entries: chartDataEntry, label: "Rank")
@@ -107,7 +107,6 @@ class ChartsViewController: UIViewController, ChartViewDelegate {
         dataSet.drawValuesEnabled = true
         
         lineChartView.data = data
-       
     }
 }
 

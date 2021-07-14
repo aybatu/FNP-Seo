@@ -213,11 +213,14 @@ extension KeywordViewController: SEODelegate {
                 try self.realm.write {
                     let newKeyword = Keywords()
                     let newStatistic = StatisticResult()
-                    let date = Date().timeIntervalSince1970
+                
+                    let dateRaw = Date()
+                    let date = dateRaw.getFormattedDate(format: "yyyy-MM-dd hh:mm")
+                    
                     var dateComponent = DateComponents()
                     dateComponent.day = 1
                     
-                    newStatistic.date = Date().timeIntervalSince1970
+                    newStatistic.date = dateRaw.timeIntervalSince1970
                     newStatistic.name = keyword.removeDash()
                     newStatistic.rank = listLine
                     newStatistic.requestedURL = link
@@ -230,14 +233,19 @@ extension KeywordViewController: SEODelegate {
                         self.loadData()
                         return
                     }
+                
                     guard let oldStatistic = newKey.statistics.last?.date else {return}
                     let oldStatisticDate = Date(timeIntervalSince1970: oldStatistic)
-                    guard let futureDate = Calendar.current.date(byAdding: dateComponent, to: oldStatisticDate)?.timeIntervalSince1970 else {return}
-
+                    
+                    guard let futureDate = Calendar.current.date(byAdding: dateComponent, to: oldStatisticDate) else {return}
                     newKey.rank = listLine
                     newKey.name = keyword
-                    if date >= futureDate {
+                    
+                    if date >= futureDate.getFormattedDate(format: "dd.MM.yyyy") {
                         newKey.statistics.append(newStatistic)
+                    } else {
+                        newKey.statistics.last?.rank = listLine
+                        newKey.statistics.last?.date = Date().timeIntervalSince1970
                     }
                     
                     self.loadData()

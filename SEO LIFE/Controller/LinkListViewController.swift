@@ -146,7 +146,7 @@ extension LinkListViewController: ChartViewDelegate {
         
         realmData.forEach { statics in
             let day = (statics.date - Date().timeIntervalSince1970) / (3600 * 24)
-            chartDataEntryRaw.append(ChartDataEntry(x: floor(day), y: Double(statics.rank)))
+            chartDataEntryRaw.append(ChartDataEntry(x: round(1 * day / 1), y: Double(statics.rank)))
         }
         
         let dataSet = LineChartDataSet(entries: chartDataEntryRaw, label: "Rank")

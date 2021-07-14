@@ -16,6 +16,7 @@ extension Date {
     func getFormattedDate(format: String) -> String {
         let dateformat = DateFormatter()
         dateformat.dateFormat = format
+        dateformat.locale = .current
         return dateformat.string(from: self)
     }
 }
@@ -37,11 +38,9 @@ extension String {
 extension Double {
     func getDateStringFromUTC() -> String {
         let date = Date(timeIntervalSince1970: self)
-
         let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "en")
+        dateFormatter.locale = .current
         dateFormatter.dateStyle = .medium
-        dateFormatter.timeZone = NSTimeZone (abbreviation: "GMT + 3: 00")! as TimeZone
         return dateFormatter.string(from: date)
     }
 }
