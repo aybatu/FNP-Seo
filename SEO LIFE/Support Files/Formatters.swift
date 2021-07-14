@@ -27,11 +27,11 @@ extension String {
     }
     
     func removeWhitespace() -> String {
-        return self.replace(string: " ", replacement: "-")
+        return self.replace(string: " ", replacement: "+")
     }
     
     func removeDash() -> String {
-        return self.replace(string: "-", replacement: " ")
+        return self.replace(string: "+", replacement: " ")
     }
 }
 

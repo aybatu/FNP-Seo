@@ -15,15 +15,15 @@ import Foundation
 
 struct SEO {
     var delegate: SEODelegate?
-    let apiKey = "AIzaSyBn1MCv4pIKHP3wOkNDiplOsc5wmc0L2aA"
-    let searchEngine = "34c9189327a3a48cc"
+    let apiKey = "AIzaSyAgw8iqI3tykylWra192BBCbVWdoi0xa5k"
+    let searchEngine = "9c343391b1ace4dc9"
     let lang = "lang_tr"
     let hl = "tr"
     let location = "tr"
-
+    
     func fetchSEO(keyword: String, requestURL: String? = nil, start: Int? = 1) {
             let start = start
-            let urlString = "https://www.googleapis.com/customsearch/v1?q=\(keyword)&lr=\(lang)&gl=\(location)&start=\(start ?? 1)&key=\(apiKey)&cx=\(searchEngine)"
+            let urlString = "https://www.googleapis.com/customsearch/v1?q=\(keyword)&gl=\(location)&hl=\(hl)&start=\(start ?? 1)&key=\(apiKey)&cx=\(searchEngine)"
             performRequest(with: urlString, for: keyword, request: requestURL, startIndex: start ?? 1)
     }
 

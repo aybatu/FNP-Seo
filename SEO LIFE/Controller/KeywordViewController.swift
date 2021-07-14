@@ -50,7 +50,7 @@ class KeywordViewController: UITableViewController {
         keywordModel.keywordCount = 0
         
         keywordArray.forEach { keyword in
-            self.seo.fetchSEO(keyword: keyword, requestURL: self.selectedDomain!.domainName)
+            self.seo.fetchSEO(keyword: keyword.removeWhitespace(), requestURL: self.selectedDomain!.domainName)
         }
      
         let deadLine = DispatchTime.now() + .seconds(1)
@@ -133,7 +133,7 @@ class KeywordViewController: UITableViewController {
         
         if 0 < keywordModel.keywordRanks!.count  && 0 < keywordModel.keywordNames.count && indexPath.section == 1 {
             keywordCell.detailTextLabel?.text = String((selectedDomain?.keywords[indexPath.row].rank)!)
-            keywordCell.textLabel?.text = selectedDomain?.keywords[indexPath.row].name
+            keywordCell.textLabel?.text = selectedDomain?.keywords[indexPath.row].name.removeDash()
             result = keywordCell
         }
         return result
@@ -195,7 +195,9 @@ class KeywordViewController: UITableViewController {
         } catch {
             print("Error delete keyword: \(error)")
         }
-        guard let _ = keywordModel.keywordRanks?.removeLast() else {return}
+        if let _ = keywordModel.keywordRanks?.last {
+            keywordModel.keywordRanks?.removeLast()
+        }
         guard let _ = keywordModel.keywordNames.removeLast() else {return}
         
         loadData()
@@ -215,8 +217,6 @@ extension KeywordViewController: SEODelegate {
                     let newStatistic = StatisticResult()
                 
                     let dateRaw = Date()
-                    let date = dateRaw.getFormattedDate(format: "yyyy-MM-dd hh:mm")
-                    
                     var dateComponent = DateComponents()
                     dateComponent.day = 1
                     
@@ -226,7 +226,7 @@ extension KeywordViewController: SEODelegate {
                     newStatistic.requestedURL = link
                     
                     guard let newKey = self.selectedDomain?.keywords.filter("name = %@", keyword).last else {
-                        newKeyword.name = keyword.removeDash()
+                        newKeyword.name = keyword
                         newKeyword.rank = listLine
                         self.selectedDomain?.keywords.append(newKeyword)
                         newKeyword.statistics.append(newStatistic)
@@ -241,7 +241,7 @@ extension KeywordViewController: SEODelegate {
                     newKey.rank = listLine
                     newKey.name = keyword
                     
-                    if date >= futureDate.getFormattedDate(format: "dd.MM.yyyy") {
+                    if dateRaw.getFormattedDate(format: "dd.MM.yyyy") >= futureDate.getFormattedDate(format: "dd.MM.yyyy") {
                         newKey.statistics.append(newStatistic)
                     } else {
                         newKey.statistics.last?.rank = listLine
