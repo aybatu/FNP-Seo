@@ -23,7 +23,7 @@ class LinkListViewController: UIViewController, SEODelegate {
         lineChartView.delegate = self
         seo.delegate = self
         
-        navigationItem.title = "Results For: \(keywordRaw!)"
+        navigationItem.title = "Results For: \(keywordRaw!.removeDash())"
         navigationItem.backButtonTitle = "Back"
         
         tableView.register(UINib(nibName: K.Links.linkCellNib, bundle: nil), forCellReuseIdentifier: K.Links.linkCell)
@@ -110,7 +110,7 @@ extension LinkListViewController: UITableViewDelegate {
 //MARK: - Line Chart View
 
 extension LinkListViewController: ChartViewDelegate {
-    
+ 
     func chartView() {
         let xAxis = lineChartView.xAxis
         xAxis.granularityEnabled = true

@@ -23,6 +23,7 @@ class DomainViewController: UITableViewController {
         loadData()
     }
     
+
     //MARK: -  Add pressed
     
     @IBAction func addPressed(_ sender: UIBarButtonItem) {
@@ -43,8 +44,15 @@ class DomainViewController: UITableViewController {
             text = textField
             text.placeholder = "Domain name..."
         }
-        present(alert, animated: true, completion: nil)
-        
+        present(alert, animated: true) {
+            alert.view.superview?.isUserInteractionEnabled = true
+              alert.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.alertControllerBackgroundTapped)))
+        }
+    }
+    
+    @objc func alertControllerBackgroundTapped()
+    {
+        self.dismiss(animated: true, completion: nil)
     }
     
     //MARK: - Table View Data Source Methods
@@ -91,12 +99,13 @@ class DomainViewController: UITableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destinationVC = segue.destination as! KeywordViewController
-        
-        if let indexPath = tableView.indexPathForSelectedRow {
-            destinationVC.selectedDomain = domain?[indexPath.row]
+        if segue.identifier == K.Segue.domianToKeyword {
+            let destinationVC = segue.destination as! KeywordViewController
+            
+            if let indexPath = tableView.indexPathForSelectedRow {
+                destinationVC.selectedDomain = domain?[indexPath.row]
+            }
         }
-        
     }
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {

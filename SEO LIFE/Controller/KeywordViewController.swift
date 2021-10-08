@@ -40,8 +40,9 @@ class KeywordViewController: UITableViewController {
         var keywordArray = [String]()
        
         keywordModel.keywordNames.forEach { keyword in
-            guard let keySafe = keyword else {return}
-            keywordArray.append(keySafe)
+            if let keySafe = keyword {
+                keywordArray.append(keySafe)
+            }
         }
 
         keywordModel.keywordNames = [String]()
@@ -89,7 +90,14 @@ class KeywordViewController: UITableViewController {
             textfield.placeholder = "Type a keyword..."
         }
         
-        present(alert, animated: true, completion: nil)
+        present(alert, animated: true) {
+            alert.view.superview?.isUserInteractionEnabled = true
+                  alert.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.alertControllerBackgroundTapped)))
+        }
+    }
+    
+    @objc func alertControllerBackgroundTapped() {
+        self.dismiss(animated: true, completion: nil)
     }
     
     //MARK: - Table View Data Source
@@ -103,7 +111,7 @@ class KeywordViewController: UITableViewController {
             return 2
         } else {
             return selectedDomain!.keywords.count
-        }      
+        }
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -266,4 +274,3 @@ extension KeywordViewController: SEODelegate {
         
     }
 }
-

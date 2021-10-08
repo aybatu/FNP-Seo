@@ -32,5 +32,6 @@ struct K {
         static let keywordToLinks = "KeywordToLinks"
         static let linkToWeb = "LinkToWebView"
         static let linkToChart = "LinkToChart"
+        static let domainToSettings = "DomainToSettings"
     }
 }

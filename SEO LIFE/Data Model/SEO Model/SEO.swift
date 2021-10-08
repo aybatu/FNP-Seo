@@ -15,7 +15,7 @@ import Foundation
 
 struct SEO {
     var delegate: SEODelegate?
-    let apiKey = "AIzaSyAgw8iqI3tykylWra192BBCbVWdoi0xa5k"
+    let apiKey = "AIzaSyDxp2VNPmqtt7opn-4EEuTJ0ik-fLMG9m8"
     let searchEngine = "9c343391b1ace4dc9"
     let lang = "lang_tr"
     let hl = "tr"

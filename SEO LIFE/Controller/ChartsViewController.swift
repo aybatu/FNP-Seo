@@ -16,6 +16,7 @@ class ChartsViewController: UIViewController, ChartViewDelegate {
     
     let realm = try! Realm()
     var selectedKeyword: Results<StatisticResult>?
+    
     override var shouldAutorotate: Bool {
         if UIDevice.current.orientation.isPortrait == true {
             return false
@@ -34,7 +35,7 @@ class ChartsViewController: UIViewController, ChartViewDelegate {
         lineChartData()
         setView()
     }
-    
+
     //Mark: Close Button Pressed
     
     @IBAction func closePressed(_ sender: UIButton) {
