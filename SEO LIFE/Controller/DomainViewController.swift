@@ -33,8 +33,13 @@ class DomainViewController: UITableViewController {
         let action = UIAlertAction(title: "Add", style: .default) { action in
             if text.text != "" {
                 if let textSafe = text.text {
-                    self.alexa.fetchAlexa(for: textSafe)
-                    
+                    let newDomain = WebSites()
+
+                    newDomain.domainName = textSafe
+                    newDomain.date = Date()
+                    DispatchQueue.main.async {
+                        self.saveData(website: newDomain)
+                    }
                 }
             }
         }
